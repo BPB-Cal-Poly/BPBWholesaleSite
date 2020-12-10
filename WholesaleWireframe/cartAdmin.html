@@ -12,7 +12,18 @@
             <h3 style="color:red">Admin Portal</h3>
         </header>
         <nav>
-            <h2>High St. Deli</h2>
+            <section>
+                <select name="customer" id="customer">
+                    <option value="rt">High St. Deli</option>
+                    <option value="rt">Scout Coffee</option>
+                    <option value="rt">Kreuzberg</option>
+                    <option value="rt">Novo</option>
+                    <option value="rt">Milestone Tavern</option>
+                    <option value="rt">Windows on the Water</option>
+                    <option value="rt">Kin Coffee</option>
+                    
+                </select>
+            </section>
             <h3>Standing</h3>
             <h3>Billing</h3>
             <h3>Products</h3>
@@ -63,6 +74,22 @@
                     <div class="total">$102</div>
                     <div class="termsLabel">Terms:</div>
                     <div class="terms">net 30</div>
+                    
+                </section>
+            </div>
+            <div class="chooseRoute">
+                <label for "id">Choose Route:</label><br>
+                <section>
+                    <select name="route" id="route">
+                        <option value="rt">Pick up SLO</option>
+                        <option value="rt">Pick up Carlton</option>
+                        <option value="rt">Prado to Carlton</option>
+                        <option value="rt">AM Pastry</option>
+                        <option value="rt">High St.</option>
+                        <option value="rt">Lunch 1</option>
+                        <option value="rt">North County</option>
+                        
+                    </select>
                 </section>
             </div>
             <div class="enterNewProduct">
@@ -79,14 +106,7 @@
                     <button>+ ADD</button>
                 </section>
             </div>
-            <div class="fulfill">
-                <input type="radio" id="delivery" name="fulfill" value="delivery">
-                <label for "delivery">Delivery</label>
-                <input type="radio" id="pickupSLO" name="fulfill" value="pickupSLO">
-                <label for "delivery">Pickup SLO</label>
-                <input type="radio" id="pickupAtascadero" name="fulfill" value="pickupAtascadero">
-                <label for "delivery">Pickup Atascadero</label>
-            </div>
+            
             <div class="currentOrder">
 
                     <img src="">

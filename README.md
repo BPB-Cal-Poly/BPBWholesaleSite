@@ -21,4 +21,4 @@ Dan is building a nonfunctioning wireframe layout of the site at:
   - Big Buttons
   - Minimum viable amount of information.
   - Clear announcement of order placement.
-  - Ideally, customer receives a text confirmation any changes they make.
+  - Ideally, customer receives a text confirmation of any changes they make.

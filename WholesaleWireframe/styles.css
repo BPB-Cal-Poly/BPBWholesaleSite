@@ -57,10 +57,9 @@ main {
     grid-template: repeat(4, 1fr) / 1fr 1fr;
 }
 
-.enterNewProduct {
+.enterNewProduct, .chooseRoute {
     padding: 10px 30%;
     text-align: left;
-    background-color: #dddddd;
 }
 
 img {
@@ -81,7 +80,12 @@ img {
     margin-top: 20px;
 }
 
-.fulfill {
+.chooseRoute {
+    background-color: #dddddd;
+}
+
+
+.fulfill, .enterNewProduct {
     background-color: #eeeeee;
 }
 .buttons {
