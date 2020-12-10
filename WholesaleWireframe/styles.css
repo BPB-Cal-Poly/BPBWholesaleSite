@@ -1,0 +1,85 @@
+body  {
+    font-family: "Montserrat", Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+h1,h2,h3, h4 {
+    margin: 0;
+    font-weight: normal;
+}
+
+h1 {
+    color: blue;
+}
+
+h2 {
+    color: white;
+}
+
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin: 5px 0;
+    background-color: lightblue
+}
+
+main {
+    width: 100%;
+}
+
+.bulkInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    ;
+}
+
+.totalGrid {
+    display: grid;
+    width: 300px;
+    grid-template: repeat(4, 1fr) / 1fr 1fr;
+}
+
+.enterNewProduct {
+    padding: 10px 30%;
+    text-align: left;
+    background-color: #dddddd;
+}
+
+img {
+    width: 40px;
+}
+
+
+.currentOrder {
+    display: grid;
+    width: 500px;
+    margin: 20px auto;
+    grid-template: repeat(4, 1fr) / 1fr 6fr 2fr 1fr 2fr 1fr;
+    align-items: center;
+}
+
+.submit, .fulfill {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.fulfill {
+    background-color: #eeeeee;
+}
+.buttons {
+    text-align: center;
+}
