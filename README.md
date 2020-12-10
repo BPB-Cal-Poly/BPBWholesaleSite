@@ -10,5 +10,5 @@ This site will:
 
 ## Initial Wireframe
 Dan is building a nonfunctioning wireframe layout of the site at:
-- index.html
+- https://danberkeland.github.io/BPBWholesaleSite/WholesaleWireframe/index.html
 
