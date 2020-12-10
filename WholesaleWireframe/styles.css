@@ -9,6 +9,10 @@ body  {
     margin-right: auto;
 }
 
+a {
+    text-decoration: none;
+}
+
 
 h1,h2,h3, h4 {
     margin: 0;
@@ -82,4 +86,19 @@ img {
 }
 .buttons {
     text-align: center;
+}
+
+
+
+
+/* css specific to index.html */
+
+.wholesaleCust, .bpbAdmin, .logisticsPortal, .bakeryPortal {
+    display: flex;
+    flex-direction: column;
+    margin: 40px 40px;
+}
+
+.wholesaleCust h2, .bpbAdmin h2, .logisticsPortal h2, .bakeryPortal h2 {
+    color: black;
 }
