@@ -24,27 +24,17 @@
                     
                 </select>
             </section>
-            <h3><a href="standingAdmin.html">Standing</a></h3>
+            <h3><a href="cartAdmin.html">Cart</a></h3>
             <h3>Billing</h3>
             <h3>Products</h3>
             <h3>Calendar</h3>
             <h3>Account Settings</h3>
         </nav>
         <main>
-            <h1>Cart Order:</h1>
+            <h1>Standing Order:</h1>
             <div class="bulkInfo">
 
                 <section class="orderInfo">
-                    <div id="orderDate">
-                        <label for "date">Date of Delivery:</label><br>
-                        <input type="text" name="date" id="date" value="12/9/2020"></input>
-                    </div>
-                    <br>
-                    <div id="po">
-                        <label for "po">Purchase Order #:</label><br>
-                        <input type="text" name="po" id="po" value="123456"></input>
-                    </div>
-                    <br>
                     <div>
                         <label for "notes">Special Notes:</label><br>
                         <textarea name="po" id="po" rows="4" cols="40">Enter any special delivery notes or instructions.</textarea>
@@ -59,22 +49,13 @@
                         <h4>93401</h4>
                     </div>
                     <br><br>
+                </section>
+                
+                <section class="custPhone">
                     <div id="phone">
                         <h3>Phone Number:</h3>
                         <h4>(805)541-4738</h4>
                     </div>
-                </section>
-                
-                <section class="totalGrid">
-                    <div class="subtotalLabel">Subtotal:</div>
-                    <div class="Subtotal">$100</div>
-                    <div class="deliveryLabel">Delivery:</div>
-                    <div class="delivery">$2</div>
-                    <div class="totalLabel">Total:</div>
-                    <div class="total">$102</div>
-                    <div class="termsLabel">Terms:</div>
-                    <div class="terms">net 30</div>
-                    
                 </section>
             </div>
             <div class="chooseRoute">
@@ -92,9 +73,20 @@
                     </select>
                 </section>
             </div>
-            <div class="enterNewProduct">
-                <label for "id">Add a Product:</label><br>
-                <section>
+            <div class="enterNewStandingProduct">
+                
+                
+
+                <section class="addStandGrid">
+                    <h3>Product</h3>
+                    <h3>Sun</h3>
+                    <h3>Mon</h3>
+                    <h3>Tue</h3>
+                    <h3>Wed</h3>
+                    <h3>Thu</h3>
+                    <h3>Fri</h3>
+                    <h3>Sat</h3>
+                    <h3></h3>
                     <select name="po" id="po">
                         <option value="pl">All Butter Croissant.....($1.50)</option>
                         <option value="bag">Ham and Cheese Croissant.....($2.75)</option>
@@ -102,59 +94,82 @@
                         <option value="bag">23" Baguette.....($2.20)</option>
                         
                     </select>
-                    <input type="text" name="po" id="po" size="6" value="Qty"></input>
+                    <input type="text" name="sun" id="po" size="3" value="0"></input>
+                    <input type="text" name="mon" id="po" size="3" value="0"></input>
+                    <input type="text" name="tue" id="po" size="3" value="0"></input>
+                    <input type="text" name="wed" id="po" size="3" value="0"></input>
+                    <input type="text" name="thu" id="po" size="3" value="0"></input>
+                    <input type="text" name="fri" id="po" size="3" value="0"></input>
+                    <input type="text" name="sat" id="po" size="3" value="0"></input>   
                     <button>+ ADD</button>
                 </section>
             </div>
             
-            <div class="currentOrder">
+            <div class="currentStandingOrder">
 
-                    <img src="">
-                    <h4>Product</h4>
-                    <h4>Price</h4>
-                    <h4>SO</h4>
-                    <h4>Order</h4>
-                    <h4>Total</h4>
+                <h3>Product</h3>
+                <h3>Sun</h3>
+                <h3>Mon</h3>
+                <h3>Tue</h3>
+                <h3>Wed</h3>
+                <h3>Thu</h3>
+                <h3>Fri</h3>
+                <h3>Sat</h3>
+                <h3></h3>
                 
-                    <img src="./resources/trashcan.png">
+                    
                     <h4>Ham and Cheese Croissant</h4>
-                    <h4>$2.75</h4>
-                    <h4>10</h4>
-                    <input type="text" name="order" id="order" size="5" value="Qty"></input>
-                    <h4>$27.50</h4>
+                    <input type="text" name="sun" id="po" size="3" value="0"></input>
+                    <input type="text" name="mon" id="po" size="3" value="0"></input>
+                    <input type="text" name="tue" id="po" size="3" value="0"></input>
+                    <input type="text" name="wed" id="po" size="3" value="0"></input>
+                    <input type="text" name="thu" id="po" size="3" value="0"></input>
+                    <input type="text" name="fri" id="po" size="3" value="0"></input>
+                    <input type="text" name="sat" id="po" size="3" value="0"></input>   
+                    <img src="./resources/trashcan.png">
                
-                    <img src="./resources/trashcan.png">
+                    
                     <h4>All Butter Croissant</h4>
-                    <h4>$1.50</h4>
-                    <h4>10</h4>
-                    <input type="text" name="order" id="order" size="5" value="Qty"></input>
-                    <h4>$15.00</h4>
-                
+                    <input type="text" name="sun" id="po" size="3" value="0"></input>
+                    <input type="text" name="mon" id="po" size="3" value="0"></input>
+                    <input type="text" name="tue" id="po" size="3" value="0"></input>
+                    <input type="text" name="wed" id="po" size="3" value="0"></input>
+                    <input type="text" name="thu" id="po" size="3" value="0"></input>
+                    <input type="text" name="fri" id="po" size="3" value="0"></input>
+                    <input type="text" name="sat" id="po" size="3" value="0"></input>   
                     <img src="./resources/trashcan.png">
+                
                     <h4>Brioche Burger Buns (8)</h4>
-                    <h4>$5.40</h4>
-                    <h4>6</h4>
-                    <input type="text" name="order" id="order" size="5" value="Qty"></input>
-                    <h4>$32.40</h4>
-                
+                    <input type="text" name="sun" id="po" size="3" value="0"></input>
+                    <input type="text" name="mon" id="po" size="3" value="0"></input>
+                    <input type="text" name="tue" id="po" size="3" value="0"></input>
+                    <input type="text" name="wed" id="po" size="3" value="0"></input>
+                    <input type="text" name="thu" id="po" size="3" value="0"></input>
+                    <input type="text" name="fri" id="po" size="3" value="0"></input>
+                    <input type="text" name="sat" id="po" size="3" value="0"></input>   
                     <img src="./resources/trashcan.png">
+                
                     <h4>23" Baguette</h4>
-                    <h4>$2.20</h4>
-                    <h4>15</h4>
-                    <input type="text" name="order" id="order" size="3" value="Qty"></input>
-                    <h4>$33.00</h4>
+                    <input type="text" name="sun" id="po" size="3" value="0"></input>
+                    <input type="text" name="mon" id="po" size="3" value="0"></input>
+                    <input type="text" name="tue" id="po" size="3" value="0"></input>
+                    <input type="text" name="wed" id="po" size="3" value="0"></input>
+                    <input type="text" name="thu" id="po" size="3" value="0"></input>
+                    <input type="text" name="fri" id="po" size="3" value="0"></input>
+                    <input type="text" name="sat" id="po" size="3" value="0"></input>   
+                    <img src="./resources/trashcan.png">
                 
             </div>
             <div class="buttons">
-                <button>CLEAR ORDER</button>
-                <button>REVERT TO STANDING ORDER</button>
-                <button>SUBMIT ORDER</button>
+                
+                <button>CONFIRM STANDING ORDER</button>
             </div>
         </main>
         <footer></footer>
 
     </body>
 
+    <!---
     <script type="text/javascript">
     swal({
         title: "Dan Notes",
@@ -163,4 +178,5 @@
         button: "Got it!"
     })
     </script>
+-->
 </html>
