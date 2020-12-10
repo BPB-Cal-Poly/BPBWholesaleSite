@@ -12,7 +12,12 @@ This site will:
 Dan is building a nonfunctioning wireframe layout of the site at:
 - https://danberkeland.github.io/BPBWholesaleSite/WholesaleWireframe/index.html
 
-## GUI Goals
+
+
+# Steps
+
+
+## 1. GUI Goals
 - Desktop graphic interface (BPB Admin)
 - Mobile Graphic Interface (simple and intuitive for potentially not so tech saavy kitchen crews.)
 
@@ -22,3 +27,38 @@ Dan is building a nonfunctioning wireframe layout of the site at:
   - Minimum viable amount of information.
   - Clear announcement of order placement.
   - Ideally, customer receives a text confirmation of any changes they make.
+
+## 2. The Database
+- Develop to database
+  - Products
+  - Customers
+  - Orders
+  - Other
+
+## 3. Deploying to the web
+- Best way to put this online.  AWS?
+
+## 4. Checks, Balances, Limitations on Ordering
+- Proofread orders for mistakes and limitations.
+  - lead time limitations
+  - quantity limitations
+  - delivery limitations
+
+## 5. Customer Alerts & Confirmations
+- Develop meaningful automated communication with the customer.
+
+## 6. Logistics Reports
+- Design clear reports for our drivers.
+  - What needs to go where?
+  - Most efficient route?
+  - Paper invoices to be delivered with order
+
+## 7. Production Reports
+- Design clear reports for our bakers.
+  - How much to mix?
+  - How much to shape?
+  - How much to bake?
+  - How much to prep?
+
+## 8. API link to Quickbooks for billing
+- Figure out how to work with Quickbooks for handling our customers' billing.
