@@ -31,7 +31,11 @@ div {
     margin: 30px 30px;
 }
 
-
+section {
+    display: flex;
+    flex-direction: column;
+    
+}
 
 nav {
     display: flex;
