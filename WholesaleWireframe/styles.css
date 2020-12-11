@@ -27,6 +27,11 @@ h2 {
     color: white;
 }
 
+div {
+    margin: 30px 30px;
+}
+
+
 
 nav {
     display: flex;
@@ -116,14 +121,21 @@ img {
 
 
 
+/* css specific to customerAdmin.html */
+
+.custName, .custDelivAddress, .custContact {
+    width: 80%;
+    text-align: center;
+    display: grid;
+    grid-template: 1fr 1fr / 200px 300px;
+    grid-gap: 10px;
+    justify-items: start;
+    align-items: center;
+}
+
 
 /* css specific to index.html */
 
-.wholesaleCust, .bpbAdmin, .logisticsPortal, .bakeryPortal {
-    display: flex;
-    flex-direction: column;
-    margin: 40px 40px;
-}
 
 .wholesaleCust h2, .bpbAdmin h2, .logisticsPortal h2, .bakeryPortal h2 {
     color: black;
