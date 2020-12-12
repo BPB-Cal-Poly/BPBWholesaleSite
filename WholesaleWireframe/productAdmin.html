@@ -20,10 +20,69 @@
             <h2>Products</h2>
             <h3><a href="customersAdmin.html">Customers</a></h3>
             <h3><a href="billingAdmin.html">Billing</a></h3>
-            <h3><a href="routesAdmin.html">Routes</a></h3>
+            <h3><a href="settingsAdmin.html">Settings</a></h3>
         </nav>
         <main>
-            <h1>Products:</h1>
+            <main>
+                <h1>Product:</h1>
+    
+                <div class="prodName">
+                    <label for "prodName">Product Name:</label>
+                    <input type="text" name="prodName" id="prodName"></input>
+                    <label for "prodNick">Nickname:</label>
+                    <input type="text" name="prodNick" id="prodNick"></input>
+                    <label for ="prodDescrip">Product Description:</label><nr></br>
+                        <textarea id="prodDescrip" name="prodDescrip" rows="5" cols="50">Product Description ...
+                        </textarea>
+                </div>
+                
+                <br>
+                <h1>Product Settings:</h1>
+                <div class="prodSettings">
+                    <label for="packGroup">Pack Group:</label>
+                    <select name="packGroup" id="packGroup">
+                        <option value="cod">Pastries</option>
+                        <option value="net15">Brioche</option>
+                        <option value="net30">Rustics</option>
+                    </select>
+                    <label for "packSize">Pack Size:</label>
+                    <input type="text" name="packSize" id="packSize"></input>
+                    <label for="primaryDough">Primary Dough:</label>
+                    <select name="primaryDough" id="primaryDough">
+                        <option value="Baguette">Baguette</option>
+                        <option value="Croissant">Croissant</option>
+                        <option value="Brioche">Brioche</option>
+                    </select>
+                    <label for="bakedWhere">Baked Where:</label>
+                    <select name="bakedWhere" id="bakedWhere">
+                        <option value="SLO">SLO</option>
+                        <option value="Carlton">Carlton</option>
+                        <option value="split">split</option>
+                    </select>
+                    <label for="bakedWhen">When to Bake (days before delivery):</label>
+                    <select name="bakedWhen" id="bakedWhen">
+                        <option value=0>0</option>
+                        <option value=1>1</option>
+                        
+                    </select>
+                    <label for "price">Price:</label>
+                    <input type="text" name="price" id="price"></input>
+                    <label for "weight">Weight:</label>
+                    <input type="text" name="weight" id="weight"></input>
+                    <label for="orderCutoff">Order Cutoff (days before delivery):</label>
+                    <select name="orderCutoff" id="orderCutoff">
+                        <option value=0>0</option>
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+                        
+                        
+                    </select>
+                </div>
+    
+               
+                <button>SUBMIT</button>
+               
+            </main>
            
         </main>
         <footer></footer>

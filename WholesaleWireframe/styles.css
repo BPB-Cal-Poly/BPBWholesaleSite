@@ -138,9 +138,23 @@ img {
 }
 
 
+/* css specific to productAdmin.html */
+
+.prodName, .prodSettings {
+    width: 80%;
+    text-align: center;
+    display: grid;
+    grid-template: 1fr 1fr / 200px 300px;
+    grid-gap: 10px;
+    justify-items: start;
+    align-items: center;
+}
+
 /* css specific to index.html */
 
 
 .wholesaleCust h2, .bpbAdmin h2, .logisticsPortal h2, .bakeryPortal h2 {
     color: black;
 }
+
+
