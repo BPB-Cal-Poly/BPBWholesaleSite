@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Back Porch Bakery Wholesale</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="index.html"><h1>Back Porch Bakery Wholesale </h1></a>
+            <h3 style="color:red">Admin Portal</h3>
+        </header>
+        <nav>
+            <section>
+                <select name="customer" id="customer">
+                    <option value="rt">High St. Deli</option>
+                    <option value="rt">Scout Coffee</option>
+                    <option value="rt">Kreuzberg</option>
+                    <option value="rt">Novo</option>
+                    <option value="rt">Milestone Tavern</option>
+                    <option value="rt">Windows on the Water</option>
+                    <option value="rt">Kin Coffee</option>
+                    
+                </select>
+            </section>
+            <h3><a href="cartAdmin.html">Cart</a></h3>
+            <h2>Standing</h2>
+            <h3><a href="productAdmin.html">Products</a></h3>
+            <h3><a href="customersAdmin.html">Customers</a></h3>
+            <h3><a href="billingAdmin.html">Billing</a></h3>
+            <h3><a href="settingsAdmin.html">Settings</a></h3>
+        </nav>
+        <main>
+            <h1>Standing Order:</h1>
+            <div class="bulkInfo">
+
+                <section class="orderInfo">
+                    <div>
+                        <label for "notes">Special Notes:</label><br>
+                        <textarea name="po" id="po" rows="4" cols="40">Enter any special delivery notes or instructions.</textarea>
+                    </div>
+                </section>
+
+                <section class="custInfo">
+                    <div id="address">
+                        <h3>Delivery Address:</h3>
+                        <h4>350 High St.</h4>
+                        <h4>San Luis Obispo, CA</h4>
+                        <h4>93401</h4>
+                    </div>
+                    <br><br>
+                </section>
+                
+                <section class="custPhone">
+                    <div id="phone">
+                        <h3>Phone Number:</h3>
+                        <h4>(805)541-4738</h4>
+                    </div>
+                </section>
+            </div>
+            <div class="chooseRoute">
+                <label for "id">Choose Route:</label><br>
+                <section>
+                    <select name="route" id="route">
+                        <option value="rt">Pick up SLO</option>
+                        <option value="rt">Pick up Carlton</option>
+                        <option value="rt">Prado to Carlton</option>
+                        <option value="rt">AM Pastry</option>
+                        <option value="rt">High St.</option>
+                        <option value="rt">Lunch 1</option>
+                        <option value="rt">North County</option>
+                        
+                    </select>
+                </section>
+            </div>
+            <div class="enterNewStandingProduct">
+                
+                
+
+                <section class="addStandGrid">
+                    <h3>Product</h3>
+                    <h3>Sun</h3>
+                    <h3>Mon</h3>
+                    <h3>Tue</h3>
+                    <h3>Wed</h3>
+                    <h3>Thu</h3>
+                    <h3>Fri</h3>
+                    <h3>Sat</h3>
+                    <h3></h3>
+                    <select name="po" id="po">
+                        <option value="pl">All Butter Croissant.....($1.50)</option>
+                        <option value="bag">Ham and Cheese Croissant.....($2.75)</option>
+                        <option value="bag">Brioche Burger Buns (8).....($5.40)</option>
+                        <option value="bag">23" Baguette.....($2.20)</option>
+                        
+                    </select>
+                    <input type="text" name="sun" id="po" size="3" value="0"></input>
+                    <input type="text" name="mon" id="po" size="3" value="0"></input>
+                    <input type="text" name="tue" id="po" size="3" value="0"></input>
+                    <input type="text" name="wed" id="po" size="3" value="0"></input>
+                    <input type="text" name="thu" id="po" size="3" value="0"></input>
+                    <input type="text" name="fri" id="po" size="3" value="0"></input>
+                    <input type="text" name="sat" id="po" size="3" value="0"></input>   
+                    <button>+ ADD</button>
+                </section>
+            </div>
+            
+            <div class="currentStandingOrder">
+
+                <h3>Product</h3>
+                <h3>Sun</h3>
+                <h3>Mon</h3>
+                <h3>Tue</h3>
+                <h3>Wed</h3>
+                <h3>Thu</h3>
+                <h3>Fri</h3>
+                <h3>Sat</h3>
+                <h3></h3>
+                
+                    
+                    <h4>Ham and Cheese Croissant</h4>
+                    <input type="text" name="sun" id="po" size="3" value="15"></input>
+                    <input type="text" name="mon" id="po" size="3" value="10"></input>
+                    <input type="text" name="tue" id="po" size="3" value="10"></input>
+                    <input type="text" name="wed" id="po" size="3" value="10"></input>
+                    <input type="text" name="thu" id="po" size="3" value="10"></input>
+                    <input type="text" name="fri" id="po" size="3" value="10"></input>
+                    <input type="text" name="sat" id="po" size="3" value="15"></input>   
+                    <img src="./resources/trashcan.png">
+               
+                    
+                    <h4>All Butter Croissant</h4>
+                    <input type="text" name="sun" id="po" size="3" value="25"></input>
+                    <input type="text" name="mon" id="po" size="3" value="18"></input>
+                    <input type="text" name="tue" id="po" size="3" value="12"></input>
+                    <input type="text" name="wed" id="po" size="3" value="12"></input>
+                    <input type="text" name="thu" id="po" size="3" value="12"></input>
+                    <input type="text" name="fri" id="po" size="3" value="18"></input>
+                    <input type="text" name="sat" id="po" size="3" value="25"></input>   
+                    <img src="./resources/trashcan.png">
+                
+                    <h4>Brioche Burger Buns (8)</h4>
+                    <input type="text" name="sun" id="po" size="3" value="4"></input>
+                    <input type="text" name="mon" id="po" size="3" value="4"></input>
+                    <input type="text" name="tue" id="po" size="3" value="4"></input>
+                    <input type="text" name="wed" id="po" size="3" value="4"></input>
+                    <input type="text" name="thu" id="po" size="3" value="4"></input>
+                    <input type="text" name="fri" id="po" size="3" value="4"></input>
+                    <input type="text" name="sat" id="po" size="3" value="4"></input>   
+                    <img src="./resources/trashcan.png">
+                
+                    <h4>23" Baguette</h4>
+                    <input type="text" name="sun" id="po" size="3" value="12"></input>
+                    <input type="text" name="mon" id="po" size="3" value="8"></input>
+                    <input type="text" name="tue" id="po" size="3" value="6"></input>
+                    <input type="text" name="wed" id="po" size="3" value="6"></input>
+                    <input type="text" name="thu" id="po" size="3" value="6"></input>
+                    <input type="text" name="fri" id="po" size="3" value="8"></input>
+                    <input type="text" name="sat" id="po" size="3" value="20"></input>   
+                    <img src="./resources/trashcan.png">
+                
+            </div>
+            <div class="buttons">
+                
+                <button>CONFIRM STANDING ORDER</button>
+            </div>
+        </main>
+        <footer></footer>
+
+    </body>
+
+    <!---
+    <script type="text/javascript">
+    swal({
+        title: "Dan Notes",
+        text: "There are minor differences between the Wholesale Customer Cart Order page and the BPB Admin Cart Order page. The Admin page allows for choosing the customer and also for choosing the route.",
+        icon: "success",
+        button: "Got it!"
+    })
+    </script>
+-->
+</html>

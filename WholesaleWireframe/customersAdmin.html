@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Back Porch Bakery Wholesale</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="index.html"><h1>Back Porch Bakery Wholesale </h1></a>
+            <h3 style="color:red">Admin Portal</h3>
+        </header>
+        <nav>
+            <section>
+                
+            </section>
+            <section>
+                <select name="customer" id="customer">
+                    <option value="rt">High St. Deli</option>
+                    <option value="rt">Scout Coffee</option>
+                    <option value="rt">Kreuzberg</option>
+                    <option value="rt">Novo</option>
+                    <option value="rt">Milestone Tavern</option>
+                    <option value="rt">Windows on the Water</option>
+                    <option value="rt">Kin Coffee</option>
+                    
+                </select>
+            </section>
+            <h3><a href="cartAdmin.html">Cart</a></h3>
+            <h3><a href="standingAdmin.html">Standing</a></h3>
+            <h3><a href="productAdmin.html">Products</a></h3>
+            <h2>Customers</h2>
+            <h3><a href="billingAdmin.html">Billing</a></h3>
+            <h3><a href="settingsAdmin.html">Settings</a></h3>
+        </nav>
+        <main>
+            <h1>Customer:</h1>
+
+            <div class="custName">
+                <label for "name">Customer Name</label>
+                <input type="text" name="name" id="name"></input>
+                <label for "nick">Nickname</label>
+                <input type="text" name="nick" id="nick"></input>
+            </div>
+            <br>
+            <h1>Delivery Address:</h1>
+            <div class="custDelivAddress">
+                <label for "delivAdd1">Address Line 1:</label>
+                <input type="text" name="delivAdd1" id="delivAdd1" size="50"></input>
+                <label for "delivAdd2">Address Line 2:</label>
+                <input type="text" name="delivAdd2" id="delivAdd2" size="50"></input>
+                <label for "delivAdd3">Address Line 3:</label>
+                <input type="text" name="delivAdd3" id="delivAdd3" size="50"></input>
+                <label for "delivCity">City:</label>
+                <input type="text" name="delivCity" id="delivCity"></input>
+                <label for "delivZip">Zip COde:</label>
+                <input type="text" name="delivZip" id="delivZip"></input>
+            </div>
+
+            <h1>Contact Info:</h1>
+            <div class="custContact">
+                <label for "custFirst">Contact First Name:</label>
+                <input type="text" name="custFirst" id="custFirst"></input>
+                <label for "custLast">Contact Last Name:</label>
+                <input type="text" name="custLast" id="custLast"></input>
+                <label for "custPhone">Phone Number:</label>
+                <input type="text" name="custPhone" id="custPhone"></input>
+                <label for "custEmail">Email:</label>
+                <input type="text" name="custEmail" id="custEmail"></input>
+            </div>
+
+            <h1>Account Settings:</h1>
+            <div class="custAcct">
+
+                
+                <input type="radio" name="invPref" id="printedInv">
+                <label for "printedInv">Printed Invoice</label><br>
+                
+                <input type="radio" name="invPref" id="emailedInv">
+                <label for "emailedInv">Emailed Invoice</label><br>
+               
+                <input type="radio" name="invPref" id="bothInv">
+                <label for "bothInv">Both</label><br><br>
+
+                <label for="terms">Terms:</label>
+                <select name="terms" id="terms">
+                    <option value="cod">DUE ON RECEIPT</option>
+                    <option value="net15">NET 15</option>
+                    <option value="net30">NET 30</option>
+                </select>
+                <br><br>
+                <label for="route">Default Route:</label>
+                <select name="route" id="route">
+                    <option value="AMPastry">AM Pastry</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="northCounty">North County</option>
+                </select>
+                <br><br>
+                <label for ="specialNotes">Special Notes:</label><nr></br>
+                <textarea id="specialNotes" name="specialNotes" rows="5" cols="50">Anything else we should know ...
+                </textarea>
+            </div>
+            <button>SUBMIT</button>
+           
+        </main>
+        <footer></footer>
+
+    </body>
+
+    <!---
+    <script type="text/javascript">
+    swal({
+        title: "Dan Notes",
+        text: "There are minor differences between the Wholesale Customer Cart Order page and the BPB Admin Cart Order page. The Admin page allows for choosing the customer and also for choosing the route.",
+        icon: "success",
+        button: "Got it!"
+    })
+    </script>
+-->
+</html>

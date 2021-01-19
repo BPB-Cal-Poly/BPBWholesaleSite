@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Back Porch Bakery Wholesale</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="index.html"><h1>Back Porch Bakery Wholesale </h1></a>
+            <h3 style="color:red">Admin Portal</h3>
+        </header>
+        <nav>
+            <section>
+                <select name="customer" id="customer">
+                    <option value="rt">High St. Deli</option>
+                    <option value="rt">Scout Coffee</option>
+                    <option value="rt">Kreuzberg</option>
+                    <option value="rt">Novo</option>
+                    <option value="rt">Milestone Tavern</option>
+                    <option value="rt">Windows on the Water</option>
+                    <option value="rt">Kin Coffee</option>
+                    
+                </select>
+            </section>
+            <h2>Cart</h2>
+            <h3><a href="standingAdmin.html">Standing</a></h3>
+            <h3><a href="productAdmin.html">Products</a></h3>
+            <h3><a href="customersAdmin.html">Customers</a></h3>
+            <h3><a href="billingAdmin.html">Billing</a></h3>
+            <h3><a href="settingsAdmin.html">Settings</a></h3>
+            
+            
+        </nav>
+        <main>
+            <h1>Cart Order:</h1>
+            <div class="bulkInfo">
+
+                <section class="orderInfo">
+                    <div id="orderDate">
+                        <label for "date">Date of Delivery:</label><br>
+                        <input type="text" name="date" id="date" value="12/9/2020"></input>
+                    </div>
+                    <br>
+                    <div id="po">
+                        <label for "po">Purchase Order #:</label><br>
+                        <input type="text" name="po" id="po" value="123456"></input>
+                    </div>
+                    <br>
+                    <div>
+                        <label for "notes">Special Notes:</label><br>
+                        <textarea name="po" id="po" rows="4" cols="40">Enter any special delivery notes or instructions.</textarea>
+                    </div>
+                </section>
+
+                <section class="custInfo">
+                    <div id="address">
+                        <h3>Delivery Address:</h3>
+                        <h4>350 High St.</h4>
+                        <h4>San Luis Obispo, CA</h4>
+                        <h4>93401</h4>
+                    </div>
+                    <br><br>
+                    <div id="phone">
+                        <h3>Phone Number:</h3>
+                        <h4>(805)541-4738</h4>
+                    </div>
+                </section>
+                
+                <section class="totalGrid">
+                    <div class="subtotalLabel">Subtotal:</div>
+                    <div class="Subtotal">$100</div>
+                    <div class="deliveryLabel">Delivery:</div>
+                    <div class="delivery">$2</div>
+                    <div class="totalLabel">Total:</div>
+                    <div class="total">$102</div>
+                    <div class="termsLabel">Terms:</div>
+                    <div class="terms">net 30</div>
+                    
+                </section>
+            </div>
+            <div class="chooseRoute">
+                <label for "id">Choose Route:</label><br>
+                <section>
+                    <select name="route" id="route">
+                        <option value="rt">Pick up SLO</option>
+                        <option value="rt">Pick up Carlton</option>
+                        <option value="rt">Prado to Carlton</option>
+                        <option value="rt">AM Pastry</option>
+                        <option value="rt">High St.</option>
+                        <option value="rt">Lunch 1</option>
+                        <option value="rt">North County</option>
+                        
+                    </select>
+                </section>
+            </div>
+            <div class="enterNewProduct">
+                <label for "id">Add a Product:</label><br>
+                <section>
+                    <select name="po" id="po">
+                        <option value="pl">All Butter Croissant.....($1.50)</option>
+                        <option value="bag">Ham and Cheese Croissant.....($2.75)</option>
+                        <option value="bag">Brioche Burger Buns (8).....($5.40)</option>
+                        <option value="bag">23" Baguette.....($2.20)</option>
+                        
+                    </select>
+                    <input type="text" name="po" id="po" size="6" value="Qty"></input>
+                    <button>+ ADD</button>
+                </section>
+            </div>
+            
+            <div class="currentOrder">
+
+                    <img src="">
+                    <h4>Product</h4>
+                    <h4>Price</h4>
+                    <h4>SO</h4>
+                    <h4>Order</h4>
+                    <h4>Total</h4>
+                
+                    <img src="./resources/trashcan.png">
+                    <h4>Ham and Cheese Croissant</h4>
+                    <h4>$2.75</h4>
+                    <h4>10</h4>
+                    <input type="text" name="order" id="order" size="5" value="Qty"></input>
+                    <h4>$27.50</h4>
+               
+                    <img src="./resources/trashcan.png">
+                    <h4>All Butter Croissant</h4>
+                    <h4>$1.50</h4>
+                    <h4>10</h4>
+                    <input type="text" name="order" id="order" size="5" value="Qty"></input>
+                    <h4>$15.00</h4>
+                
+                    <img src="./resources/trashcan.png">
+                    <h4>Brioche Burger Buns (8)</h4>
+                    <h4>$5.40</h4>
+                    <h4>6</h4>
+                    <input type="text" name="order" id="order" size="5" value="Qty"></input>
+                    <h4>$32.40</h4>
+                
+                    <img src="./resources/trashcan.png">
+                    <h4>23" Baguette</h4>
+                    <h4>$2.20</h4>
+                    <h4>15</h4>
+                    <input type="text" name="order" id="order" size="3" value="Qty"></input>
+                    <h4>$33.00</h4>
+                
+            </div>
+            <div class="buttons">
+                <button>CLEAR ORDER</button>
+                <button>REVERT TO STANDING ORDER</button>
+                <button>SUBMIT ORDER</button>
+            </div>
+        </main>
+        <footer></footer>
+
+    </body>
+<!--
+    <script type="text/javascript">
+    swal({
+        title: "Dan Notes",
+        text: "There are minor differences between the Wholesale Customer Cart Order page and the BPB Admin Cart Order page. The Admin page allows for choosing the customer and also for choosing the route.",
+        icon: "success",
+        button: "Got it!"
+    })
+    </script>
+-->
+</html>
