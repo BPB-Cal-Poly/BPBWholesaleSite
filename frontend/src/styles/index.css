@@ -156,7 +156,7 @@ img {
 }
 header{
   grid-area: header;
-  background-color: #642626;
+  background-color: #eee4ac;
   color: #ffffff;
 }
 /* main{
@@ -172,11 +172,11 @@ footer{
 
 /* header */
 header a{
-  color: #ffffff;
+  color: #000000;
   padding:1rem;
 }
 a.brand{
-  color: #ffffff;
+  color: #581717;
   font-size: 3rem;
   font-weight: bold;
 }

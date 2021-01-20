@@ -1,0 +1,18 @@
+.logo{
+    height:32px;
+    margin:10px;
+    font-size: 20px;
+    color:#ffffff;
+    text-align:center;
+}
+
+.menu{
+    min-height: 100%;
+    color:antiquewhite;
+}
+
+.site-layout-background {
+    background: #fff;
+    padding: 24;
+    min-height: 360;
+  }
