@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Breadcrumb} from "antd";
+import { Layout, Menu, Breadcrumb } from "antd";
 import {
   UserOutlined,
   DesktopOutlined,
@@ -12,6 +12,10 @@ import {
 import "./styles/layout.css";
 import { Redirect, Route, Switch, Link } from "react-router-dom";
 import ProductList from "./product/ProductList";
+import CustomerList from "./user/CustomerList";
+import EditCustomer from "./user/EditCustomer";
+import StandingOrders from "./order/StandingOrders";
+import CartOrders from "./order/CartOrders";
 
 const { Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -20,22 +24,8 @@ export default class Admin extends React.Component {
     super(props);
   }
 
-  //   handleClickProductList = (e) =>{
-  //       console.log(e.item.props);
-  //       this.props.history.push('admin/product/list/');
-  //   }
-
   render() {
     return (
-      //   <Layout className="menu">
-      //     <Sider>
-      //       <div className="logo">Admin Portal</div>
-      //     </Sider>
-      //     <Layout>
-      //       <Content></Content>
-      //     </Layout>
-      //   </Layout>
-
       <Layout>
         <Sider width={250} className="site-layout-background">
           <Menu
@@ -45,14 +35,16 @@ export default class Admin extends React.Component {
             style={{ height: "100%", borderRight: 0 }}
           >
             <Menu.Item key="/main" icon={<DesktopOutlined />}>
-            <Link to="/admin/main">Admin</Link>
+              <Link to="/admin/main">Admin</Link>
             </Menu.Item>
             <SubMenu
               key="/cartOrders"
               icon={<BarsOutlined />}
               title="Cart Orders"
             >
-              <Menu.Item key="cartOrderList">View/Edit Order List</Menu.Item>
+              <Menu.Item key="cartOrderList"><Link to="/admin/cart-order/list">
+                  View/Edit Order List
+                </Link></Menu.Item>
               <Menu.Item key="cartOrderAdd">Add Cart Order</Menu.Item>
             </SubMenu>
             <SubMenu
@@ -61,7 +53,9 @@ export default class Admin extends React.Component {
               title="Standing Orders"
             >
               <Menu.Item key="standingOrderList">
-                View/Edit Order List
+                <Link to="/admin/standing-order/list">
+                  View/Edit Order List
+                </Link>
               </Menu.Item>
               <Menu.Item key="standingOrderAdd">Add Standing Order</Menu.Item>
             </SubMenu>
@@ -72,7 +66,9 @@ export default class Admin extends React.Component {
               <Menu.Item key="productAdd">Add Product</Menu.Item>
             </SubMenu>
             <SubMenu key="/customers" icon={<UserOutlined />} title="Customers">
-              <Menu.Item key="customerList">View/Edit Customer List</Menu.Item>
+              <Menu.Item key="customerList">
+                <Link to="/admin/customer/list">View/Edit Customer List</Link>
+              </Menu.Item>
               <Menu.Item key="customerAdd">Add Customer</Menu.Item>
             </SubMenu>
             <SubMenu
@@ -92,6 +88,15 @@ export default class Admin extends React.Component {
               <Route path="/admin/product/list">
                 <Breadcrumb.Item>products</Breadcrumb.Item>
               </Route>
+              <Route path="/admin/customer/list">
+                <Breadcrumb.Item>customers</Breadcrumb.Item>
+              </Route>
+              <Route path="/admin/standing-order/list">
+                <Breadcrumb.Item>standing orders</Breadcrumb.Item>
+              </Route>
+              <Route path="/admin/cart-order/list">
+                <Breadcrumb.Item>cart orders</Breadcrumb.Item>
+              </Route>
               <Route path="/admin/main">
                 <Breadcrumb.Item>main</Breadcrumb.Item>
               </Route>
@@ -107,9 +112,28 @@ export default class Admin extends React.Component {
           >
             <Switch>
               <Route path="/admin/product/list" exact component={ProductList} />
+              <Route
+                path="/admin/customer/list"
+                exact
+                component={CustomerList}
+              />
+              <Route
+                path="/admin/customer/edit/:id"
+                exact
+                component={EditCustomer}
+              />
+              <Route
+                path="/admin/standing-order/list"
+                exact
+                component={StandingOrders}
+              />
+              <Route
+                path="/admin/cart-order/list"
+                exact
+                component={CartOrders}
+              />
               <Route path="/admin/main">Here is the admin portal</Route>
             </Switch>
-            {/* <Redirect to="/admin/main" /> */}
           </Content>
         </Layout>
       </Layout>

@@ -6,12 +6,30 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
 const { confirm } = Modal;
 
-let fakeProducts = [
-  { id: 1, category: "Pastries", name: "1", nickname: "1" },
-  { id: 2, category: "Rustics", name: "2", nickname: "2" },
+let fakeOrders = [
+  {
+    id: 1,
+    name: "John Brown",
+    date: "2020-02-09",
+  },
+  {
+    id: 2,
+    name: "Jim Green",
+    date: "2020-02-09",
+  },
+  {
+    id: 3,
+    name: "Joe Black",
+    date: "2020-02-07",
+  },
+  {
+    id: 4,
+    name: "Addy Red",
+    date: "2020-02-02",
+  },
 ];
 
-export default class ProductList extends React.Component {
+export default class CartOrders extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,28 +49,28 @@ export default class ProductList extends React.Component {
   getList = () => {
     if (this._isMounted) {
       this.setState({
-        list: fakeProducts,
+        list: fakeOrders,
       });
     }
   };
 
-  deleteProduct = (id) => {
+  deleteOrder = (id) => {
     let dataProps = {
       id: id,
     };
     confirm({
       title: "Are you sure you want to delete",
-      content: "If you press yes, the product will be delete permanently",
+      content: "If you press yes, the Order will be delete permanently",
       okText: "Yes",
       cancelText: "Cancel",
       icon: <ExclamationCircleOutlined />,
       onOk: () => {
-        const newProducts = fakeProducts.filter(function (product) {
-          return product.id != id;
+        const newOrders = fakeOrders.filter(function (order) {
+          return order.id != id;
         });
         message.success("Delete Successfully");
         this.setState({
-          list: newProducts,
+          list: newOrders,
         });
       },
     });
@@ -60,24 +78,17 @@ export default class ProductList extends React.Component {
 
   columns = [
     {
-      title: "Category",
-      dataIndex: "category",
+      title: "Purchase Order",
+      dataIndex: "id",
       sorter: {
-        compare: (a, b) => a.category - b.category,
+        compare: (a, b) => a.id.localeCompare(b.id),
       },
     },
     {
-      title: "Name",
-      dataIndex: "name",
+      title: "Date of Delivery",
+      dataIndex: "date",
       sorter: {
-        compare: (a, b) => a.name - b.name,
-      },
-    },
-    {
-      title: "Nickname",
-      dataIndex: "nickname",
-      sorter: {
-        compare: (a, b) => a.nickname - b.nickname,
+        compare: (a, b) => a.date.localeCompare(b.date),
       },
     },
     {
@@ -90,7 +101,7 @@ export default class ProductList extends React.Component {
           <Button
             type="primary"
             onClick={() => {
-              this.deleteCustomer(record.id);
+              this.deleteOrder(record.id);
             }}
           >
             Delete
@@ -100,8 +111,12 @@ export default class ProductList extends React.Component {
     },
   ];
 
+  onChange(pagination, filters, sorter, extra) {
+    console.log("params", pagination, filters, sorter, extra);
+  }
   render() {
     let { list } = this.state;
+    // console.log(this.state.list);
     return <Table columns={this.columns} dataSource={list} />;
   }
 }

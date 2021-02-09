@@ -1,17 +1,17 @@
 import React from "react";
-import { List, Button, Modal, message, Table, Space } from "antd";
+import { List, Button, Row, Col, Modal, message, Table, Space } from "antd";
 import ReactDOM from "react-dom";
 
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
 const { confirm } = Modal;
 
-let fakeProducts = [
-  { id: 1, category: "Pastries", name: "1", nickname: "1" },
-  { id: 2, category: "Rustics", name: "2", nickname: "2" },
+let fakeCustomers = [
+  { id: 1, name: "11", nickname: "1" },
+  { id: 2, name: "22", nickname: "2" },
 ];
 
-export default class ProductList extends React.Component {
+export default class CustomerList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,46 +31,43 @@ export default class ProductList extends React.Component {
   getList = () => {
     if (this._isMounted) {
       this.setState({
-        list: fakeProducts,
+        list: fakeCustomers,
       });
     }
   };
 
-  deleteProduct = (id) => {
+  deleteCustomer = (id) => {
     let dataProps = {
       id: id,
     };
     confirm({
       title: "Are you sure you want to delete",
-      content: "If you press yes, the product will be delete permanently",
+      content: "If you press yes, the customer will be delete permanently",
       okText: "Yes",
       cancelText: "Cancel",
       icon: <ExclamationCircleOutlined />,
       onOk: () => {
-        const newProducts = fakeProducts.filter(function (product) {
-          return product.id != id;
+        const newCustomers = fakeCustomers.filter(function (cus) {
+          return cus.id != id;
         });
         message.success("Delete Successfully");
         this.setState({
-          list: newProducts,
+          list: newCustomers,
         });
       },
     });
   };
 
+  editCustomer = (id) => {
+    this.props.history.push('/admin/customer/edit/' + id);
+  };
+
   columns = [
-    {
-      title: "Category",
-      dataIndex: "category",
-      sorter: {
-        compare: (a, b) => a.category - b.category,
-      },
-    },
     {
       title: "Name",
       dataIndex: "name",
       sorter: {
-        compare: (a, b) => a.name - b.name,
+        compare: (a, b) => a.name.localeCompare(b.name),
       },
     },
     {
@@ -86,7 +83,14 @@ export default class ProductList extends React.Component {
       dataIndex: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button type="primary">Edit</Button>
+          <Button
+            type="primary"
+            onClick={() => {
+              this.editCustomer(record.id);
+            }}
+          >
+            Edit
+          </Button>
           <Button
             type="primary"
             onClick={() => {
