@@ -10,26 +10,26 @@ let fakeOrders = [
   {
     id: 1,
     name: "John Brown",
-    date: "2020-02-09"
+    date: "2020-02-09",
   },
   {
     id: 2,
     name: "Jim Green",
-    date: "2020-02-09"
+    date: "2020-02-09",
   },
   {
     id: 3,
     name: "Joe Black",
-    date: "2020-02-07"
+    date: "2020-02-07",
   },
   {
     id: 4,
     name: "Addy Red",
-    date: "2020-02-02"
+    date: "2020-02-02",
   },
 ];
 
-export default class StandingOrders extends React.Component {
+export default class StandingOrdersList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,17 +64,20 @@ export default class StandingOrders extends React.Component {
       okText: "Yes",
       cancelText: "Cancel",
       icon: <ExclamationCircleOutlined />,
-      onOk:() => {
-        const newOrders = fakeOrders.filter(function(order){
-          return order.id!=id;
+      onOk: () => {
+        const newOrders = fakeOrders.filter(function (order) {
+          return order.id != id;
         });
         message.success("Delete Successfully");
         this.setState({
           list: newOrders,
         });
-        
       },
     });
+  };
+
+  editOrder = (id) => {
+    this.props.history.push("/admin/standing-order/edit/" + id);
   };
 
   columns = [
@@ -82,14 +85,14 @@ export default class StandingOrders extends React.Component {
       title: "Name",
       dataIndex: "name",
       sorter: {
-        compare: (a, b) => a.name.localeCompare(b.name)
+        compare: (a, b) => a.name.localeCompare(b.name),
       },
     },
     {
       title: "Next Order",
       dataIndex: "date",
       sorter: {
-        compare: (a, b) => a.date.localeCompare(b.date)
+        compare: (a, b) => a.date.localeCompare(b.date),
       },
     },
     {
@@ -98,7 +101,14 @@ export default class StandingOrders extends React.Component {
       dataIndex: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button type="primary">Edit</Button>
+          <Button
+            type="primary"
+            onClick={() => {
+              this.editOrder(record.id);
+            }}
+          >
+            Edit
+          </Button>
           <Button
             type="primary"
             onClick={() => {
@@ -116,14 +126,8 @@ export default class StandingOrders extends React.Component {
     console.log("params", pagination, filters, sorter, extra);
   }
   render() {
-    let {list} = this.state;
+    let { list } = this.state;
     // console.log(this.state.list);
-    return (
-      <Table
-        columns={this.columns}
-        dataSource={list}
-      />
-    );
+    return <Table columns={this.columns} dataSource={list} />;
   }
 }
-

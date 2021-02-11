@@ -1,8 +1,6 @@
-import React from "react";
-import { List, Button, Modal, message, Table, Space } from "antd";
-import ReactDOM from "react-dom";
-
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { Button, message, Modal, Space, Table } from "antd";
+import React from "react";
 import "../styles/product-list.css";
 const { confirm } = Modal;
 
@@ -58,6 +56,10 @@ export default class ProductList extends React.Component {
     });
   };
 
+  editProduct= (id) => {
+    this.props.history.push("/admin/product/edit/" + id);
+  };
+
   columns = [
     {
       title: "Category",
@@ -86,7 +88,14 @@ export default class ProductList extends React.Component {
       dataIndex: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button type="primary">Edit</Button>
+          <Button
+            type="primary"
+            onClick={() => {
+              this.editProduct(record.id);
+            }}
+          >
+            Edit
+          </Button>
           <Button
             type="primary"
             onClick={() => {

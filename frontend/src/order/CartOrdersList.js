@@ -29,7 +29,7 @@ let fakeOrders = [
   },
 ];
 
-export default class CartOrders extends React.Component {
+export default class CartOrdersList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -76,12 +76,15 @@ export default class CartOrders extends React.Component {
     });
   };
 
+  editOrder = (id) => {
+    this.props.history.push("/admin/standing-order/edit/" + id);
+  };
   columns = [
     {
       title: "Purchase Order",
       dataIndex: "id",
       sorter: {
-        compare: (a, b) => a.id.localeCompare(b.id),
+        compare: (a, b) => a.id - b.id,
       },
     },
     {
@@ -97,7 +100,14 @@ export default class CartOrders extends React.Component {
       dataIndex: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button type="primary">Edit</Button>
+          <Button
+            type="primary"
+            onClick={() => {
+              this.editOrder(record.id);
+            }}
+          >
+            Edit
+          </Button>
           <Button
             type="primary"
             onClick={() => {

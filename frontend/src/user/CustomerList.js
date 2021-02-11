@@ -1,9 +1,8 @@
-import React from "react";
-import { List, Button, Row, Col, Modal, message, Table, Space } from "antd";
-import ReactDOM from "react-dom";
-
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { Button, message, Modal, Space, Table } from "antd";
+import React from "react";
 import "../styles/product-list.css";
+
 const { confirm } = Modal;
 
 let fakeCustomers = [
@@ -59,7 +58,7 @@ export default class CustomerList extends React.Component {
   };
 
   editCustomer = (id) => {
-    this.props.history.push('/admin/customer/edit/' + id);
+    this.props.history.push("/admin/customer/edit/" + id);
   };
 
   columns = [

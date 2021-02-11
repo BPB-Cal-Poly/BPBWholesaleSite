@@ -9,11 +9,11 @@ import "antd/dist/antd.css";
 class App extends React.Component {
   render() {
     return (
-      <BrowserRouter>
-        <div class="grid-container">
-          <header class="row">
+      
+        <div className="grid-container">
+          <header className="row">
             <div>
-              <a class="brand" href="/">
+              <a className="brand" href="/">
                 Back Porch Bakery
               </a>
             </div>
@@ -24,13 +24,15 @@ class App extends React.Component {
             </div>
           </header>
           <main>
+          <BrowserRouter>
             <Route path="/admin" component={Admin}></Route>
             <Route path="/login" component={Login} exact></Route>
             <Route path="/" component={HomeScreen} exact></Route>
+            </BrowserRouter>
           </main>
-          <footer class="row center">This is footer</footer>
+          <footer className="row center">This is footer</footer>
         </div>
-      </BrowserRouter>
+      
     );
   }
 }

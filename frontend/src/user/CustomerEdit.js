@@ -6,7 +6,7 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
 const { confirm } = Modal;
 
-export default class EditCustomer extends React.Component {
+export default class CustomerEdit extends React.Component {
   constructor(props) {
     super(props);
 
