@@ -21,12 +21,12 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
 const { Option } = Select;
 const { TextArea } = Input;
-let fakeProducts = [
-  { id: 1, category: "Pastries", name: "Pastries A", nickname: "PA" },
-  { id: 2, category: "Pastries", name: "Pastries B", nickname: "PB" },
-  { id: 3, category: "Rustics", name: "Rustics A", nickname: "RA" },
-  { id: 4, category: "Rustics", name: "Rustics B", nickname: "RB" },
-];
+// let fakeProducts = [
+//   { id: 1, category: "Pastries", name: "Pastries A", nickname: "PA" },
+//   { id: 2, category: "Pastries", name: "Pastries B", nickname: "PB" },
+//   { id: 3, category: "Rustics", name: "Rustics A", nickname: "RA" },
+//   { id: 4, category: "Rustics", name: "Rustics B", nickname: "RB" },
+// ];
 let fakeCategories = [
   { id: 1, name: "Pastries" },
   { id: 2, name: "Rustics" },
@@ -43,7 +43,7 @@ export default class ProductAdd extends React.Component {
       nickname: "",
       description: "",
       category: "Pastries",
-      picksize: "",
+      packsize: "",
       dough: "Baguette",
       where: "SLO",
       when: "",
@@ -64,6 +64,7 @@ export default class ProductAdd extends React.Component {
 
   getList = () => {
     if (this._isMounted) {
+      let fakeProducts = this.props.fakeProducts;
       this.setState({
         list: fakeProducts,
         categories: fakeCategories,
@@ -141,7 +142,29 @@ export default class ProductAdd extends React.Component {
     this.setState({
       modelVisible:false,
     });
-    this.props.history.push('/admin/product/list')
+    let newProduct = {
+      'id':this.state.id,
+      'name':this.state.name,
+      'nickname':this.state.nickname,
+      'description':this.state.description,
+      'category':this.state.category,
+      'packsize':this.state.packsize,
+      'dough':this.state.dough,
+      'where':this.state.where,
+      'when':this.state.when,
+      'price':this.state.price,
+      'weight':this.state.weight,
+      'cutoff':this.state.cutoff
+    }
+    let newList = this.state.list;
+    newList.push(newProduct);
+    this.setState({
+      list:newList,
+    });
+    this.props.onListChange(this.state.list);
+    
+    
+    this.props.history.push('/admin/product/list');
   }
 
   render() {
@@ -151,7 +174,6 @@ export default class ProductAdd extends React.Component {
         span: 3,
       },
     };
-    console.log(this.state);
     return (
       <div className="customer-layout">
         <Card>
@@ -243,7 +265,7 @@ export default class ProductAdd extends React.Component {
                 <Option key="Split">Split</Option>
               </Select>
             </Form.Item>
-            <Form.Item label="When to">
+            <Form.Item label="When to Bake">
               <InputNumber
                 min={0}
                 style={{ width: 120 }}

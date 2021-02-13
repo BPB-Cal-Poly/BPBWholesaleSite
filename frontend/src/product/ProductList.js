@@ -4,18 +4,17 @@ import React from "react";
 import "../styles/product-list.css";
 const { confirm } = Modal;
 
-let fakeProducts = [
-  { id: 1, category: "Pastries", name: "1", nickname: "1" },
-  { id: 2, category: "Rustics", name: "2", nickname: "2" },
-];
+
 
 export default class ProductList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       list: [],
+      expandedRowKeys: [],
     };
   }
+  
 
   componentDidMount() {
     this._isMounted = true;
@@ -28,6 +27,7 @@ export default class ProductList extends React.Component {
 
   getList = () => {
     if (this._isMounted) {
+      let fakeProducts = this.props.fakeProducts;
       this.setState({
         list: fakeProducts,
       });
@@ -45,7 +45,7 @@ export default class ProductList extends React.Component {
       cancelText: "Cancel",
       icon: <ExclamationCircleOutlined />,
       onOk: () => {
-        const newProducts = fakeProducts.filter(function (product) {
+        const newProducts = this.state.list.filter(function (product) {
           return product.id != id;
         });
         message.success("Delete Successfully");
@@ -65,26 +65,42 @@ export default class ProductList extends React.Component {
       title: "Category",
       dataIndex: "category",
       sorter: {
-        compare: (a, b) => a.category - b.category,
+        compare: (a, b) => a.category.localeCompare(b.category),
       },
     },
     {
       title: "Name",
       dataIndex: "name",
       sorter: {
-        compare: (a, b) => a.name - b.name,
+        compare: (a, b) => a.name.localeCompare(b.name),
       },
     },
     {
-      title: "Nickname",
-      dataIndex: "nickname",
+      title: "When to Bake",
+      dataIndex: "when",
       sorter: {
-        compare: (a, b) => a.nickname - b.nickname,
+        compare: (a, b) => a.when - b.when,
       },
     },
+    {
+      title: "Price",
+      dataIndex: "price",
+      sorter: {
+        compare: (a, b) => a.price - b.price,
+      },
+    },
+    {
+      title: "Weight",
+      dataIndex: "weight",
+      sorter: {
+        compare: (a, b) => a.weight - b.weight,
+      },
+    },
+
+
     {
       title: "Action",
-      id: "action",
+      key: 'x',
       dataIndex: "action",
       render: (text, record) => (
         <Space size="middle">
@@ -99,7 +115,7 @@ export default class ProductList extends React.Component {
           <Button
             type="primary"
             onClick={() => {
-              this.deleteCustomer(record.id);
+              this.deleteProduct(record.id);
             }}
           >
             Delete
@@ -109,8 +125,76 @@ export default class ProductList extends React.Component {
     },
   ];
 
+  expandedRowRender = (record) => {
+    const columns = [
+      {
+        title: "Nickname",
+        dataIndex: "nickname",
+        fixed: 'left',
+        sorter: {
+          compare: (a, b) => a.nickname.localeCompare(b.nickname),
+        },
+      },
+      {
+        title: "Pack Size",
+        dataIndex: "packsize",
+        sorter: {
+          compare: (a, b) => a.packsize - b.packsize,
+        },
+      },
+      {
+        title: "When to Bake",
+        dataIndex: "when",
+        sorter: {
+          compare: (a, b) => a.when - b.when,
+        },
+      },
+      {
+        title: "Dough",
+        dataIndex: "dough",
+        sorter: {
+          compare: (a, b) => a.dough.localeCompare(b.dough),
+        },
+      },
+      {
+        title: "Baked Where",
+        dataIndex: "where",
+        sorter: {
+          compare: (a, b) => a.where.localeCompare(b.where),
+        },
+      },
+
+      {
+        title: "Cutoff",
+        dataIndex: "cutoff",
+        sorter: {
+          compare: (a, b) => a.cutoff - b.cutoff,
+        },
+      },
+      {
+        title: "Description",
+        dataIndex: "description",
+        sorter: {
+          compare: (a, b) => a.description.localeCompare(b.description),
+        },
+      },
+    ];
+
+    const list = [];
+    list[0] = this.state.list[record.id-1];
+    return <Table columns={columns} dataSource={list} pagination={false} size="small" scroll={{ x: 1000 }} />;
+  };
+
+
+
   render() {
     let { list } = this.state;
-    return <Table columns={this.columns} dataSource={list} />;
+    return <Table columns={this.columns} 
+
+    expandedRowRender={ this.expandedRowRender }
+    dataSource={list} sticky={true}     
+    rowKey='id'
+    />
+
   }
 }

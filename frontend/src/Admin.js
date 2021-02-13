@@ -24,11 +24,41 @@ import ProductAdd from "./product/ProductAdd";
 
 const { Content, Sider } = Layout;
 const { SubMenu } = Menu;
+
+
 export default class Admin extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      fakeProducts : [
+        { id: 1, name: "A1", nickname: "a1", 
+        description : "this is desciption for A1 this is desciption for A1 this is desciption for A1 this is desciption for A1 this is desciption for A1",
+        category: "Pastries", packsize : 10, dough:"Baguette", 
+        where: "SLO", when: 1, price: 3, weight: 10, cutoff: 2},
+        { id: 2, name: "A2", nickname: "a2", 
+        description : "this is desciption for A2",
+        category: "Rustics", packsize : 8, dough:"Croissant", 
+        where: "SLO", when: 2, price: 10, weight: 8, cutoff: 0},
+        { id: 3, name: "B1", nickname: "b1", 
+        description : "this is desciption for B1",
+        category: "Pastries", packsize : 10, dough:"Baguette", 
+        where: "SLO", when: 2, price: 4, weight: 11, cutoff: 4},
+        { id: 4, name: "B2", nickname: "b2", 
+        description : "this is desciption for B2",
+        category: "Rustics", packsize : 8, dough:"Croissant", 
+        where: "SLO", when: 0, price: 3, weight: 9, cutoff: 5},
+      ]
+    };
+
+  }
+  handleListChange = fakeProducts => {
+    this.setState({ fakeProducts })
   }
 
+  
+
+
+  
   render() {
     let pathnames = this.props.location.pathname.split("/");
     let category = pathnames[2];
@@ -144,13 +174,26 @@ export default class Admin extends React.Component {
             }}
           >
             <Switch>
-              <Route path="/admin/product/list" exact component={ProductList} />
+              <Route path="/admin/product/list" exact 
+                render={(props) => (
+                  <ProductList {...props} fakeProducts={this.state.fakeProducts}/>
+                )}
+              // component={ProductList } 
+              />
               <Route
                 path="/admin/product/edit/:id"
                 exact
-                component={ProductEdit}
+                render={(props) => (
+                  <ProductEdit {...props} fakeProducts={this.state.fakeProducts} onListChange={this.handleListChange}/>
+                )}
+                // component={ProductEdit}
               />
-              <Route path="/admin/product/add" exact component={ProductAdd} />
+              <Route path="/admin/product/add" exact 
+              render={(props) => (
+                <ProductAdd {...props} fakeProducts={this.state.fakeProducts} onListChange={this.handleListChange}/>
+              )}
+              // component={ProductAdd} 
+              />
               <Route
                 path="/admin/customer/list"
                 exact
