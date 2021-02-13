@@ -243,7 +243,7 @@ export default class ProductAdd extends React.Component {
                 <Option key="Split">Split</Option>
               </Select>
             </Form.Item>
-            <Form.Item label="When to Bake">
+            <Form.Item label="When to">
               <InputNumber
                 min={0}
                 style={{ width: 120 }}
