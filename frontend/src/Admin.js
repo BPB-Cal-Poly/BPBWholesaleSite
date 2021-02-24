@@ -14,6 +14,7 @@ import { Redirect, Route, Switch, Link } from "react-router-dom";
 import ProductList from "./product/ProductList";
 import ProductEdit from "./product/ProductEdit";
 import CustomerList from "./user/CustomerList";
+import BusinessList from "./user/BusinessList";
 import CustomerEdit from "./user/CustomerEdit";
 import CustomerAdd from "./user/CustomerAdd";
 import StandingOrdersList from "./order/StandingOrdersList";
@@ -25,48 +26,106 @@ import ProductAdd from "./product/ProductAdd";
 const { Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
-
 export default class Admin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fakeProducts : [
-        { id: 1, name: "A1", nickname: "a1", 
-        description : "this is desciption for A1 this is desciption for A1 this is desciption for A1 this is desciption for A1 this is desciption for A1",
-        category: "Pastries", packsize : 10, dough:"Baguette", 
-        where: "SLO", when: 1, price: 3, weight: 10, cutoff: 2},
-        { id: 2, name: "A2", nickname: "a2", 
-        description : "this is desciption for A2",
-        category: "Rustics", packsize : 8, dough:"Croissant", 
-        where: "SLO", when: 2, price: 10, weight: 8, cutoff: 0},
-        { id: 3, name: "B1", nickname: "b1", 
-        description : "this is desciption for B1",
-        category: "Pastries", packsize : 10, dough:"Baguette", 
-        where: "SLO", when: 2, price: 4, weight: 11, cutoff: 4},
-        { id: 4, name: "B2", nickname: "b2", 
-        description : "this is desciption for B2",
-        category: "Rustics", packsize : 8, dough:"Croissant", 
-        where: "SLO", when: 0, price: 3, weight: 9, cutoff: 5},
-      ]
+      fakeProducts: [
+        {
+          id: 1,
+          name: "A1",
+          nickname: "a1",
+          description:
+            "this is desciption for A1 this is desciption for A1 this is desciption for A1 this is desciption for A1 this is desciption for A1",
+          category: "Pastries",
+          packsize: 10,
+          dough: "Baguette",
+          where: "SLO",
+          when: 1,
+          price: 3,
+          weight: 10,
+          cutoff: 2,
+        },
+        {
+          id: 2,
+          name: "A2",
+          nickname: "a2",
+          description: "this is desciption for A2",
+          category: "Rustics",
+          packsize: 8,
+          dough: "Croissant",
+          where: "SLO",
+          when: 2,
+          price: 10,
+          weight: 8,
+          cutoff: 0,
+        },
+        {
+          id: 3,
+          name: "B1",
+          nickname: "b1",
+          description: "this is desciption for B1",
+          category: "Pastries",
+          packsize: 10,
+          dough: "Baguette",
+          where: "SLO",
+          when: 2,
+          price: 4,
+          weight: 11,
+          cutoff: 4,
+        },
+        {
+          id: 4,
+          name: "B2",
+          nickname: "b2",
+          description: "this is desciption for B2",
+          category: "Rustics",
+          packsize: 8,
+          dough: "Croissant",
+          where: "SLO",
+          when: 0,
+          price: 3,
+          weight: 9,
+          cutoff: 5,
+        },
+      ],
+      fakeCustomers: [
+        {
+          id: 1,
+          firstName: "first1",
+          lastName: "last1",
+          nickname: "1",
+          business: "Business 1",
+          permission: "full",
+        },
+        {
+          id: 2,
+          firstName: "first2",
+          lastName: "last2",
+          nickname: "2",
+          business: "Business 2",
+          permission: "order",
+        },
+      ],
     };
-
   }
-  handleListChange = fakeProducts => {
-    this.setState({ fakeProducts })
-  }
+  handleProductChange = (fakeProducts) => {
+    this.setState({ fakeProducts });
+  };
 
-  
+  handleUserChange = (fakeCustomers) => {
+    this.setState({ fakeCustomers });
+  };
 
-
-  
   render() {
     let pathnames = this.props.location.pathname.split("/");
     let category = pathnames[2];
-    var sub_category, id;
+    var sub_category, id, customer_category;
 
     switch (category) {
       case "customer":
         category = "Customer";
+        customer_category = pathnames[3];
         break;
       case "product":
         category = "Product";
@@ -82,6 +141,9 @@ export default class Admin extends React.Component {
     }
     if (pathnames.length > 2) {
       sub_category = pathnames[3];
+      if (category == "Customer") {
+        sub_category = pathnames[4];
+      }
       switch (sub_category) {
         case "list":
           sub_category = "List";
@@ -108,42 +170,29 @@ export default class Admin extends React.Component {
             <Menu.Item key="/main" icon={<DesktopOutlined />}>
               <Link to="/admin/main">Admin</Link>
             </Menu.Item>
-            <SubMenu
+            <Menu.Item
               key="/cartOrders"
               icon={<BarsOutlined />}
               title="Cart Orders"
             >
-              <Menu.Item key="cartOrderList">
-                <Link to="/admin/cart-order/list">View/Edit Order List</Link>
-              </Menu.Item>
-              <Menu.Item key="cartOrderAdd">Add Cart Order</Menu.Item>
-            </SubMenu>
-            <SubMenu
+              <Link to="/admin/cart-order/list">Cart Orders</Link>
+            </Menu.Item>
+            <Menu.Item
               key="/standingOrders"
               icon={<DatabaseOutlined />}
               title="Standing Orders"
             >
-              <Menu.Item key="standingOrderList">
-                <Link to="/admin/standing-order/list">
-                  View/Edit Order List
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="standingOrderAdd">Add Standing Order</Menu.Item>
-            </SubMenu>
-            <SubMenu key="/products" icon={<ShopOutlined />} title="Products">
-              <Menu.Item key="productList">
-                <Link to="/admin/product/list">View/Edit Product List</Link>
-              </Menu.Item>
-              <Menu.Item key="productAdd">
-                <Link to="/admin/product/add">Add Product</Link>
-              </Menu.Item>
-            </SubMenu>
+              <Link to="/admin/standing-order/list">Standing Orders</Link>
+            </Menu.Item>
+            <Menu.Item key="/products" icon={<ShopOutlined />} title="Products">
+              <Link to="/admin/product/list">Products</Link>
+            </Menu.Item>
             <SubMenu key="/customers" icon={<UserOutlined />} title="Customers">
-              <Menu.Item key="customerList">
-                <Link to="/admin/customer/list">View/Edit Customer List</Link>
+              <Menu.Item key="userList">
+                <Link to="/admin/customer/user/list">Users</Link>
               </Menu.Item>
-              <Menu.Item key="customerAdd">
-                <Link to="/admin/customer/add">Add Customer</Link>
+              <Menu.Item key="businessList">
+                <Link to="/admin/customer/business/list">Businesses</Link>
               </Menu.Item>
             </SubMenu>
             <SubMenu
@@ -161,6 +210,9 @@ export default class Admin extends React.Component {
             <Breadcrumb.Item>Admin</Breadcrumb.Item>
             <Breadcrumb.Item>{category}</Breadcrumb.Item>
             <Breadcrumb.Item>
+              {customer_category ? customer_category : null}
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
               {sub_category ? sub_category : null}
             </Breadcrumb.Item>
             <Breadcrumb.Item>{id ? id : null}</Breadcrumb.Item>
@@ -174,41 +226,91 @@ export default class Admin extends React.Component {
             }}
           >
             <Switch>
-              <Route path="/admin/product/list" exact 
+              <Route
+                path="/admin/product/list"
+                exact
                 render={(props) => (
-                  <ProductList {...props} fakeProducts={this.state.fakeProducts}/>
+                  <ProductList
+                    {...props}
+                    fakeProducts={this.state.fakeProducts}
+                  />
                 )}
-              // component={ProductList } 
               />
               <Route
                 path="/admin/product/edit/:id"
                 exact
                 render={(props) => (
-                  <ProductEdit {...props} fakeProducts={this.state.fakeProducts} onListChange={this.handleListChange}/>
+                  <ProductEdit
+                    {...props}
+                    fakeProducts={this.state.fakeProducts}
+                    onListChange={this.handleProductChange}
+                  />
                 )}
-                // component={ProductEdit}
-              />
-              <Route path="/admin/product/add" exact 
-              render={(props) => (
-                <ProductAdd {...props} fakeProducts={this.state.fakeProducts} onListChange={this.handleListChange}/>
-              )}
-              // component={ProductAdd} 
               />
               <Route
-                path="/admin/customer/list"
+                path="/admin/product/add"
                 exact
-                component={CustomerList}
+                render={(props) => (
+                  <ProductAdd
+                    {...props}
+                    fakeProducts={this.state.fakeProducts}
+                    onListChange={this.handleProductChange}
+                  />
+                )}
+              />
+              <Route
+                path="/admin/customer/user/list"
+                exact
+                render={(props) => (
+                  <CustomerList
+                    {...props}
+                    fakeCustomers={this.state.fakeCustomers}
+                  />
+                )}
+              />
+              <Route
+                path="/admin/customer/business/list"
+                exact
+                render={(props) => (
+                  <BusinessList
+                    {...props}
+                    fakeCustomers={this.state.fakeCustomers}
+                  />
+                )}
               />
               <Route
                 path="/admin/customer/edit/:id"
                 exact
-                component={CustomerEdit}
+                render={(props) => (
+                  <CustomerEdit
+                    {...props}
+                    fakeCustomers={this.state.fakeCustomers}
+                    onListChange={this.handleUserChange}
+                  />
+                )}
               />
-              <Route path="/admin/customer/add" exact component={CustomerAdd} />
+              <Route
+                path="/admin/customer/user/add"
+                exact
+                render={(props) => (
+                  <CustomerAdd
+                    {...props}
+                    fakeCustomers={this.state.fakeCustomers}
+                    onListChange={this.handleUserChange }
+                  />
+                )}
+              />
               <Route
                 path="/admin/standing-order/list"
                 exact
-                component={StandingOrdersList}
+                render={(props) => (
+                  <StandingOrdersList
+                    {...props}
+                    fakeCustomers={this.state.fakeCustomers}
+                    onListChange={this.handleListChange}
+                  />
+                )}
+                // component={StandingOrdersList}
               />
               <Route
                 path="/admin/standing-order/edit"

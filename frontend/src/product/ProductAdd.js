@@ -21,12 +21,7 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
 const { Option } = Select;
 const { TextArea } = Input;
-// let fakeProducts = [
-//   { id: 1, category: "Pastries", name: "Pastries A", nickname: "PA" },
-//   { id: 2, category: "Pastries", name: "Pastries B", nickname: "PB" },
-//   { id: 3, category: "Rustics", name: "Rustics A", nickname: "RA" },
-//   { id: 4, category: "Rustics", name: "Rustics B", nickname: "RB" },
-// ];
+
 let fakeCategories = [
   { id: 1, name: "Pastries" },
   { id: 2, name: "Rustics" },
@@ -143,7 +138,7 @@ export default class ProductAdd extends React.Component {
       modelVisible:false,
     });
     let newProduct = {
-      'id':this.state.id,
+      'id':this.state.list.length+1,
       'name':this.state.name,
       'nickname':this.state.nickname,
       'description':this.state.description,

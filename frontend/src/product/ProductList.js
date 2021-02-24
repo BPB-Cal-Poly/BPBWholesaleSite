@@ -1,10 +1,9 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Button, message, Modal, Space, Table } from "antd";
+import { Link } from "react-router-dom";
 import React from "react";
 import "../styles/product-list.css";
 const { confirm } = Modal;
-
-
 
 export default class ProductList extends React.Component {
   constructor(props) {
@@ -14,7 +13,6 @@ export default class ProductList extends React.Component {
       expandedRowKeys: [],
     };
   }
-  
 
   componentDidMount() {
     this._isMounted = true;
@@ -56,7 +54,7 @@ export default class ProductList extends React.Component {
     });
   };
 
-  editProduct= (id) => {
+  editProduct = (id) => {
     this.props.history.push("/admin/product/edit/" + id);
   };
 
@@ -97,10 +95,9 @@ export default class ProductList extends React.Component {
       },
     },
 
-
     {
       title: "Action",
-      key: 'x',
+      key: "x",
       dataIndex: "action",
       render: (text, record) => (
         <Space size="middle">
@@ -130,7 +127,7 @@ export default class ProductList extends React.Component {
       {
         title: "Nickname",
         dataIndex: "nickname",
-        fixed: 'left',
+        fixed: "left",
         sorter: {
           compare: (a, b) => a.nickname.localeCompare(b.nickname),
         },
@@ -181,20 +178,37 @@ export default class ProductList extends React.Component {
     ];
 
     const list = [];
-    list[0] = this.state.list[record.id-1];
-    return <Table columns={columns} dataSource={list} pagination={false} size="small" scroll={{ x: 1000 }} />;
+    list[0] = this.state.list[record.id - 1];
+    return (
+      <Table
+        columns={columns}
+        dataSource={list}
+        pagination={false}
+        size="small"
+        scroll={{ x: 1000 }}
+      />
+    );
   };
-
-
 
   render() {
     let { list } = this.state;
-    return <Table columns={this.columns} 
-
-    expandedRowRender={ this.expandedRowRender }
-    dataSource={list} sticky={true}     
-    rowKey='id'
-    />
-
+    return (
+      <div>
+        <Table
+          columns={this.columns}
+          expandedRowRender={this.expandedRowRender}
+          dataSource={list}
+          sticky={true}
+          rowKey="id"
+        />
+        <div className="add-button">
+          <Button
+            type="primary"
+          >
+            <Link to="/admin/product/add">Add Product</Link>
+          </Button>
+          </div>
+      </div>
+    );
   }
 }

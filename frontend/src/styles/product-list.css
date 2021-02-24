@@ -1,3 +1,8 @@
 .list-div{
     width: 100%;
 }
+
+.add-button{
+  display:flex;
+  justify-content: flex-end;
+}

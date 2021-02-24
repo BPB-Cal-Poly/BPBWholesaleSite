@@ -6,7 +6,8 @@ import "../styles/product-list.css";
 
 const { confirm } = Modal;
 
-export default class CustomerList extends React.Component {
+
+export default class BusinessList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

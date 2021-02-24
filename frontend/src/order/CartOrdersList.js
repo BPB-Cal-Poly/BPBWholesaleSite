@@ -1,5 +1,6 @@
 import React from "react";
 import { List, Button, Modal, message, Table, Space } from "antd";
+import { Link } from "react-router-dom";
 import ReactDOM from "react-dom";
 
 import { ExclamationCircleOutlined } from "@ant-design/icons";
@@ -126,7 +127,17 @@ export default class CartOrdersList extends React.Component {
   }
   render() {
     let { list } = this.state;
-    // console.log(this.state.list);
-    return <Table columns={this.columns} dataSource={list} />;
+    return (
+      <div>
+        <Table columns={this.columns} dataSource={list} />;
+        <div className="add-button">
+          <Button
+            type="primary"
+          >
+            <Link to="/admin/cart-order/add">Add Cart Order</Link>
+          </Button>
+          </div>
+      </div>
+    );
   }
 }
