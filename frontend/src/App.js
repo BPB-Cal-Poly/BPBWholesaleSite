@@ -3,8 +3,10 @@ import { BrowserRouter, Route } from "react-router-dom";
 import HomeScreen from "./screens/HomeScreen";
 import Login from "./user/Login";
 import Admin from "./Admin";
+import Amplify, { Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
 import "antd/dist/antd.css";
-
+Amplify.configure(awsconfig);
 
 class App extends React.Component {
   render() {

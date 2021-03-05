@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/ui-react": "^1.0.3",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
     "antd": "^4.10.3",
+    "aws-amplify": "^3.3.22",
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "copy-webpack-plugin": "^5.0.5",

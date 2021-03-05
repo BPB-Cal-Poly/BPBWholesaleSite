@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bpboregon-dev-120913-authRole",
+      "UnauthRoleArn": "arn:aws:iam::548183285548:role/amplify-bpboregon-dev-120913-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::548183285548:role/amplify-bpboregon-dev-120913-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-bpboregon-dev-120913-deployment",
+      "UnauthRoleName": "amplify-bpboregon-dev-120913-unauthRole",
+      "StackName": "amplify-bpboregon-dev-120913",
+      "StackId": "arn:aws:cloudformation:us-west-2:548183285548:stack/amplify-bpboregon-dev-120913/d4088950-7a00-11eb-93cd-060e4fc6c1d9",
+      "AmplifyAppId": "d35nb3d4s3s8vs"
+    },
+    "categories": {
+      "auth": {
+        "cognito5f1489c1": {}
+      },
+      "function": {
+        "productLambda": {
+          "deploymentBucketName": "amplify-bpboregon-dev-120913-deployment",
+          "s3Key": "amplify-builds/productLambda-4f30566557383447316c-build.zip"
+        }
+      }
+    }
+  }
+}
