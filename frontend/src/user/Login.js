@@ -105,7 +105,8 @@ export default class Login extends React.Component {
             block
             onClick={this.checkLogin}
           >
-            Sign up
+            
+            <a href="/signup">Sign up</a>
           </Button>
         </Card>
       </div>
