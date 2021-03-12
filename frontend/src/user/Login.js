@@ -96,6 +96,17 @@ export default class Login extends React.Component {
           >
             Login in
           </Button>
+          <br />
+          <br />
+          <Button
+            type="primary"
+            
+            style={{ backgroundColor: "#642626", borderColor: "#642626", width: '100px', float: 'right' }}
+            block
+            onClick={this.checkLogin}
+          >
+            Sign up
+          </Button>
         </Card>
       </div>
     );
