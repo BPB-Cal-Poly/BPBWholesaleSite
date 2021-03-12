@@ -16,9 +16,9 @@
         "cognito5f1489c1": {}
       },
       "function": {
-        "productLambda": {
+        "user": {
           "deploymentBucketName": "amplify-bpboregon-dev-120913-deployment",
-          "s3Key": "amplify-builds/productLambda-4f30566557383447316c-build.zip"
+          "s3Key": "amplify-builds/user-463634664a4930373543-build.zip"
         }
       }
     }

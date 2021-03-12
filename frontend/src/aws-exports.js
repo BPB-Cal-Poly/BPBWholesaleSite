@@ -10,8 +10,15 @@ const awsmobile = {
     "oauth": {},
     "aws_cloud_logic_custom": [
         {
-            "name": "productApi",
-            "endpoint": "https://qk562prhsi.execute-api.us-west-2.amazonaws.com/dev",
+            "name": "user",
+            "endpoint": "https://3p6dbizux5.execute-api.us-west-2.amazonaws.com/dev",
+            "region": "us-west-2"
+        }
+    ],
+    "aws_dynamodb_all_tables_region": "us-west-2",
+    "aws_dynamodb_table_schemas": [
+        {
+            "tableName": "users-dev",
             "region": "us-west-2"
         }
     ]

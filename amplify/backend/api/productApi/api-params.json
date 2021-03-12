@@ -1,0 +1,45 @@
+{
+    "paths": [
+        {
+            "name": "/product",
+            "lambdaFunction": "productLambda",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/GET"
+                ]
+            },
+            "policyResourceName": "/product"
+        }
+    ],
+    "resourceName": "productApi",
+    "apiName": "productApi",
+    "functionArns": [
+        {
+            "lambdaFunction": "productLambda"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 1,
+        "authRoleName": "amplify-bpboregon-dev-120913-authRole",
+        "unAuthRoleName": "amplify-bpboregon-dev-120913-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "productLambda",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

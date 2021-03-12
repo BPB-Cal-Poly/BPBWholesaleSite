@@ -1,7 +1,8 @@
 import React from "react";
 import { Card, Input, message, Button, Menu, Breadcrumb } from "antd";
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
-import { withAuthenticator } from "@aws-amplify/ui-react";
+import ApiUrl from "../config/api_url";
+import ReactDOM from "react-dom";
 import "../styles/login.css";
 import axios from "axios";
 export default class Login extends React.Component {
@@ -25,6 +26,23 @@ export default class Login extends React.Component {
       username: this.state.userName,
       password: this.state.password,
     };
+    axios({
+      method: "post",
+      url: ApiUrl.USER_LOGIN,
+      data: dataProps,
+    }).then((res) => {
+      console.log(res.data);
+      let data = res.data.data;
+      if (res.data.code == 0) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.id);
+        localStorage.setItem("username", data.username);
+        const { history } = this.props;
+        history.push({ pathname: "/admin" });
+      } else {
+        message.error("Password do not match");
+      }
+    });
   };
 
   setUserName = (name) => {

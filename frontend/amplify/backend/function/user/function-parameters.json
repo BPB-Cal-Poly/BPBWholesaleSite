@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "auth": {
+      "cognito5f1489c1": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "storage": {
+      "users": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

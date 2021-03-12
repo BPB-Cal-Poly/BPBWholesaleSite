@@ -1,0 +1,7 @@
+{
+    "tableName": "users",
+    "partitionKeyName": "id",
+    "partitionKeyType": "N",
+    "sortKeyName": "",
+    "sortKeyType": ""
+}
