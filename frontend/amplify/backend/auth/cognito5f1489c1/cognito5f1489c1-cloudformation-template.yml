@@ -9,6 +9,28 @@ Parameters:
     Type: String
 
   
+  
+  
+  functioncognito5f1489c1CustomMessageArn:
+    Type: String
+    Default: functioncognito5f1489c1CustomMessageArn
+  
+  functioncognito5f1489c1CustomMessageName:
+    Type: String
+    Default: functioncognito5f1489c1CustomMessageName
+  
+  
+  
+  functioncognito5f1489c1PostConfirmationArn:
+    Type: String
+    Default: functioncognito5f1489c1PostConfirmationArn
+  
+  functioncognito5f1489c1PostConfirmationName:
+    Type: String
+    Default: functioncognito5f1489c1PostConfirmationName
+  
+  
+  
 
     
   identityPoolName:
@@ -105,6 +127,58 @@ Parameters:
             
             
             
+  useDefault:
+    Type: String
+  
+            
+  
+  userPoolGroups:
+    Type: String
+            
+  
+  adminQueries:
+    Type: String
+            
+  triggers:
+    Type: String
+  
+            
+  
+  hostedUI:
+    Type: String
+            
+        
+  userPoolGroupList:
+    Type: CommaDelimitedList
+      
+  adminQueryGroup:
+    Type: String
+  
+            
+  serviceName:
+    Type: String
+  
+            
+  verificationBucketName:
+    Type: String
+  
+            
+      
+  parentStack:
+    Type: String
+        
+        
+  permissions:
+    Type: CommaDelimitedList
+      
+        
+  dependsOn:
+    Type: CommaDelimitedList
+      
+        
+  authProviders:
+    Type: CommaDelimitedList
+      
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
   
@@ -112,6 +186,27 @@ Conditions:
    
 
 Resources:
+  
+  CustomMessageConfirmationBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: "Retain"
+    Properties:
+      BucketName:  !If [ShouldNotCreateEnvResources, !Ref verificationBucketName, !Join ['',[!Ref verificationBucketName, '-', !Ref env]]]
+      AccessControl: "Private"
+      WebsiteConfiguration:
+        IndexDocument: "index.html"
+        ErrorDocument: "index.html"
+      CorsConfiguration:
+        CorsRules:
+          -
+            AllowedHeaders:
+              - "Authorization"
+              - "Content-Length"
+            AllowedMethods:
+              - "GET"
+            AllowedOrigins:
+              - "*"
+            MaxAge: 3000
   
   
   # BEGIN SNS ROLE RESOURCE
@@ -162,6 +257,21 @@ Resources:
         
       
       
+      LambdaConfig:
+        
+        
+          CustomMessage: !Ref functioncognito5f1489c1CustomMessageArn
+        
+        
+        
+        
+          PostConfirmation: !Ref functioncognito5f1489c1PostConfirmationArn
+        
+        
+        
+        
+        
+      
       
       AutoVerifiedAttributes: !Ref autoVerifiedAttributes
       
@@ -184,12 +294,77 @@ Resources:
         ExternalId: bpbore091bea0d_role_external_id
     
   
+  
+  
+  UserPoolCustomMessageLambdaInvokePermission:
+    Type: "AWS::Lambda::Permission"
+    DependsOn: UserPool
+    Properties:
+      Action: "lambda:invokeFunction"
+      Principal: "cognito-idp.amazonaws.com"
+      FunctionName: !Ref functioncognito5f1489c1CustomMessageName
+      SourceArn: !GetAtt UserPool.Arn
+  
+  
+  
+  
+  UserPoolPostConfirmationLambdaInvokePermission:
+    Type: "AWS::Lambda::Permission"
+    DependsOn: UserPool
+    Properties:
+      Action: "lambda:invokeFunction"
+      Principal: "cognito-idp.amazonaws.com"
+      FunctionName: !Ref functioncognito5f1489c1PostConfirmationName
+      SourceArn: !GetAtt UserPool.Arn
+  
+  
+  
+  
+  
+  # Updating lambda role with permissions to Cognito
+  
+  
+  cognito5f1489c1PostConfirmationAddToGroupCognito:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: cognito5f1489c1PostConfirmationAddToGroupCognito
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+            
+              - cognito-idp:AdminAddUserToGroup
+            
+              - cognito-idp:GetGroup
+            
+              - cognito-idp:CreateGroup
+            
+            
+            
+            Resource: !GetAtt
+            
+              - UserPool
+            
+              - Arn
+            
+            
+            
+
+      Roles:
+        - !Join ['',["cognito5f1489c1PostConfirmation", '-', !Ref env]]
+  
+  
+  
   UserPoolClientWeb:
   # Created provide application access to user pool
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
       ClientName: bpbore091bea0d_app_clientWeb
+      
+      ReadAttributes: !Ref userpoolClientReadAttributes
+      WriteAttributes: !Ref userpoolClientWriteAttributes
       
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
@@ -200,6 +375,9 @@ Resources:
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
       ClientName: bpbore091bea0d_app_client
+      
+      ReadAttributes: !Ref userpoolClientReadAttributes
+      WriteAttributes: !Ref userpoolClientWriteAttributes
       
       GenerateSecret: !Ref userpoolClientGenerateSecret
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
@@ -321,7 +499,7 @@ Resources:
   # Always created
     Type: AWS::Cognito::IdentityPool
     Properties:
-      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'bpboregon_identitypool_091bea0d', !Join ['',['bpboregon_identitypool_091bea0d', '__', !Ref env]]]
+      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'cognito5f1489c1_identitypool_d609d295', !Join ['',['cognito5f1489c1_identitypool_d609d295', '__', !Ref env]]]
       
       CognitoIdentityProviders:
         - ClientId:  !Ref UserPoolClient

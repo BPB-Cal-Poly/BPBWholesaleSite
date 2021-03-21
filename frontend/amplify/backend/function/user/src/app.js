@@ -31,8 +31,8 @@ if (process.env.ENV && process.env.ENV !== "NONE") {
 const userIdPresent = false; // TODO: update in case is required to use that definition
 const partitionKeyName = "id";
 const partitionKeyType = "N";
-const sortKeyName = "";
-const sortKeyType = "";
+const sortKeyName = "username";
+const sortKeyType = "S";
 const hasSortKey = sortKeyName !== "";
 const path = "/user";
 const UNAUTH = "UNAUTH";
@@ -117,7 +117,7 @@ app.get(path, function (req, res) {
  * HTTP Get method for get single object *
  *****************************************/
 
-app.get(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
+app.get(path + hashKeyPath, function (req, res) {
   var params = {};
   if (userIdPresent && req.apiGateway) {
     params[partitionKeyName] =
@@ -134,17 +134,17 @@ app.get(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
       res.json({ error: "Wrong column type " + err });
     }
   }
-  if (hasSortKey) {
-    try {
-      params[sortKeyName] = convertUrlType(
-        req.params[sortKeyName],
-        sortKeyType
-      );
-    } catch (err) {
-      res.statusCode = 500;
-      res.json({ error: "Wrong column type " + err });
-    }
-  }
+  // if (hasSortKey) {
+  //   try {
+  //     params[sortKeyName] = convertUrlType(
+  //       req.params[sortKeyName],
+  //       sortKeyType
+  //     );
+  //   } catch (err) {
+  //     res.statusCode = 500;
+  //     res.json({ error: "Wrong column type " + err });
+  //   }
+  // }
 
   let getItemParams = {
     TableName: tableName,
@@ -165,6 +165,41 @@ app.get(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
   });
 });
 
+app.get(path + sortKeyPath, function (req, res) {
+  var params = {};
+
+    if (hasSortKey) {
+      try {
+        params[sortKeyName] = convertUrlType(
+          req.params[sortKeyName],
+          sortKeyType
+        );
+      } catch (err) {
+        res.statusCode = 500;
+        res.json({ error: "Wrong column type " + err });
+      }
+    }
+
+
+
+  let getItemParams = {
+    TableName: tableName,
+    Key: params,
+  };
+
+  dynamodb.get(getItemParams, (err, data) => {
+    if (err) {
+      res.statusCode = 500;
+      res.json({ error: "Could not load items: " + err.message });
+    } else {
+      if (data.Item) {
+        res.json(data.Item);
+      } else {
+        res.json(data);
+      }
+    }
+  });
+});
 /************************************
  * HTTP put method for insert object *
  *************************************/

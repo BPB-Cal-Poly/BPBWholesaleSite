@@ -4,18 +4,7 @@
             "name": "/user",
             "lambdaFunction": "user",
             "privacy": {
-                "protected": true,
-                "auth": [
-                    "/POST",
-                    "/GET",
-                    "/PUT",
-                    "/PATCH",
-                    "/DELETE"
-                ],
-                "unauth": [
-                    "/POST",
-                    "/GET"
-                ]
+                "open": true
             },
             "policyResourceName": "/user"
         }
@@ -28,8 +17,8 @@
         }
     ],
     "privacy": {
-        "auth": 1,
-        "unauth": 1,
+        "auth": 0,
+        "unauth": 0,
         "authRoleName": "amplify-bpboregon-dev-120913-authRole",
         "unAuthRoleName": "amplify-bpboregon-dev-120913-unauthRole"
     },
@@ -42,5 +31,6 @@
                 "Arn"
             ]
         }
-    ]
+    ],
+    "uuid": "89b6930a"
 }
