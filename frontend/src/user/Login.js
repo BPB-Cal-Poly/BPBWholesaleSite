@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Input, message, Button, Menu, Breadcrumb } from "antd";
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 import "../styles/login.css";
+import { setUsername, setUserType } from "../utils";
 import Amplify, { API } from "aws-amplify";
 import aws_exports from "../aws-exports";
 Amplify.configure(aws_exports);
@@ -30,6 +31,7 @@ let fakeCustomers = [
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
     this.state = {
       username: "",
       password: "",
@@ -47,7 +49,7 @@ export default class Login extends React.Component {
 
   getUser(data) {
     var theuser;
-    console.log(data.username);
+    // console.log(data.username);
     
     for (let user of fakeCustomers){
         if (user.username == data.username){
@@ -64,15 +66,15 @@ export default class Login extends React.Component {
         message.error("No user found");
         return;
     }
-    localStorage.setItem('userId',data.id);
-    localStorage.setItem('username',data.username);
-    const { history } = this.props;
+    setUsername(theuser.username);  
     if (theuser.permission == "admin"){  
-        history.push({ pathname: "/admin" });
+        setUserType("admin");
     }
     else{
-        history.push({ pathname: "/" });
+        setUserType("customer");
     }
+    this.props.onUserChange();
+    this.props.history.push({ pathname: "/" });
   }
 
   checkLogin = () => {
@@ -94,22 +96,6 @@ export default class Login extends React.Component {
     //         }
     // }
     // this.fetchUser(dataProps);
-    // axios({
-    //   method: "post",
-    //   url: ApiUrl.USER_LOGIN,
-    //   data: dataProps,
-    // }).then((res) => {
-    //   console.log(res.data);
-    //   let data = res.data.data;
-    //   if (res.data.code == 0) {
-    //     localStorage.setItem("token", data.token);
-    //     localStorage.setItem("userId", data.id);
-    //     localStorage.setItem("username", data.username);
-    //     const { history } = this.props;
-    //     history.push({ pathname: "/admin" });
-    //   } else {
-    //     message.error("Password do not match");
-    //   }
     // });
   };
 
