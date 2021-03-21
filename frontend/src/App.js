@@ -57,17 +57,20 @@ class App extends React.Component {
           }
         }}
       >
-        <Menu.Item key="admin" icon={<ReconciliationOutlined />} >
+        <Menu.Item key="admin" icon={<ReconciliationOutlined />}>
           <Link to="/admin/main">admin</Link>
         </Menu.Item>
-        <Menu.Item key="account"icon ={<SafetyCertificateOutlined />}>account</Menu.Item>
-        <Menu.Item key="logout" icon={<LoginOutlined />}>logout</Menu.Item>
+        <Menu.Item key="account" icon={<SafetyCertificateOutlined />}>
+          account
+        </Menu.Item>
+        <Menu.Item key="logout" icon={<LoginOutlined />}>
+          logout
+        </Menu.Item>
       </Menu>
     );
 
     let popMenuCustomer = (
       <Menu
-
         onClick={(p) => {
           if (p.key == "logout") {
             clearToken();
@@ -78,22 +81,26 @@ class App extends React.Component {
           }
         }}
       >
-        <Menu.Item key="account"icon ={<SafetyCertificateOutlined />}>account</Menu.Item>
-        <Menu.Item key="logout" icon={<LoginOutlined />}>logout</Menu.Item>
+        <Menu.Item key="account" icon={<SafetyCertificateOutlined />}>
+          account
+        </Menu.Item>
+        <Menu.Item key="logout" icon={<LoginOutlined />}>
+          logout
+        </Menu.Item>
       </Menu>
     );
     let dropdown =
       userType == "admin" ? (
         <Dropdown overlay={popMenuAdmin} className="nav-item">
           <div>
-          <UserOutlined />
+            <UserOutlined />
             <span>Hello, {username}</span>
           </div>
         </Dropdown>
       ) : (
         <Dropdown overlay={popMenuCustomer} className="nav-item">
           <div>
-          <UserOutlined />
+            <UserOutlined />
             <span>Hello, {username}</span>
           </div>
         </Dropdown>
@@ -107,7 +114,7 @@ class App extends React.Component {
         </div>
         <div className="nav">
           <a href="/cart" className="nav-item">
-          <ShoppingCartOutlined />
+            <ShoppingCartOutlined />
             cart
           </a>
           {dropdown}
@@ -120,7 +127,7 @@ class App extends React.Component {
             Back Porch Bakery
           </a>
         </div>
-        <div className="nav">   
+        <div className="nav">
           <a href="/login" className="nav-item">
             login
           </a>
@@ -135,12 +142,18 @@ class App extends React.Component {
             <Route
               path="/admin"
               // component={Admin}
-              render={(props) => userType == "admin" ? (<Admin {...props} />): <Redirect to={{
-                pathname: '/login',
-                state: { from: props.location }
-                }}
-              />
-            }
+              render={(props) =>
+                userType == "admin" ? (
+                  <Admin {...props} />
+                ) : (
+                  <Redirect
+                    to={{
+                      pathname: "/login",
+                      state: { from: props.location },
+                    }}
+                  />
+                )
+              }
             />
             <Route
               path="/login"
@@ -149,7 +162,23 @@ class App extends React.Component {
                 <Login {...props} onUserChange={this.updateUser} />
               )}
             ></Route>
-            <Route path="/" component={HomeScreen} exact></Route>
+            <Route
+              path="/"
+              render={(props) =>
+                isLogined ? (
+                  <HomeScreen {...props} />
+                ) : (
+                  <Redirect
+                    to={{
+                      pathname: "/login",
+                      state: { from: props.location },
+                    }}
+                  />
+                )
+              }
+              // component={HomeScreen}
+              // exact
+            ></Route>
           </Switch>
         </main>
         <footer className="row center">This is footer</footer>
