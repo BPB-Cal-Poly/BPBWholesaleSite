@@ -19,6 +19,7 @@ import ReactDOM from "react-dom";
 
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
+import { Redirect } from "react-router-dom";
 const { Option } = Select;
 const { TextArea } = Input;
 
@@ -133,37 +134,36 @@ export default class HomeScreen extends React.Component {
     });
   };
 
-  handleOk = () =>{
+  handleOk = () => {
     this.setState({
-      modelVisible:false,
+      modelVisible: false,
     });
     let newProduct = {
-      'id':this.state.list.length+1,
-      'name':this.state.name,
-      'nickname':this.state.nickname,
-      'description':this.state.description,
-      'category':this.state.category,
-      'packsize':this.state.packsize,
-      'dough':this.state.dough,
-      'where':this.state.where,
-      'when':this.state.when,
-      'price':this.state.price,
-      'weight':this.state.weight,
-      'cutoff':this.state.cutoff
-    }
+      id: this.state.list.length + 1,
+      name: this.state.name,
+      nickname: this.state.nickname,
+      description: this.state.description,
+      category: this.state.category,
+      packsize: this.state.packsize,
+      dough: this.state.dough,
+      where: this.state.where,
+      when: this.state.when,
+      price: this.state.price,
+      weight: this.state.weight,
+      cutoff: this.state.cutoff,
+    };
     let newList = this.state.list;
     newList.push(newProduct);
     this.setState({
-      list:newList,
+      list: newList,
     });
     this.props.onListChange(this.state.list);
-    
-    
-    this.props.history.push('/admin/product/list');
-  }
+
+    this.props.history.push("/admin/product/list");
+  };
 
   render() {
-    let { list, categories } = this.state;
+    let { list, categories, isLogined } = this.state;
     const formItemLayout = {
       labelCol: {
         span: 3,
@@ -172,8 +172,7 @@ export default class HomeScreen extends React.Component {
     return (
       <div className="customer-layout">
         <Card>
-          <Form {...formItemLayout}
-          form={this.form}>
+          <Form {...formItemLayout} form={this.form}>
             <h1>Product</h1>
 
             <Form.Item
@@ -214,9 +213,7 @@ export default class HomeScreen extends React.Component {
               ></TextArea>
             </Form.Item>
             <h1>Product Settings</h1>
-            <Form.Item
-              label="Category"
-            >
+            <Form.Item label="Category">
               <Select
                 defaultValue="Pastries"
                 style={{ width: 120 }}
@@ -309,8 +306,7 @@ export default class HomeScreen extends React.Component {
                 offset: 7,
               }}
             >
-              <Button type="primary" htmlType="submit"
-              onClick={this.handleOk}>
+              <Button type="primary" htmlType="submit" onClick={this.handleOk}>
                 Add Product
               </Button>
             </Form.Item>

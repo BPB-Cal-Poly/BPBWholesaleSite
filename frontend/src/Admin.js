@@ -26,7 +26,7 @@ import ProductAdd from "./product/ProductAdd";
 const { Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
-export default class Admin extends React.Component {
+export default class OrderScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

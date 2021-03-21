@@ -6,3 +6,7 @@
   display:flex;
   justify-content: flex-end;
 }
+
+.customer-layout{
+  align-self: center;
+}

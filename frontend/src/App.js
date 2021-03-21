@@ -8,7 +8,7 @@ import {
   SafetyCertificateOutlined,
   ReconciliationOutlined,
 } from "@ant-design/icons";
-import HomeScreen from "./screens/HomeScreen";
+import OrderScreen from "./screens/OrderScreen";
 import Login from "./user/Login";
 import Admin from "./Admin";
 import { isLogined, getUsername, getUserType, clearToken } from "./utils/utils";
@@ -26,9 +26,21 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    console.log("mount");
     this._isMounted = true;
     this.updateUser();
   }
+
+  // componentDidUpdate(prevProps){
+  //   if (this._isMounted){
+  //     console.log("update");
+  //     if(this.props.username != prevProps.username){
+  //     console.log("update");
+  //     this.updateUser();
+  //     }
+
+  //   }
+  // }
 
   updateUser = () => {
     this.setState({
@@ -39,11 +51,14 @@ class App extends React.Component {
   };
 
   componentWillUnmount() {
+    console.log("will mount");
+    // this.updateUser();
     this._isMounted = false;
   }
 
   render() {
     let { isLogined, username, userType } = this.state;
+    console.log(userType + " " + isLogined);
     let popMenuAdmin = (
       <Menu
         onClick={(p) => {
@@ -143,15 +158,15 @@ class App extends React.Component {
               path="/admin"
               // component={Admin}
               render={(props) =>
-                userType == "admin" ? (
-                  <Admin {...props} />
-                ) : (
+                this._isMounted && this.state.userType != "admin" ? (
                   <Redirect
                     to={{
                       pathname: "/login",
                       state: { from: props.location },
                     }}
                   />
+                ) : (
+                  <Admin {...props} />
                 )
               }
             />
@@ -163,22 +178,26 @@ class App extends React.Component {
               )}
             ></Route>
             <Route
+              exact
               path="/"
               render={(props) =>
-                isLogined ? (
-                  <HomeScreen {...props} />
-                ) : (
+                this._isMounted && !isLogined ? (
                   <Redirect
                     to={{
                       pathname: "/login",
                       state: { from: props.location },
                     }}
                   />
+                ) : (
+                  <OrderScreen {...props} />
                 )
               }
-              // component={HomeScreen}
-              // exact
             ></Route>
+            {/* <Route
+              exact
+              path="/"
+              render={(props) => <OrderScreen {...props} />}
+            ></Route> */}
           </Switch>
         </main>
         <footer className="row center">This is footer</footer>
