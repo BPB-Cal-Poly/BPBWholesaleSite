@@ -7,6 +7,18 @@
   justify-content: flex-end;
 }
 
-.customer-layout{
+/* .customer-layout{
+  display: flex;
   align-self: center;
+  text-align: left;
+  justify-content: center;
+}
+
+.customer-center{
+  text-align: left;
+  width: 300%;
+} */
+
+#Form.Item {
+  text-align: left;
 }

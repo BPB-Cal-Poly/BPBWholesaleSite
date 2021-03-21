@@ -31,17 +31,6 @@ class App extends React.Component {
     this.updateUser();
   }
 
-  // componentDidUpdate(prevProps){
-  //   if (this._isMounted){
-  //     console.log("update");
-  //     if(this.props.username != prevProps.username){
-  //     console.log("update");
-  //     this.updateUser();
-  //     }
-
-  //   }
-  // }
-
   updateUser = () => {
     this.setState({
       username: getUsername(),
