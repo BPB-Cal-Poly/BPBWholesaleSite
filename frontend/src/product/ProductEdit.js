@@ -9,7 +9,7 @@ import {
 } from "antd";
 import ReactDOM from "react-dom";
 
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+
 import "../styles/product-list.css";
 const { Option } = Select;
 const { TextArea } = Input;

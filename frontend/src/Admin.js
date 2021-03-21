@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
 import {
-  UserOutlined,
+  UsergroupAddOutlined,
   DesktopOutlined,
   SettingOutlined,
   ShopOutlined,
@@ -188,7 +188,7 @@ export default class Admin extends React.Component {
             <Menu.Item key="/products" icon={<ShopOutlined />} title="Products">
               <Link to="/admin/product/list">Products</Link>
             </Menu.Item>
-            <SubMenu key="/customers" icon={<UserOutlined />} title="Customers">
+            <SubMenu key="/customers" icon={<UsergroupAddOutlined />} title="Customers">
               <Menu.Item key="userList">
                 <Link to="/admin/customer/user/list">Users</Link>
               </Menu.Item>

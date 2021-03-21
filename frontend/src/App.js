@@ -1,13 +1,18 @@
 import React from "react";
 import { BrowserRouter, Route, Redirect, Link, Switch } from "react-router-dom";
 import { Dropdown, Menu, message } from "antd";
+import {
+  UserOutlined,
+  ShoppingCartOutlined,
+  LoginOutlined,
+  SafetyCertificateOutlined,
+  ReconciliationOutlined,
+} from "@ant-design/icons";
 import HomeScreen from "./screens/HomeScreen";
 import Login from "./user/Login";
 import Admin from "./Admin";
-// import AuthenticatedRoute from "./utils/AuthenticatedRouter"
-// import UnauthenticatedRoute from "./utils/UnauthenticatedRouter"
 import { isLogined, getUsername, getUserType, clearToken } from "./utils/utils";
-// import { withAuthenticator } from "aws-amplify-react";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 
 class App extends React.Component {
@@ -52,16 +57,17 @@ class App extends React.Component {
           }
         }}
       >
-        <Menu.Item key="admin">
-          <Link to="/admin/main">Admin</Link>
+        <Menu.Item key="admin" icon={<ReconciliationOutlined />} >
+          <Link to="/admin/main">admin</Link>
         </Menu.Item>
-        <Menu.Item key="account">account</Menu.Item>
-        <Menu.Item key="logout">logout</Menu.Item>
+        <Menu.Item key="account"icon ={<SafetyCertificateOutlined />}>account</Menu.Item>
+        <Menu.Item key="logout" icon={<LoginOutlined />}>logout</Menu.Item>
       </Menu>
     );
 
     let popMenuCustomer = (
       <Menu
+
         onClick={(p) => {
           if (p.key == "logout") {
             clearToken();
@@ -72,20 +78,22 @@ class App extends React.Component {
           }
         }}
       >
-        <Menu.Item key="account">account</Menu.Item>
-        <Menu.Item key="logout">logout</Menu.Item>
+        <Menu.Item key="account"icon ={<SafetyCertificateOutlined />}>account</Menu.Item>
+        <Menu.Item key="logout" icon={<LoginOutlined />}>logout</Menu.Item>
       </Menu>
     );
     let dropdown =
       userType == "admin" ? (
         <Dropdown overlay={popMenuAdmin} className="nav-item">
           <div>
+          <UserOutlined />
             <span>Hello, {username}</span>
           </div>
         </Dropdown>
       ) : (
         <Dropdown overlay={popMenuCustomer} className="nav-item">
           <div>
+          <UserOutlined />
             <span>Hello, {username}</span>
           </div>
         </Dropdown>
@@ -99,6 +107,7 @@ class App extends React.Component {
         </div>
         <div className="nav">
           <a href="/cart" className="nav-item">
+          <ShoppingCartOutlined />
             cart
           </a>
           {dropdown}
@@ -111,10 +120,7 @@ class App extends React.Component {
             Back Porch Bakery
           </a>
         </div>
-        <div className="nav">
-          <a href="/cart" className="nav-item">
-            cart
-          </a>
+        <div className="nav">   
           <a href="/login" className="nav-item">
             login
           </a>
