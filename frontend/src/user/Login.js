@@ -1,8 +1,8 @@
 import React from "react";
-import { Card, Input, message, Button, Menu, Breadcrumb } from "antd";
+import { Card, Input, message, Button} from "antd";
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 import "../styles/login.css";
-import { setUsername, setUserType } from "../utils";
+import { setUsername, setUserType } from "../utils/utils";
 import Amplify, { API } from "aws-amplify";
 import aws_exports from "../aws-exports";
 Amplify.configure(aws_exports);

@@ -10,7 +10,7 @@ import {
   DatabaseOutlined,
 } from "@ant-design/icons";
 import "./styles/layout.css";
-import { Redirect, Route, Switch, Link } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 import ProductList from "./product/ProductList";
 import ProductEdit from "./product/ProductEdit";
 import CustomerList from "./user/CustomerList";
@@ -109,6 +109,7 @@ export default class Admin extends React.Component {
       ],
     };
   }
+
   handleProductChange = (fakeProducts) => {
     this.setState({ fakeProducts });
   };

@@ -1,17 +1,9 @@
 import React from "react";
 import {
-  List,
   Button,
-  Row,
-  Col,
-  Modal,
-  message,
-  Table,
-  Space,
   Select,
   Card,
   Input,
-  Divider,
   Form,
   InputNumber,
 } from "antd";
