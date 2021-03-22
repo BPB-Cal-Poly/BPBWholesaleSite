@@ -8,41 +8,43 @@ import {
   InputNumber,
   DatePicker,
 } from "antd";
-import ReactDOM from "react-dom";
-// import moment from 'moment';
-// import 'moment/locale/en-us';
-// moment.locale('en-us');
 
-import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
 import { Redirect } from "react-router-dom";
 const { Option } = Select;
 const { TextArea } = Input;
 
-let fakeCategories = [
-  { id: 1, name: "Pastries" },
-  { id: 2, name: "Rustics" },
-];
+// let categories = [
+//   { id: 1, name: "Pastries" },
+//   { id: 2, name: "Rustics" },
+// ];
+
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       categories: [],
+      // customers: [],
+      products: [],
+      // businesses: [],
+      // username: this.props.username,
+      // business: {},
       modelVisible: false,
       date: "",
       deliver: "",
       address: "",
       phone: "",
-      products: [],
+      note: "",
+      orders: [],
       method: "",
       type: "",
-      business: "",
     };
   }
 
   componentDidMount() {
     this._isMounted = true;
     this.getList();
+    // this.getBusiness();
   }
 
   componentWillUnmount() {
@@ -51,11 +53,25 @@ export default class HomeScreen extends React.Component {
 
   getList = () => {
     if (this._isMounted) {
-      let fakeProducts = this.props.category;
+      // let username= this.props.username;
+      let categories = this.props.fakeCategories;
+      let products = this.props.fakeProducts;
+      // let customers = this.props.fakeCustomers;
+      // let businesses = this.props.fakeBusinesses;
       this.setState({
-        categories: fakeCategories,
+        // username: username,
+        products: products,
+        categories: categories,
+        // customers: customers,
+        // businesses: businesses,
       });
     }
+  };
+
+  setDeliverDate = (date) => {
+    this.setState({
+      deliverDate: date,
+    });
   };
 
   setProductName = (name) => {
@@ -64,21 +80,15 @@ export default class HomeScreen extends React.Component {
     });
   };
 
-  setProductNickname = (nickname) => {
+  setNote = (note) => {
     this.setState({
-      nickname: nickname,
+      note: note,
     });
   };
 
-  setDescription = (description) => {
+  setAddress = (addr) => {
     this.setState({
-      description: description,
-    });
-  };
-
-  setCategory = (category) => {
-    this.setState({
-      category: category,
+      address: addr,
     });
   };
 
@@ -124,16 +134,6 @@ export default class HomeScreen extends React.Component {
     });
   };
 
-
-
-
-  setDeliver = (date) => {
-    this.setState({
-      deliver: date,
-    });
-    console.log(date);
-  };
-
   handleOk = () => {
     this.setState({
       modelVisible: false,
@@ -142,7 +142,7 @@ export default class HomeScreen extends React.Component {
       id: this.state.list.length + 1,
       name: this.state.name,
       nickname: this.state.nickname,
-      description: this.state.description,
+      note: this.state.note,
       category: this.state.category,
       packsize: this.state.packsize,
       dough: this.state.dough,
@@ -163,12 +163,28 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
-    let { list, categories, isLogined } = this.state;
+    let { categories } = this.state;
+    let business = this.props.business;
     const formItemLayout = {
       labelCol: {
         span: 3,
       },
     };
+    let addressForm = business ? (
+      <Form.Item label="Deliver address">
+        <Select
+          defaultValue={business.addresses[0]}
+          style={{ width: 300 }}
+          onSelect={this.setAddress}
+        >
+          {business.addresses.map((item) => (
+            <Option key={item} value={item}>
+              {item}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
+    ) : null;
     return (
       <div>
         <Card className="customer-layout">
@@ -177,7 +193,7 @@ export default class HomeScreen extends React.Component {
               <h1>Order</h1>
               <Form.Item
                 label="Delivery Day"
-                name="deliver"
+                name="deliverDate"
                 rules={[
                   {
                     required: true,
@@ -186,32 +202,22 @@ export default class HomeScreen extends React.Component {
                 ]}
               >
                 <DatePicker
-                  // size={"large"}
                   onChange={(date, dateString) => {
-                    this.setDeliver(dateString);
+                    this.setDeliverDate(dateString);
                   }}
                 />
               </Form.Item>
-              <Form.Item label="Nickname">
+              {addressForm}
+              <Form.Item label="Phone number">
                 <Input
                   style={{ width: 120 }}
-                  value={this.state.nickname}
+                  value={business? business.phone : null}
                   onChange={(e) => {
-                    this.setProductNickname(e.target.value);
+                    this.setPackSize(e.target.value);
                   }}
                 ></Input>
               </Form.Item>
-              <Form.Item label="Product Description">
-                <TextArea
-                  style={{ width: "300px" }}
-                  autoSize={{ minRows: 3, maxRows: 6 }}
-                  value={this.state.description}
-                  onChange={(e) => {
-                    this.setDescription(e.target.value);
-                  }}
-                ></TextArea>
-              </Form.Item>
-              <h1>Product Settings</h1>
+              <h1>Order Detail</h1>
               <Form.Item label="Category">
                 <Select
                   defaultValue="Pastries"
@@ -312,6 +318,16 @@ export default class HomeScreen extends React.Component {
                 >
                   Add Product
                 </Button>
+              </Form.Item>
+              <Form.Item label="Special Note">
+                <TextArea
+                  style={{ width: "300px" }}
+                  autoSize={{ minRows: 3, maxRows: 6 }}
+                  value={this.state.note}
+                  onChange={(e) => {
+                    this.setNote(e.target.value);
+                  }}
+                ></TextArea>
               </Form.Item>
             </div>
           </Form>

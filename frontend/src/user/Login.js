@@ -6,36 +6,34 @@ import { setUsername, setUserType } from "../utils/utils";
 import Amplify, { API } from "aws-amplify";
 import aws_exports from "../aws-exports";
 Amplify.configure(aws_exports);
-let fakeCustomers = [
-  {
-    id: 1,
-    firstName: "first1",
-    lastName: "last1",
-    username: "user0",
-    password: "user0",
-    nickname: "1",
-    business: "Business 1",
-    permission: "customer",
-  },
-  {
-    id: 2,
-    firstName: "admin",
-    lastName: "0",
-    username: "admin0",
-    password: "admin0",
-    nickname: "admin0",
-    business: "Business 2",
-    permission: "admin",
-  },
-];
+
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
       password: "",
+      fakeCustomers: [],
     };
   }
+
+  componentDidMount() {
+    this._isMounted = true;
+    this.getCustomerList();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  getCustomerList = () => {
+    if (this._isMounted) {
+      let fakeCustomers = this.props.fakeCustomers;
+      this.setState({
+        fakeCustomers: fakeCustomers,
+      });
+    }
+  };
 
   async fetchUser(data) {
     const response = await API.get("user", "/user/:username")
@@ -50,9 +48,9 @@ export default class Login extends React.Component {
     var theuser;
     // console.log(data.username);
     
-    for (let user of fakeCustomers){
-        if (user.username == data.username){
-            if (user.password == data.password){
+    for (let user of this.fakeCustomers){
+        if (user.username === data.username){
+            if (user.password === data.password){
                 theuser = user;
             }
             else{
@@ -66,7 +64,7 @@ export default class Login extends React.Component {
         return;
     }
     setUsername(theuser.username);  
-    if (theuser.permission == "admin"){  
+    if (theuser.permission === "admin"){  
         setUserType("admin");
     }
     else{

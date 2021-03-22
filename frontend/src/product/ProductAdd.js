@@ -1,31 +1,16 @@
 import React from "react";
 import {
-  List,
   Button,
-  Row,
-  Col,
-  Modal,
-  message,
-  Table,
-  Space,
   Select,
   Card,
   Input,
-  Divider,
   Form,
   InputNumber,
 } from "antd";
-import ReactDOM from "react-dom";
-
-import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
 const { Option } = Select;
 const { TextArea } = Input;
 
-let fakeCategories = [
-  { id: 1, name: "Pastries" },
-  { id: 2, name: "Rustics" },
-];
 export default class ProductAdd extends React.Component {
   constructor(props) {
     super(props);
@@ -60,6 +45,7 @@ export default class ProductAdd extends React.Component {
   getList = () => {
     if (this._isMounted) {
       let fakeProducts = this.props.fakeProducts;
+      let fakeCategories = this.props.fakeCategories;
       this.setState({
         list: fakeProducts,
         categories: fakeCategories,
@@ -271,11 +257,13 @@ export default class ProductAdd extends React.Component {
               />
               <span className="ant-form-text">days</span>
             </Form.Item>
-            <Form.Item label="Price($)">
+            <Form.Item label="Price">
               <InputNumber
                 min={0}
                 style={{ width: 120 }}
                 value={this.state.price}
+                formatter={value => `$ ${value}`}
+                parser={value => value.replace('$', '')}
                 onChange={(e) => {
                   this.setPrice(e);
                 }}
@@ -290,7 +278,6 @@ export default class ProductAdd extends React.Component {
                   this.setWeight(e);
                 }}
               />
-              <span className="ant-form-text">g</span>
             </Form.Item>
             <Form.Item label="Order Cutoff">
               <InputNumber

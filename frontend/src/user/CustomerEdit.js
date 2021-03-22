@@ -1,21 +1,11 @@
 import React from "react";
 import {
-  List,
   Button,
-  Row,
-  Col,
-  Modal,
-  message,
-  Table,
-  Space,
   Select,
   Card,
   Input,
-  Divider,Form
+  Form
 } from "antd";
-import ReactDOM from "react-dom";
-
-import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
 const { Option } = Select;
 let fakeBusinesses= [

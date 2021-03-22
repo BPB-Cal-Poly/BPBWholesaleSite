@@ -30,85 +30,36 @@ export default class OrderScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fakeProducts: [
-        {
-          id: 1,
-          name: "A1",
-          nickname: "a1",
-          description:
-            "this is desciption for A1 this is desciption for A1 this is desciption for A1 this is desciption for A1 this is desciption for A1",
-          category: "Pastries",
-          packsize: 10,
-          dough: "Baguette",
-          where: "SLO",
-          when: 1,
-          price: 3,
-          weight: 10,
-          cutoff: 2,
-        },
-        {
-          id: 2,
-          name: "A2",
-          nickname: "a2",
-          description: "this is desciption for A2",
-          category: "Rustics",
-          packsize: 8,
-          dough: "Croissant",
-          where: "SLO",
-          when: 2,
-          price: 10,
-          weight: 8,
-          cutoff: 0,
-        },
-        {
-          id: 3,
-          name: "B1",
-          nickname: "b1",
-          description: "this is desciption for B1",
-          category: "Pastries",
-          packsize: 10,
-          dough: "Baguette",
-          where: "SLO",
-          when: 2,
-          price: 4,
-          weight: 11,
-          cutoff: 4,
-        },
-        {
-          id: 4,
-          name: "B2",
-          nickname: "b2",
-          description: "this is desciption for B2",
-          category: "Rustics",
-          packsize: 8,
-          dough: "Croissant",
-          where: "SLO",
-          when: 0,
-          price: 3,
-          weight: 9,
-          cutoff: 5,
-        },
-      ],
-      fakeCustomers: [
-        {
-          id: 1,
-          firstName: "first1",
-          lastName: "last1",
-          nickname: "1",
-          business: "Business 1",
-          permission: "full",
-        },
-        {
-          id: 2,
-          firstName: "first2",
-          lastName: "last2",
-          nickname: "2",
-          business: "Business 2",
-          permission: "order",
-        },
-      ],
+      fakeCategories: [],
+      fakeCustomers: [],
+      fakeProducts: [],
+      fakeBusinesses: [],
     };
   }
+
+  componentDidMount() {
+    this._isMounted = true;
+    this.getList();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  getList = () => {
+    if (this._isMounted) {
+      let fakeProducts = this.props.fakeProducts;
+      let fakeCategories = this.props.fakeCategories;
+      let fakeCustomers = this.props.fakeCustomers;
+      let fakeBusinesses = this.props.fakeBusinesses;
+      this.setState({
+        fakeProducts: fakeProducts,
+        fakeCategories: fakeCategories,
+        fakeCustomers: fakeCustomers,
+        fakeBusinesses: fakeBusinesses
+      });
+    }
+  };
 
   handleProductChange = (fakeProducts) => {
     this.setState({ fakeProducts });
@@ -142,7 +93,7 @@ export default class OrderScreen extends React.Component {
     }
     if (pathnames.length > 2) {
       sub_category = pathnames[3];
-      if (category == "Customer") {
+      if (category === "Customer") {
         sub_category = pathnames[4];
       }
       switch (sub_category) {
@@ -154,6 +105,8 @@ export default class OrderScreen extends React.Component {
           break;
         case "add":
           sub_category = "Add";
+          break;
+        default:
           break;
       }
     }
@@ -234,6 +187,7 @@ export default class OrderScreen extends React.Component {
                   <ProductList
                     {...props}
                     fakeProducts={this.state.fakeProducts}
+                    fakeCategories={this.state.fakeCategories}
                   />
                 )}
               />
@@ -244,6 +198,7 @@ export default class OrderScreen extends React.Component {
                   <ProductEdit
                     {...props}
                     fakeProducts={this.state.fakeProducts}
+                    fakeCategories={this.state.fakeCategories}
                     onListChange={this.handleProductChange}
                   />
                 )}
@@ -255,6 +210,7 @@ export default class OrderScreen extends React.Component {
                   <ProductAdd
                     {...props}
                     fakeProducts={this.state.fakeProducts}
+                    fakeCategories={this.state.fakeCategories}
                     onListChange={this.handleProductChange}
                   />
                 )}
@@ -276,6 +232,7 @@ export default class OrderScreen extends React.Component {
                   <BusinessList
                     {...props}
                     fakeCustomers={this.state.fakeCustomers}
+                    fakeBusinesses={this.state.fakeBusinesses}
                   />
                 )}
               />

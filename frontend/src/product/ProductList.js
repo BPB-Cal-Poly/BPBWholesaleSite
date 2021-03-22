@@ -26,8 +26,10 @@ export default class ProductList extends React.Component {
   getList = () => {
     if (this._isMounted) {
       let fakeProducts = this.props.fakeProducts;
+      let fakeCategories = this.props.fakeCategories
       this.setState({
         list: fakeProducts,
+        categories: fakeCategories,
       });
     }
   };
@@ -44,7 +46,7 @@ export default class ProductList extends React.Component {
       icon: <ExclamationCircleOutlined />,
       onOk: () => {
         const newProducts = this.state.list.filter(function (product) {
-          return product.id != id;
+          return product.id !== id;
         });
         message.success("Delete Successfully");
         this.setState({

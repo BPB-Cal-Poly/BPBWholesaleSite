@@ -1,7 +1,6 @@
 import React from "react";
-import { List, Button, Modal, message, Table, Space } from "antd";
+import { Button, Modal, message, Table, Space } from "antd";
 import { Link } from "react-router-dom";
-import ReactDOM from "react-dom";
 
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
@@ -67,7 +66,7 @@ export default class StandingOrdersList extends React.Component {
       icon: <ExclamationCircleOutlined />,
       onOk: () => {
         const newOrders = fakeOrders.filter(function (order) {
-          return order.id != id;
+          return order.id !== id;
         });
         message.success("Delete Successfully");
         this.setState({

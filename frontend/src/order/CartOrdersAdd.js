@@ -1,8 +1,6 @@
 import React from "react";
-import { List, Button, Row, Col, Modal, message, Table, Space } from "antd";
-import ReactDOM from "react-dom";
+import {  Modal } from "antd";
 
-import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
 const { confirm } = Modal;
 

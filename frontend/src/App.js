@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Redirect, Link, Switch } from "react-router-dom";
+import { Route, Redirect, Link, Switch } from "react-router-dom";
 import { Dropdown, Menu, message } from "antd";
 import {
   UserOutlined,
@@ -12,7 +12,6 @@ import OrderScreen from "./screens/OrderScreen";
 import Login from "./user/Login";
 import Admin from "./Admin";
 import { isLogined, getUsername, getUserType, clearToken } from "./utils/utils";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 
 class App extends React.Component {
@@ -22,11 +21,112 @@ class App extends React.Component {
       isLogined: false,
       username: "",
       userType: "",
+      fakeProducts: [
+        {
+          id: 1,
+          name: "A1",
+          nickname: "a1",
+          description:
+            "this is desciption for A1 this is desciption for A1 this is desciption for A1 this is desciption for A1 this is desciption for A1",
+          category: "Pastries",
+          packsize: 10,
+          dough: "Baguette",
+          where: "SLO",
+          when: 1,
+          price: 3,
+          weight: 10,
+          cutoff: 2,
+        },
+        {
+          id: 2,
+          name: "A2",
+          nickname: "a2",
+          description: "this is desciption for A2",
+          category: "Rustics",
+          packsize: 8,
+          dough: "Croissant",
+          where: "SLO",
+          when: 2,
+          price: 10,
+          weight: 8,
+          cutoff: 0,
+        },
+        {
+          id: 3,
+          name: "B1",
+          nickname: "b1",
+          description: "this is desciption for B1",
+          category: "Pastries",
+          packsize: 10,
+          dough: "Baguette",
+          where: "SLO",
+          when: 2,
+          price: 4,
+          weight: 11,
+          cutoff: 4,
+        },
+        {
+          id: 4,
+          name: "B2",
+          nickname: "b2",
+          description: "this is desciption for B2",
+          category: "Rustics",
+          packsize: 8,
+          dough: "Croissant",
+          where: "SLO",
+          when: 0,
+          price: 3,
+          weight: 9,
+          cutoff: 5,
+        },
+      ],
+      fakeCustomers : [
+        {
+          id: 1,
+          firstName: "first1",
+          lastName: "last1",
+          username: "user0",
+          password: "user0",
+          nickname: "1",
+          business: "Business 1",
+          permission: "customer",
+        },
+        {
+          id: 2,
+          firstName: "admin",
+          lastName: "0",
+          username: "admin0",
+          password: "admin0",
+          nickname: "admin0",
+          business: "Business 2",
+          permission: "admin",
+        },
+      ],
+      fakeBusinesses: [
+        {
+          id: 1,
+          name: "Business 1",
+          addresses:["111 S OK street", "112 S OK street"],
+          phone: "(666) 666-6666",
+          nickname: "1",
+        },
+        {
+          id: 2,
+          name: "Business 2",
+          addresses: ["122 W This street","123 W This street"],
+          phone: "(555) 555-5555",
+          nickname: "2",
+        },
+      ],
+      fakeCategories: [
+        { id: 1, name: "Pastries" },
+        { id: 2, name: "Rustics" },
+      ],
     };
   }
 
   componentDidMount() {
-    console.log("mount");
+    // console.log("mount");
     this._isMounted = true;
     this.updateUser();
   }
@@ -40,22 +140,37 @@ class App extends React.Component {
   };
 
   componentWillUnmount() {
-    console.log("will mount");
-    // this.updateUser();
     this._isMounted = false;
+  }
+
+  getBusiness = () =>{
+    console.log("getting business for "+ this.state.username);
+    var thebusiness;
+    for(let customer of this.state.fakeCustomers){
+      console.log("customer is "+ customer.username);
+      if (customer.username === this.state.username){
+        thebusiness = customer.business;
+      }
+    }
+    console.log("thebusiness is "+ thebusiness);
+    for(let business of this.state.fakeBusinesses){
+      if(business.name === thebusiness){
+        return business;
+      }
+    }
   }
 
   render() {
     let { isLogined, username, userType } = this.state;
-    console.log(userType + " " + isLogined);
+    console.log("app username is" + username);
     let popMenuAdmin = (
       <Menu
         onClick={(p) => {
-          if (p.key == "logout") {
+          if (p.key === "logout") {
             clearToken();
             this.updateUser();
             this.props.history.push("/");
-          } else if (p.key == "admin") {
+          } else if (p.key === "admin") {
           } else {
             message.info(p.key);
           }
@@ -76,7 +191,7 @@ class App extends React.Component {
     let popMenuCustomer = (
       <Menu
         onClick={(p) => {
-          if (p.key == "logout") {
+          if (p.key === "logout") {
             clearToken();
             this.updateUser();
             this.props.history.push("/");
@@ -94,7 +209,7 @@ class App extends React.Component {
       </Menu>
     );
     let dropdown =
-      userType == "admin" ? (
+      userType === "admin" ? (
         <Dropdown overlay={popMenuAdmin} className="nav-item">
           <div>
             <UserOutlined />
@@ -147,7 +262,7 @@ class App extends React.Component {
               path="/admin"
               // component={Admin}
               render={(props) =>
-                this._isMounted && this.state.userType != "admin" ? (
+                this._isMounted && this.state.userType !== "admin" ? (
                   <Redirect
                     to={{
                       pathname: "/login",
@@ -155,7 +270,13 @@ class App extends React.Component {
                     }}
                   />
                 ) : (
-                  <Admin {...props} />
+                  <Admin
+                    {...props}
+                    fakeCustomers={this.state.fakeCustomers}
+                    fakeProducts={this.state.fakeProducts}
+                    fakeCategories={this.state.fakeCategories}
+                    fakeBusinesses={this.state.fakeBusinesses}
+                  />
                 )
               }
             />
@@ -163,7 +284,7 @@ class App extends React.Component {
               path="/login"
               exact
               render={(props) => (
-                <Login {...props} onUserChange={this.updateUser} />
+                <Login {...props} fakeCustomers={this.state.fakeCustomers} onUserChange={this.updateUser} />
               )}
             ></Route>
             <Route
@@ -178,7 +299,14 @@ class App extends React.Component {
                     }}
                   />
                 ) : (
-                  <OrderScreen {...props} />
+                  <OrderScreen
+                    {...props}
+                    fakeCategories={this.state.fakeCategories}
+                    fakeBusinesses={this.state.fakeBusinesses}
+                    fakeCustomers={this.state.fakeCustomers}
+                    // username={username}
+                    business={this.getBusiness()}
+                  />
                 )
               }
             ></Route>

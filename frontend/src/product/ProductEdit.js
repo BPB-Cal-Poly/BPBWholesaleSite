@@ -7,17 +7,16 @@ import {
   Form,
   InputNumber,
 } from "antd";
-import ReactDOM from "react-dom";
 
 
 import "../styles/product-list.css";
 const { Option } = Select;
 const { TextArea } = Input;
 
-let fakeCategories = [
-  { id: 1, name: "Pastries" },
-  { id: 2, name: "Rustics" },
-];
+// let fakeCategories = [
+//   { id: 1, name: "Pastries" },
+//   { id: 2, name: "Rustics" },
+// ];
 export default class ProductEdit extends React.Component {
   constructor(props) {
     super(props);
@@ -55,7 +54,7 @@ export default class ProductEdit extends React.Component {
     let id = this.props.match.params.id;
     var theproduct;
     for (let product of this.props.fakeProducts){
-      if (product.id == id){
+      if (product.id === id){
         theproduct = product;
       }
     }
@@ -79,6 +78,7 @@ export default class ProductEdit extends React.Component {
   getList = () => {
     if (this._isMounted) {
       let fakeProducts = this.props.fakeProducts;
+      let fakeCategories = this.props.fakeCategories
       this.setState({
         list: fakeProducts,
         categories: fakeCategories,
@@ -173,7 +173,7 @@ export default class ProductEdit extends React.Component {
     var i
     for (i=0; i< newList.length; i++){
       
-      if (newList[i].id == this.state.id){
+      if (newList[i].id === this.state.id){
         newList.splice(i, 1, newProduct);
       }
     }
