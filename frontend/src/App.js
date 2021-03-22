@@ -302,9 +302,7 @@ class App extends React.Component {
                   <OrderScreen
                     {...props}
                     fakeCategories={this.state.fakeCategories}
-                    fakeBusinesses={this.state.fakeBusinesses}
-                    fakeCustomers={this.state.fakeCustomers}
-                    // username={username}
+                    fakeProducts={this.state.fakeProducts}
                     business={this.getBusiness()}
                   />
                 )

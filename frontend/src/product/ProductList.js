@@ -194,6 +194,7 @@ export default class ProductList extends React.Component {
 
   render() {
     let { list } = this.state;
+    console.log(list);
     return (
       <div>
         <Table

@@ -5,10 +5,12 @@ import {
   Card,
   Input,
   Form,
+  Col,
   InputNumber,
   DatePicker,
+  Space,
 } from "antd";
-
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
 import { Redirect } from "react-router-dom";
 const { Option } = Select;
@@ -74,63 +76,21 @@ export default class HomeScreen extends React.Component {
     });
   };
 
-  setProductName = (name) => {
-    this.setState({
-      name: name,
-    });
-  };
-
-  setNote = (note) => {
-    this.setState({
-      note: note,
-    });
-  };
-
   setAddress = (addr) => {
     this.setState({
       address: addr,
     });
   };
 
-  setPackSize = (size) => {
+  setPhone = (phone) => {
     this.setState({
-      packsize: size,
+      phone: phone,
     });
   };
 
-  setDough = (dough) => {
+  setNote = (note) => {
     this.setState({
-      dough: dough,
-    });
-  };
-
-  setBakedWhere = (where) => {
-    this.setState({
-      where: where,
-    });
-  };
-
-  setWhen = (when) => {
-    this.setState({
-      when: when,
-    });
-  };
-
-  setPrice = (price) => {
-    this.setState({
-      price: price,
-    });
-  };
-
-  setWeight = (weight) => {
-    this.setState({
-      weight: weight,
-    });
-  };
-
-  setCutoff = (cutoff) => {
-    this.setState({
-      cutoff: cutoff,
+      note: note,
     });
   };
 
@@ -163,13 +123,20 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
-    let { categories } = this.state;
+    let { categories, products } = this.state;
     let business = this.props.business;
+    console.log(products);
     const formItemLayout = {
       labelCol: {
-        span: 3,
+        span: 8,
+        offset: 2,
+      },
+      wrapperCol: {
+        span: 14,
       },
     };
+
+
     let addressForm = business ? (
       <Form.Item label="Deliver address">
         <Select
@@ -185,12 +152,111 @@ export default class HomeScreen extends React.Component {
         </Select>
       </Form.Item>
     ) : null;
+
+    let productForm =
+      products.length != 0 ? (
+        <Form.Item label="Product">
+          <Select
+            defaultValue={products[0].name}
+            style={{ width: 120 }}
+            onSelect={this.setCategory}
+          >
+            {products.map((item) => (
+              <Option key={item.id} value={item.name}>
+                {item.name}
+                {" $"}
+                {item.price}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+      ) : null;
+
+    let productTest =
+      products.length != 0 ? (
+        <Form.List name="products">
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map((field) => (
+                <Space
+                  key={field.key}
+                  style={{ display: "flex", marginBottom: 8 }}
+                  align="baseline"
+                >
+                  <Form.Item
+                    {...field}
+                    label="Product"
+                    // {...formItemLayoutWithLabel }
+                    layout="vertical"
+                    name={[field.name, "product"]}
+                    fieldKey={[field.fieldKey, "product"]}
+                    rules={[{ required: true, message: "Missing product" }]}
+                  >
+                    <Select
+                      defaultValue={products[0].name}
+                      // style={{ width: 130 }}
+                      onSelect={this.setCategory}
+                    >
+                      {products.map((item) => (
+                        <Option key={item.id} value={item.name}>
+                          {item.name}
+                          {" $"}
+                          {item.price}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    {...field}
+                    label="Quantity"
+                    // {...formItemLayoutWithLabel }
+                    name={[field.name, "quantity"]}
+                    fieldKey={[field.fieldKey, "quantity"]}
+                    rules={[{ required: true, message: "Missing quantity" }]}
+                  >
+                    <InputNumber
+                      noStyle
+                      min={1}
+                      style={{ width: 120 }}
+                      onChange={(e) => {
+                        this.setWhen(e);
+                      }}
+                    />
+                  </Form.Item>
+                  {/* </Input.Group> */}
+                  {fields.length > 1 ? (
+                    <MinusCircleOutlined
+                      className="dynamic-delete-button"
+                      onClick={() => remove(field.name)}
+                    />
+                  ) : null}
+                </Space>
+              ))}
+              <Form.Item>
+                <Button
+                  type="dashed"
+                  onClick={() => add()}
+                  // block
+                  icon={<PlusOutlined />}
+                >
+                  Add product
+                </Button>
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
+      ) : null;
     return (
       <div>
         <Card className="customer-layout">
-          <Form {...formItemLayout} form={this.form}>
+          <Form
+            {...formItemLayout}
+            form={this.form}
+          >
             <div className="customer-center">
+            <Col span={5} offset={8}>
               <h1>Order</h1>
+              </Col>
               <Form.Item
                 label="Delivery Day"
                 name="deliverDate"
@@ -211,125 +277,38 @@ export default class HomeScreen extends React.Component {
               <Form.Item label="Phone number">
                 <Input
                   style={{ width: 120 }}
-                  value={business? business.phone : null}
+                  value={business ? business.phone : null}
                   onChange={(e) => {
-                    this.setPackSize(e.target.value);
+                    this.setPhone(e.target.value);
                   }}
                 ></Input>
               </Form.Item>
+              <Col span={8} offset={8}>
               <h1>Order Detail</h1>
-              <Form.Item label="Category">
-                <Select
-                  defaultValue="Pastries"
-                  style={{ width: 120 }}
-                  onSelect={this.setCategory}
-                >
-                  {categories.map((item) => (
-                    <Option key={item.id} value={item.name}>
-                      {item.name}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-              <Form.Item label="Pack Size">
-                <Input
-                  style={{ width: 120 }}
-                  value={this.state.packsize}
-                  onChange={(e) => {
-                    this.setPackSize(e.target.value);
-                  }}
-                ></Input>
-              </Form.Item>
-              <Form.Item label="Primary Dough">
-                <Select
-                  defaultValue="Baguette"
-                  style={{ width: 120 }}
-                  onSelect={this.setDough}
-                >
-                  <Option key="Baguette">Baguette</Option>
-                  <Option key="Croissant">Croissant</Option>
-                  <Option key="Brioche">Brioche</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item label="Baked Where">
-                <Select
-                  defaultValue="SLO"
-                  style={{ width: 120 }}
-                  onSelect={this.setBakedWhere}
-                >
-                  <Option key="SLO">SLO</Option>
-                  <Option key="Carlton">Carlton</Option>
-                  <Option key="Split">Split</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item label="When to Bake">
-                <InputNumber
-                  min={0}
-                  style={{ width: 120 }}
-                  value={this.state.when}
-                  onChange={(e) => {
-                    this.setWhen(e);
-                  }}
-                />
-                <span className="ant-form-text">days</span>
-              </Form.Item>
-              <Form.Item label="Price($)">
-                <InputNumber
-                  min={0}
-                  style={{ width: 120 }}
-                  value={this.state.price}
-                  onChange={(e) => {
-                    this.setPrice(e);
-                  }}
-                />
-              </Form.Item>
-              <Form.Item label="Weight">
-                <InputNumber
-                  min={0}
-                  style={{ width: 120 }}
-                  value={this.state.weight}
-                  onChange={(e) => {
-                    this.setWeight(e);
-                  }}
-                />
-                <span className="ant-form-text">g</span>
-              </Form.Item>
-              <Form.Item label="Order Cutoff">
-                <InputNumber
-                  min={0}
-                  style={{ width: 120 }}
-                  value={this.state.cutoff}
-                  onChange={(e) => {
-                    this.setCutoff(e);
-                  }}
-                />
-                <span className="ant-form-text">days</span>
-              </Form.Item>
-              <Form.Item
-                wrapperCol={{
-                  span: 12,
-                  offset: 7,
-                }}
-              >
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  onClick={this.handleOk}
-                >
-                  Add Product
-                </Button>
-              </Form.Item>
-              <Form.Item label="Special Note">
-                <TextArea
-                  style={{ width: "300px" }}
-                  autoSize={{ minRows: 3, maxRows: 6 }}
-                  value={this.state.note}
-                  onChange={(e) => {
-                    this.setNote(e.target.value);
-                  }}
-                ></TextArea>
-              </Form.Item>
+              </Col>
             </div>
+          </Form>
+          
+          <Form name="dynamic_form_nest_item" autoComplete="off">
+          <Col span={5} offset={8}>
+            {productTest}
+            </Col>
+            <Form.Item label="Special Note" {...formItemLayout}>
+              <TextArea
+                style={{ width: "300px" }}
+                autoSize={{ minRows: 3, maxRows: 6 }}
+                value={this.state.note}
+                onChange={(e) => {
+                  this.setNote(e.target.value);
+                }}
+              ></TextArea>
+            </Form.Item>
+            <Col span={5} offset={8}>
+            <Button type="primary" htmlType="submit" onClick={this.handleOk}
+            >
+              Add Product
+            </Button>
+            </Col>
           </Form>
         </Card>
       </div>
