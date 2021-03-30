@@ -19,7 +19,9 @@ export default class Login extends React.Component {
 
   componentDidMount() {
     this._isMounted = true;
+    console.log("mount");
     this.getCustomerList();
+    // console.log(this.state.fakeCustomers);
   }
 
   componentWillUnmount() {
@@ -47,8 +49,8 @@ export default class Login extends React.Component {
   getUser(data) {
     var theuser;
     // console.log(data.username);
-    
-    for (let user of this.fakeCustomers){
+    console.log(this.state.fakeCustomers);
+    for (let user of this.state.fakeCustomers){
         if (user.username === data.username){
             if (user.password === data.password){
                 theuser = user;
@@ -119,7 +121,7 @@ export default class Login extends React.Component {
           <Input
             id="username"
             size="large"
-            placeholder="Username"
+            placeholder="Username (admin0 or user0)"
             prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
             onChange={(e) => {
               this.setUserName(e.target.value);
@@ -130,7 +132,7 @@ export default class Login extends React.Component {
           <Input.Password
             id="password"
             size="large"
-            placeholder="Password"
+            placeholder="Password (admin0 or user0)"
             prefix={<KeyOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
             onChange={(e) => {
               this.setPassword(e.target.value);
