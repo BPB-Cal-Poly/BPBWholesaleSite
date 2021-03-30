@@ -13,29 +13,48 @@ export default class Login extends React.Component {
     this.state = {
       username: "",
       password: "",
-      fakeCustomers: [],
+      fakeCustomers : [
+        {
+          id: 1,
+          firstName: "first1",
+          lastName: "last1",
+          username: "user0",
+          password: "user0",
+          nickname: "1",
+          business: "Business 1",
+          permission: "customer",
+        },
+        {
+          id: 2,
+          firstName: "admin",
+          lastName: "0",
+          username: "admin0",
+          password: "admin0",
+          nickname: "admin0",
+          business: "Business 2",
+          permission: "admin",
+        },
+      ],
     };
   }
 
   componentDidMount() {
     this._isMounted = true;
-    console.log("mount");
-    this.getCustomerList();
-    // console.log(this.state.fakeCustomers);
+    // this.getCustomerList();
   }
 
   componentWillUnmount() {
     this._isMounted = false;
   }
 
-  getCustomerList = () => {
-    if (this._isMounted) {
-      let fakeCustomers = this.props.fakeCustomers;
-      this.setState({
-        fakeCustomers: fakeCustomers,
-      });
-    }
-  };
+  // getCustomerList = () => {
+  //   if (this._isMounted) {
+  //     let fakeCustomers = this.props.fakeCustomers;
+  //     this.setState({
+  //       fakeCustomers: fakeCustomers,
+  //     });
+  //   }
+  // };
 
   async fetchUser(data) {
     const response = await API.get("user", "/user/:username")

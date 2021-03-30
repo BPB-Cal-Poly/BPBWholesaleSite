@@ -126,7 +126,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // console.log("mount");
     this._isMounted = true;
     this.updateUser();
   }
@@ -144,15 +143,15 @@ class App extends React.Component {
   }
 
   getBusiness = () =>{
-    console.log("getting business for "+ this.state.username);
+    // console.log("getting business for "+ this.state.username);
     var thebusiness;
     for(let customer of this.state.fakeCustomers){
-      console.log("customer is "+ customer.username);
+      // console.log("customer is "+ customer.username);
       if (customer.username === this.state.username){
         thebusiness = customer.business;
       }
     }
-    console.log("thebusiness is "+ thebusiness);
+    // console.log("thebusiness is "+ thebusiness);
     for(let business of this.state.fakeBusinesses){
       if(business.name === thebusiness){
         return business;
@@ -162,7 +161,7 @@ class App extends React.Component {
 
   render() {
     let { isLogined, username, userType } = this.state;
-    console.log("app username is" + username);
+    console.log("app username is " + username);
     let popMenuAdmin = (
       <Menu
         onClick={(p) => {
@@ -272,10 +271,10 @@ class App extends React.Component {
                 ) : (
                   <Admin
                     {...props}
-                    fakeCustomers={this.state.fakeCustomers}
+                    // fakeCustomers={this.state.fakeCustomers}
                     fakeProducts={this.state.fakeProducts}
                     fakeCategories={this.state.fakeCategories}
-                    fakeBusinesses={this.state.fakeBusinesses}
+                    // fakeBusinesses={this.state.fakeBusinesses}
                   />
                 )
               }
@@ -284,7 +283,7 @@ class App extends React.Component {
               path="/login"
               exact
               render={(props) => (
-                <Login {...props} fakeCustomers={this.state.fakeCustomers} onUserChange={this.updateUser} />
+                <Login {...props} onUserChange={this.updateUser} />
               )}
             ></Route>
             <Route
@@ -299,6 +298,12 @@ class App extends React.Component {
                     }}
                   />
                 ) : (
+                  userType === "admin" ? <Redirect
+                  to={{
+                    pathname: "/admin/main",
+                    state: { from: props.location },
+                  }}
+                />:
                   <OrderScreen
                     {...props}
                     fakeCategories={this.state.fakeCategories}
@@ -308,11 +313,6 @@ class App extends React.Component {
                 )
               }
             ></Route>
-            {/* <Route
-              exact
-              path="/"
-              render={(props) => <OrderScreen {...props} />}
-            ></Route> */}
           </Switch>
         </main>
         <footer className="row center">This is footer</footer>

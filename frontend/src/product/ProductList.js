@@ -10,29 +10,28 @@ export default class ProductList extends React.Component {
     super(props);
     this.state = {
       list: [],
-      expandedRowKeys: [],
     };
   }
 
   componentDidMount() {
     this._isMounted = true;
-    this.getList();
   }
 
   componentWillUnmount() {
     this._isMounted = false;
   }
 
-  getList = () => {
-    if (this._isMounted) {
-      let fakeProducts = this.props.fakeProducts;
-      let fakeCategories = this.props.fakeCategories
-      this.setState({
-        list: fakeProducts,
-        categories: fakeCategories,
-      });
+  static getDerivedStateFromProps(props, state) {
+    console.log("get in list");
+    if (props.fakeProducts !== state.fakeProducts) {
+      console.log("fakeproduct change");
+      console.log(props.fakeProducts);
+      return {
+        list: props.fakeProducts,
+      };
     }
-  };
+    return null;
+  }
 
   deleteProduct = (id) => {
     let dataProps = {

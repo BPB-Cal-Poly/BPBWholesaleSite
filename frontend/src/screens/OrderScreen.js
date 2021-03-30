@@ -122,10 +122,11 @@ export default class HomeScreen extends React.Component {
     this.props.history.push("/admin/product/list");
   };
 
+
   render() {
     let { categories, products } = this.state;
     let business = this.props.business;
-    console.log(products);
+    // console.log(products);
     const formItemLayout = {
       labelCol: {
         span: 8,

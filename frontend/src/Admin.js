@@ -31,15 +31,59 @@ export default class OrderScreen extends React.Component {
     super(props);
     this.state = {
       fakeCategories: [],
-      fakeCustomers: [],
       fakeProducts: [],
       fakeBusinesses: [],
+      fakeCustomers : [
+        {
+          id: 1,
+          firstName: "first1",
+          lastName: "last1",
+          username: "user0",
+          password: "user0",
+          nickname: "1",
+          business: "Business 1",
+          permission: "customer",
+        },
+        {
+          id: 2,
+          firstName: "admin",
+          lastName: "0",
+          username: "admin0",
+          password: "admin0",
+          nickname: "admin0",
+          business: "Business 2",
+          permission: "admin",
+        },
+      ],
     };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log("get in admin");
+    if (props.fakeProducts !== state.fakeProducts) {
+      console.log("fakeproduct change");
+      return {
+        fakeProducts: props.fakeProducts,
+      };
+    }
+    if (props.fakeCategories !== state.fakeCategories) {
+      console.log("fakecat change");
+      return {
+        fakeCategories: props.fakeCategories,
+      };
+    }
+    if (props.fakeBusinesses !== state.fakeBusinesses) {
+      console.log("fakebus change");
+      return {
+        fakeBusinesses: props.fakeBusinesses,
+      };
+    }
+
+    return null;
   }
 
   componentDidMount() {
     this._isMounted = true;
-    this.getList();
   }
 
   componentWillUnmount() {
@@ -50,12 +94,10 @@ export default class OrderScreen extends React.Component {
     if (this._isMounted) {
       let fakeProducts = this.props.fakeProducts;
       let fakeCategories = this.props.fakeCategories;
-      let fakeCustomers = this.props.fakeCustomers;
       let fakeBusinesses = this.props.fakeBusinesses;
       this.setState({
         fakeProducts: fakeProducts,
         fakeCategories: fakeCategories,
-        fakeCustomers: fakeCustomers,
         fakeBusinesses: fakeBusinesses
       });
     }
@@ -73,7 +115,8 @@ export default class OrderScreen extends React.Component {
     let pathnames = this.props.location.pathname.split("/");
     let category = pathnames[2];
     var sub_category, id, customer_category;
-
+    console.log("admin");
+    console.log(this.state.fakeProducts);
     switch (category) {
       case "customer":
         category = "Customer";
