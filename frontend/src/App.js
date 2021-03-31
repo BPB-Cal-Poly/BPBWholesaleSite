@@ -13,6 +13,7 @@ import Login from "./user/Login";
 import Admin from "./Admin";
 import { isLogined, getUsername, getUserType, clearToken } from "./utils/utils";
 import "antd/dist/antd.css";
+import Script from 'react-load-script';
 
 class App extends React.Component {
   constructor(props) {
@@ -128,7 +129,12 @@ class App extends React.Component {
   componentDidMount() {
     this._isMounted = true;
     this.updateUser();
+    // const gmapScriptEl = document.createElement(`script`)
+    // gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=SECRET_EATING&libraries=places&callback=initMap`
+    // document.querySelector(`body`).insertAdjacentElement(`beforeend`, gmapScriptEl)
   }
+
+  
 
   updateUser = () => {
     this.setState({
@@ -253,9 +259,12 @@ class App extends React.Component {
       </header>
     );
     return (
+      
       <div className="grid-container">
+        
         {header}
         <main>
+        <Script url="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></Script>
           <Switch>
             <Route
               path="/admin"
@@ -271,10 +280,10 @@ class App extends React.Component {
                 ) : (
                   <Admin
                     {...props}
-                    // fakeCustomers={this.state.fakeCustomers}
+                    fakeCustomers={this.state.fakeCustomers}
                     fakeProducts={this.state.fakeProducts}
                     fakeCategories={this.state.fakeCategories}
-                    // fakeBusinesses={this.state.fakeBusinesses}
+                    fakeBusinesses={this.state.fakeBusinesses}
                   />
                 )
               }

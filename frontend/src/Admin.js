@@ -13,10 +13,11 @@ import "./styles/layout.css";
 import { Route, Switch, Link } from "react-router-dom";
 import ProductList from "./product/ProductList";
 import ProductEdit from "./product/ProductEdit";
-import CustomerList from "./user/CustomerList";
+import UserList from "./user/UserList";
 import BusinessList from "./user/BusinessList";
-import CustomerEdit from "./user/CustomerEdit";
-import CustomerAdd from "./user/CustomerAdd";
+import UserEdit from "./user/UserEdit";
+import UserAdd from "./user/UserAdd";
+import BusinessAdd from "./user/BusinessAdd";
 import StandingOrdersList from "./order/StandingOrdersList";
 import StandingOrdersEdit from "./order/StandingOrdersEdit";
 import CartOrdersList from "./order/CartOrdersList";
@@ -33,28 +34,7 @@ export default class OrderScreen extends React.Component {
       fakeCategories: [],
       fakeProducts: [],
       fakeBusinesses: [],
-      fakeCustomers : [
-        {
-          id: 1,
-          firstName: "first1",
-          lastName: "last1",
-          username: "user0",
-          password: "user0",
-          nickname: "1",
-          business: "Business 1",
-          permission: "customer",
-        },
-        {
-          id: 2,
-          firstName: "admin",
-          lastName: "0",
-          username: "admin0",
-          password: "admin0",
-          nickname: "admin0",
-          business: "Business 2",
-          permission: "admin",
-        },
-      ],
+      fakeCustomers : [],
     };
   }
 
@@ -76,6 +56,12 @@ export default class OrderScreen extends React.Component {
       console.log("fakebus change");
       return {
         fakeBusinesses: props.fakeBusinesses,
+      };
+    }
+    if (props.fakeCustomers !== state.fakeCustomers) {
+      console.log("fakecus change");
+      return {
+        fakeCustomers: props.fakeCustomers,
       };
     }
 
@@ -262,7 +248,7 @@ export default class OrderScreen extends React.Component {
                 path="/admin/customer/user/list"
                 exact
                 render={(props) => (
-                  <CustomerList
+                  <UserList
                     {...props}
                     fakeCustomers={this.state.fakeCustomers}
                   />
@@ -274,16 +260,16 @@ export default class OrderScreen extends React.Component {
                 render={(props) => (
                   <BusinessList
                     {...props}
-                    fakeCustomers={this.state.fakeCustomers}
+                    // fakeCustomers={this.state.fakeCustomers}
                     fakeBusinesses={this.state.fakeBusinesses}
                   />
                 )}
               />
               <Route
-                path="/admin/customer/edit/:id"
+                path="/admin/customer/user/edit/:id"
                 exact
                 render={(props) => (
-                  <CustomerEdit
+                  <UserEdit
                     {...props}
                     fakeCustomers={this.state.fakeCustomers}
                     onListChange={this.handleUserChange}
@@ -294,7 +280,18 @@ export default class OrderScreen extends React.Component {
                 path="/admin/customer/user/add"
                 exact
                 render={(props) => (
-                  <CustomerAdd
+                  <UserAdd
+                    {...props}
+                    fakeCustomers={this.state.fakeCustomers}
+                    onListChange={this.handleUserChange }
+                  />
+                )}
+              />
+              <Route
+                path="/admin/customer/business/add"
+                exact
+                render={(props) => (
+                  <BusinessAdd
                     {...props}
                     fakeCustomers={this.state.fakeCustomers}
                     onListChange={this.handleUserChange }

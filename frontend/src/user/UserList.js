@@ -9,7 +9,7 @@ import aws_exports from "../aws-exports";
 Amplify.configure(aws_exports);
 const { confirm } = Modal;
 
-export default class CustomerList extends React.Component {
+export default class UserList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,7 +68,7 @@ export default class CustomerList extends React.Component {
   };
 
   editCustomer = (id) => {
-    this.props.history.push("/admin/customer/edit/" + id);
+    this.props.history.push("/admin/customer/user/edit/" + id);
   };
 
   columns = [

@@ -4,9 +4,11 @@ import { BrowserRouter, Route} from "react-router-dom";
 import './styles/index.css';
 import App from './App';
 
+
 ReactDOM.render(
+  
   <React.StrictMode>
-    {/* <App /> */}
+    
     <BrowserRouter>
         <Route path="/" component={App}></Route>
 </BrowserRouter>

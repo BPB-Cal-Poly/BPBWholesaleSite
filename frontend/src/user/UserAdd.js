@@ -4,8 +4,9 @@ import {
   Select,
   Card,
   Input,
-  Form
+  Divider,Form
 } from "antd";
+
 import "../styles/product-list.css";
 const { Option } = Select;
 let fakeBusinesses= [
@@ -18,7 +19,7 @@ let fakePermissions= [
   { id: 2, name: "order" },
 ];
 
-export default class CustomerEdit extends React.Component {
+export default class UserAdd extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,32 +39,10 @@ export default class CustomerEdit extends React.Component {
   componentDidMount() {
     this._isMounted = true;
     this.getList();
-    this.getUser();
   }
 
   componentWillUnmount() {
     this._isMounted = false;
-  }
-
-  getUser =()=>{
-    let id = this.props.match.params.id;
-    var theuser;
-    // console.log(this.props.fakeCustomers);
-    for (let user of this.props.fakeCustomers){
-      if (user.id == id){
-        theuser = user;
-      }
-    }
-    if(this._isMounted){
-      this.setState({
-        firstName: theuser.firstName,
-        lastName: theuser.lastName,
-        nickname: theuser.nickname,
-        business: theuser.business,
-        permission: theuser.permissions,
-      });
-    }
-
   }
 
   getList = () => {
@@ -145,7 +124,7 @@ export default class CustomerEdit extends React.Component {
 
           <Form.Item
             label="First Name"
-            // name="first name"
+            name="first name"
             rules={[
               {
                 required: true,
@@ -163,7 +142,7 @@ export default class CustomerEdit extends React.Component {
           </Form.Item>
           <Form.Item
             label="Last Name"
-            // name="last name"
+            name="last name"
             rules={[
               {
                 required: true,

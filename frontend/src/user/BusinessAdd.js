@@ -6,9 +6,14 @@ import {
   Input,
   Divider,Form
 } from "antd";
-
+import { LocationSearch } from "../utils/LocationSearch";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import { FormComponentProps } from "antd/lib/form/Form";
 import "../styles/product-list.css";
+
 const { Option } = Select;
+
+
 let fakeBusinesses= [
   { id: 1, name: "business 1" },
   { id: 2, name: "business 2" },
@@ -19,7 +24,7 @@ let fakePermissions= [
   { id: 2, name: "order" },
 ];
 
-export default class CustomerAdd extends React.Component {
+export default class BusinessAdd extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,10 +33,9 @@ export default class CustomerAdd extends React.Component {
       permissions: [],
       modelVisible: false,
       id: "",
-      firstName: "",
-      lastName: "",
+      name: "",
       nickname: "",
-      business: "business 1",
+      address: "",
       permission: "order",
     };
   }
@@ -56,21 +60,21 @@ export default class CustomerAdd extends React.Component {
     }
   };
 
-  setFirstName = (name) => {
+  setName = (name) => {
     this.setState({
-      firstName: name,
-    });
-  };
-
-  setLastName = (name) => {
-    this.setState({
-      lastName: name,
+      name: name,
     });
   };
 
   setNickname = (nickname) => {
     this.setState({
       nickname: nickname,
+    });
+  };
+
+  setAddress = (addr) => {
+    this.setState({
+      address: addr,
     });
   };
 
@@ -107,6 +111,25 @@ export default class CustomerAdd extends React.Component {
     this.props.history.push('/admin/customer/user/list');
   }
 
+  handleAddressChange = (address) => {
+    this.setState({
+        address: address,
+      });
+  };
+
+  handleAddressSelect = (address) => {
+    geocodeByAddress(address)
+      .then((results) => {
+        return getLatLng(results[0]);
+      })
+      .then((latLng) => {
+        console.log('Success', latLng);
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+  };
+
 
   render() {
     let {list, businesses, permissions} = this.state;
@@ -116,45 +139,28 @@ export default class CustomerAdd extends React.Component {
       },
     };
     return (
+        
       <div className="customer-layout">
+          
       <Card>
         <Form {...formItemLayout}
         form={this.form}>
-          <h1>User</h1>
-
+          <h1>Business</h1>
           <Form.Item
-            label="First Name"
-            name="first name"
+            label="Name"
+            name="name"
             rules={[
               {
                 required: true,
-                message: "Please input first name",
+                message: "Please input name",
               },
             ]}
           >
             <Input
               style={{ width: 120 }}
-              value={this.state.firstName}
+              value={this.state.name}
               onChange={(e) => {
-                this.setFirstName(e.target.value);
-              }}
-            ></Input>
-          </Form.Item>
-          <Form.Item
-            label="Last Name"
-            name="last name"
-            rules={[
-              {
-                required: true,
-                message: "Please input last name",
-              },
-            ]}
-          >
-            <Input
-              style={{ width: 120 }}
-              value={this.state.lastName}
-              onChange={(e) => {
-                this.setLastName(e.target.value);
+                this.setName(e.target.value);
               }}
             ></Input>
           </Form.Item>
@@ -166,6 +172,26 @@ export default class CustomerAdd extends React.Component {
                 this.setNickname(e.target.value);
               }}
             ></Input>
+          </Form.Item>
+          <Form.Item label="Address">
+            <Input
+              style={{ width: 120 }}
+              value={this.state.address}
+              onChange={(e) => {
+                this.setAddress(e.target.value);
+              }}
+            ></Input>
+          </Form.Item>
+          <Form.Item label="Address1" initialValue=""
+                rules= {[{ required: false }]}>
+       
+                <LocationSearch
+                  address={this.state.address}
+                  onChange={this.handleAddressChange}
+                  onAddressSelect={this.handleAddressSelect}
+                />
+
+        
           </Form.Item>
           <Form.Item
             label="Business"
@@ -215,3 +241,4 @@ export default class CustomerAdd extends React.Component {
     );
   }
 }
+

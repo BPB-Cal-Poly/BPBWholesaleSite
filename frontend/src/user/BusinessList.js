@@ -17,23 +17,26 @@ export default class BusinessList extends React.Component {
 
   componentDidMount() {
     this._isMounted = true;
-    this.getList();
+    // this.getList();
   }
 
   componentWillUnmount() {
     this._isMounted = false;
   }
 
-  getList = () => {
-    if (this._isMounted) {
-      let fakeCustomers= this.props.fakeCustomers;
-      this.setState({
-        list: fakeCustomers,
-      });
+  static getDerivedStateFromProps(props, state) {
+    console.log("get in admin");
+    if (props.fakeBusinesses !== state.fakeBusinesses) {
+      console.log("fakebus change");
+      return {
+        list: props.fakeBusinesses,
+      };
     }
-  };
 
-  deleteCustomer = (id) => {
+    return null;
+  }
+
+  deleteBusiness = (id) => {
     let dataProps = {
       id: id,
     };
@@ -55,23 +58,16 @@ export default class BusinessList extends React.Component {
     });
   };
 
-  editCustomer = (id) => {
-    this.props.history.push("/admin/customer/edit/" + id);
+  editBusiness = (id) => {
+    this.props.history.push("/admin/customer/business/edit/" + id);
   };
 
   columns = [
     {
-      title: "First Name",
-      dataIndex: "firstName",
+      title: "Name",
+      dataIndex: "name",
       sorter: {
-        compare: (a, b) => a.firstName.localeCompare(b.firstName),
-      },
-    },
-    {
-      title: "Last Name",
-      dataIndex: "lastName",
-      sorter: {
-        compare: (a, b) => a.lastName.localeCompare(b.lastName),
+        compare: (a, b) => a.name.localeCompare(b.name),
       },
     },
     {
@@ -82,17 +78,10 @@ export default class BusinessList extends React.Component {
       },
     },
     {
-      title: "Business",
-      dataIndex: "business",
+      title: "Phone",
+      dataIndex: "phone",
       sorter: {
-        compare: (a, b) => a.business.localeCompare(b.business),
-      },
-    },
-    {
-      title: "Permission",
-      dataIndex: "permission",
-      sorter: {
-        compare: (a, b) => a.permission.localeCompare(b.permission),
+        compare: (a, b) => a.phone.localeCompare(b.phone),
       },
     },
     {
@@ -104,7 +93,7 @@ export default class BusinessList extends React.Component {
           <Button
             type="primary"
             onClick={() => {
-              this.editCustomer(record.id);
+              this.editBusiness(record.id);
             }}
           >
             Edit
@@ -112,7 +101,7 @@ export default class BusinessList extends React.Component {
           <Button
             type="primary"
             onClick={() => {
-              this.deleteCustomer(record.id);
+              this.deleteBusiness(record.id);
             }}
           >
             Delete
@@ -131,7 +120,7 @@ export default class BusinessList extends React.Component {
           <Button
             type="primary"
           >
-            <Link to="/admin/customer/user/add">Add User</Link>
+            <Link to="/admin/customer/business/add">Add Business</Link>
           </Button>
           </div>
       </div>
