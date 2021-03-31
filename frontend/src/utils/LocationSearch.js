@@ -1,6 +1,6 @@
 import { Input } from "antd";
 import React from "react";
-import PlacesAutocomplete, { Suggestion } from "react-places-autocomplete";
+import PlacesAutocomplete from "react-places-autocomplete";
 
 
 export class LocationSearch extends React.Component {
@@ -33,6 +33,7 @@ export class LocationSearch extends React.Component {
                 placeholder: 'Search Places ...',
                 className: 'location-search-input',
               })}
+              style={{ width: 200 }}
             />
             <div className="autocomplete-dropdown-container">
               {loading ? <div>Loading...</div> : null}

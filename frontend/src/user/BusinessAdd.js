@@ -6,9 +6,6 @@ import {
   Input,
   Divider,Form
 } from "antd";
-import { LocationSearch } from "../utils/LocationSearch";
-import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import { FormComponentProps } from "antd/lib/form/Form";
 import "../styles/product-list.css";
 
 const { Option } = Select;
@@ -30,13 +27,12 @@ export default class BusinessAdd extends React.Component {
     this.state = {
       list: [],
       businesses: [],
-      permissions: [],
       modelVisible: false,
       id: "",
       name: "",
       nickname: "",
-      address: "",
-      permission: "order",
+      address: ["", "", "", "", ""],
+      phone: "",
     };
   }
 
@@ -55,7 +51,6 @@ export default class BusinessAdd extends React.Component {
       this.setState({
         list: fakeCustomers,
         businesses: fakeBusinesses,
-        permissions: fakePermissions,
       });
     }
   };
@@ -72,21 +67,45 @@ export default class BusinessAdd extends React.Component {
     });
   };
 
-  setAddress = (addr) => {
+  setAddress1 = (addr) => {
+    var curAddr = this.state.address;
+    curAddr[0] = addr;
     this.setState({
-      address: addr,
+      address: curAddr,
+    });
+  };
+  setAddress2 = (addr) => {
+    var curAddr = this.state.address;
+    curAddr[1] = addr;
+    this.setState({
+      address: curAddr,
+    });
+  };
+  setAddress3 = (addr) => {
+    var curAddr = this.state.address;
+    curAddr[2] = addr;
+    this.setState({
+      address: curAddr,
+    });
+  };
+  setCity = (addr) => {
+    var curAddr = this.state.address;
+    curAddr[3] = addr;
+    this.setState({
+      address: curAddr,
+    });
+  };
+  setZipCode = (addr) => {
+    var curAddr = this.state.address;
+    curAddr[4] = addr;
+    this.setState({
+      address: curAddr,
     });
   };
 
-  setBusiness = (business) => {
+  setPhone = (phone) => {
     this.setState({
-      business: business,
-    });
-  };
-
-  setPermission = (permission) => {
-    this.setState({
-      permission: permission,
+      phone: phone,
     });
   };
 
@@ -111,28 +130,10 @@ export default class BusinessAdd extends React.Component {
     this.props.history.push('/admin/customer/user/list');
   }
 
-  handleAddressChange = (address) => {
-    this.setState({
-        address: address,
-      });
-  };
-
-  handleAddressSelect = (address) => {
-    geocodeByAddress(address)
-      .then((results) => {
-        return getLatLng(results[0]);
-      })
-      .then((latLng) => {
-        console.log('Success', latLng);
-      })
-      .catch((error) => {
-        console.error("Error", error);
-      });
-  };
 
 
   render() {
-    let {list, businesses, permissions} = this.state;
+    let {list, businesses, permissions, address} = this.state;
     const formItemLayout = {
       labelCol: {
         span: 3,
@@ -173,57 +174,63 @@ export default class BusinessAdd extends React.Component {
               }}
             ></Input>
           </Form.Item>
-          <Form.Item label="Address">
+          <h1>Address</h1>
+          <Form.Item label="Address Line 1">
             <Input
-              style={{ width: 120 }}
-              value={this.state.address}
+              style={{ width: 250 }}
+              value={this.state.address[0]}
               onChange={(e) => {
-                this.setAddress(e.target.value);
+                this.setAddress1(e.target.value);
               }}
             ></Input>
           </Form.Item>
-          <Form.Item label="Address1" initialValue=""
-                rules= {[{ required: false }]}>
-       
-                <LocationSearch
-                  address={this.state.address}
-                  onChange={this.handleAddressChange}
-                  onAddressSelect={this.handleAddressSelect}
-                />
-
-        
+          <Form.Item label="Address Line 2">
+            <Input
+              style={{ width: 250 }}
+              value={this.state.address[1]}
+              onChange={(e) => {
+                this.setAddress2(e.target.value);
+              }}
+            ></Input>
           </Form.Item>
-          <Form.Item
-            label="Business"
-          >
-            <Select
-              defaultValue="business 1"
+          <Form.Item label="Address Line 3">
+            <Input
+              style={{ width: 250 }}
+              value={this.state.address[2]}
+              onChange={(e) => {
+                this.setAddress3(e.target.value);
+              }}
+            ></Input>
+          </Form.Item>
+          <Form.Item label="City">
+            <Input
+              style={{ width: 130 }}
+              value={this.state.address[3]}
+              onChange={(e) => {
+                this.setCity(e.target.value);
+              }}
+            ></Input>
+          </Form.Item>
+          <Form.Item label="Zipcode">
+            <Input
               style={{ width: 120 }}
-              onSelect={this.setBusiness}
-            >
-              {businesses.map((item) => (
-                <Option key={item.id} value={item.name}>
-                  {item.name}
-                </Option>
-              ))}
-            </Select>
+              value={this.state.address[4]}
+              onChange={(e) => {
+                this.setZipCode(e.target.value);
+              }}
+            ></Input>
           </Form.Item>
-          <Form.Item
-            label="Permission"
-          >
-            <Select
-              defaultValue="order"
+          <h1>Contact Info</h1>
+          <Form.Item label="Phone">
+            <Input
               style={{ width: 120 }}
-              onSelect={this.setPermission}
-            >
-              {permissions.map((item) => (
-                <Option key={item.id} value={item.name}>
-                  {item.name}
-                </Option>
-              ))}
-            </Select>
+              value={this.state.phone}
+              onChange={(e) => {
+                this.setPhone(e.target.value);
+              }}
+            ></Input>
           </Form.Item>
-          
+          <h1>Account Settings</h1>
           <Form.Item
             wrapperCol={{
               span: 12,
@@ -231,8 +238,9 @@ export default class BusinessAdd extends React.Component {
             }}
           >
             <Button type="primary" htmlType="submit"
-            onClick={this.handleOk}>
-              Add User
+            // onClick={this.handleOk}
+            >
+              Add Business
             </Button>
           </Form.Item>
         </Form>

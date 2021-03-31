@@ -13,7 +13,6 @@ import Login from "./user/Login";
 import Admin from "./Admin";
 import { isLogined, getUsername, getUserType, clearToken } from "./utils/utils";
 import "antd/dist/antd.css";
-import Script from 'react-load-script';
 
 class App extends React.Component {
   constructor(props) {
@@ -264,7 +263,6 @@ class App extends React.Component {
         
         {header}
         <main>
-        <Script url="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></Script>
           <Switch>
             <Route
               path="/admin"
