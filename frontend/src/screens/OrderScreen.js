@@ -276,7 +276,7 @@ export default class HomeScreen extends React.Component {
                   onFinish={async (values) => {
                     console.log(values);
                     this.addToOrder(values);
-                    message.success("提交成功");
+                    message.success("Product added");
                     return true;
                   }}
                 >
