@@ -24,10 +24,10 @@ class App extends React.Component {
       fakeProducts: [
         {
           id: 1,
-          name: "A1",
-          nickname: "a1",
+          name: "Waffle",
+          nickname: "waffle",
           description:
-            "this is desciption for A1 this is desciption for A1 this is desciption for A1 this is desciption for A1 this is desciption for A1",
+            "this is desciption for waffle this is desciption for waffle this is desciption for waffle this is desciption for waffle this is desciption for waffle",
           category: "Pastries",
           packsize: 10,
           dough: "Baguette",
@@ -39,9 +39,9 @@ class App extends React.Component {
         },
         {
           id: 2,
-          name: "A2",
-          nickname: "a2",
-          description: "this is desciption for A2",
+          name: "Cupcake",
+          nickname: "cupcake",
+          description: "this is desciption for cupcake",
           category: "Rustics",
           packsize: 8,
           dough: "Croissant",
@@ -53,9 +53,9 @@ class App extends React.Component {
         },
         {
           id: 3,
-          name: "B1",
-          nickname: "b1",
-          description: "this is desciption for B1",
+          name: "Croissant",
+          nickname: "croissant",
+          description: "this is desciption for croissant",
           category: "Pastries",
           packsize: 10,
           dough: "Baguette",
@@ -67,9 +67,9 @@ class App extends React.Component {
         },
         {
           id: 4,
-          name: "B2",
-          nickname: "b2",
-          description: "this is desciption for B2",
+          name: "Pie",
+          nickname: "pie",
+          description: "this is desciption for pie",
           category: "Rustics",
           packsize: 8,
           dough: "Croissant",

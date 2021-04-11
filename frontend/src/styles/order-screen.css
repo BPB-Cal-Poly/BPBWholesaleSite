@@ -1,0 +1,122 @@
+.products{
+  list-style: none;
+  height: 280px;
+  width: 100%;
+  /* display: table; */
+  cursor: grab;
+  position: relative;
+  left: 0;
+  transform: translate3d(0, 0, 0);
+  background: rgba(255, 144, 70, 0.596);;
+}
+
+.product{
+position: relative;
+width: 200px;
+height: 280px;
+float: left;
+padding: 1em;
+}
+.product:hover{
+      z-index: 1
+}
+
+.product.product-preview{
+        background: #E8B0AF
+}
+
+.product-preview {
+    /* padding: 1em; */
+    height: 280px;
+    position: relative;
+}
+
+.thumbnail {
+    width: 100%;
+    min-height: 120px;
+    max-height: 200px;
+    background: #E8B0AF;
+}
+
+.product-paper {
+    position: absolute;
+    height: 75px;
+    bottom: 20px;
+    background: rgba(226, 185, 185, 0.65);
+    padding: 1em;
+    display: block;
+    width: 100%;
+}
+
+img{
+    width: 100%;
+    margin-top: 1em;
+}
+
+.product-name {
+    font-size: 1.6em;
+    text-align: center;
+}
+
+.product-price {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.product-quantity {
+    font-size: 2em;
+    width: 2em;
+    height: 2em;
+    text-align: center;
+    padding: 0.35em 0;
+    border-radius: 1em;
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    background: #fff;
+    transform: rotateZ(10deg);
+    backface-visibility: hidden;
+}
+
+.product-interactions {
+    position: absolute;
+    bottom: 100px;
+    width: 172px;
+    height: 40px;
+    display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+    width: 20%;
+    height: 100%;
+    float: left;
+    text-align: center;
+    font-size: 3em;
+    line-height: 0.75em;
+    background: rgba(255, 255, 255, 0.65);
+    cursor: pointer;
+    transition: 0.1s all ease-in-out;
+    transform-origin: 50% 0 0;
+    transform: perspective(600px);
+    z-index: 0;
+    position: relative;
+    /* display: table-cell; */
+    vertical-align: middle;
+    border: 2px solid white;
+    border-radius: 1px;
+}
+
+.button.plus{
+    color: #7fb034;
+}
+
+.button.minus{
+    color: #a0ce5a;
+}
+
+.button.del{
+    color: red;
+}
