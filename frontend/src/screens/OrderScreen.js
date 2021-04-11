@@ -5,33 +5,26 @@ import {
   Card,
   Input,
   Form,
-  Col,
+  message,
   InputNumber,
   DatePicker,
   Space,
+  List,
 } from "antd";
+import ProForm, { ModalForm } from "@ant-design/pro-form";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import "../styles/product-list.css";
 import { Redirect } from "react-router-dom";
 const { Option } = Select;
 const { TextArea } = Input;
 
-// let categories = [
-//   { id: 1, name: "Pastries" },
-//   { id: 2, name: "Rustics" },
-// ];
-
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       categories: [],
-      // customers: [],
       products: [],
-      // businesses: [],
-      // username: this.props.username,
-      // business: {},
-      modelVisible: false,
+      //----order details---
       date: "",
       deliver: "",
       address: "",
@@ -46,7 +39,6 @@ export default class HomeScreen extends React.Component {
   componentDidMount() {
     this._isMounted = true;
     this.getList();
-    // this.getBusiness();
   }
 
   componentWillUnmount() {
@@ -55,17 +47,11 @@ export default class HomeScreen extends React.Component {
 
   getList = () => {
     if (this._isMounted) {
-      // let username= this.props.username;
       let categories = this.props.fakeCategories;
       let products = this.props.fakeProducts;
-      // let customers = this.props.fakeCustomers;
-      // let businesses = this.props.fakeBusinesses;
       this.setState({
-        // username: username,
         products: products,
         categories: categories,
-        // customers: customers,
-        // businesses: businesses,
       });
     }
   };
@@ -91,6 +77,14 @@ export default class HomeScreen extends React.Component {
   setNote = (note) => {
     this.setState({
       note: note,
+    });
+  };
+
+  addToOrder = (product) => {
+    let newList = this.state.orders;
+    newList.push(product);
+    this.setState({
+      orders: newList,
     });
   };
 
@@ -122,21 +116,19 @@ export default class HomeScreen extends React.Component {
     this.props.history.push("/admin/product/list");
   };
 
-
   render() {
     let { categories, products } = this.state;
     let business = this.props.business;
     // console.log(products);
     const formItemLayout = {
       labelCol: {
-        span: 8,
-        offset: 2,
+        // span: 8,
+        // offset: 2,
       },
       wrapperCol: {
         span: 14,
       },
     };
-
 
     let addressForm = business ? (
       <Form.Item label="Deliver address">
@@ -154,26 +146,7 @@ export default class HomeScreen extends React.Component {
       </Form.Item>
     ) : null;
 
-    let productForm =
-      products.length != 0 ? (
-        <Form.Item label="Product">
-          <Select
-            defaultValue={products[0].name}
-            style={{ width: 120 }}
-            onSelect={this.setCategory}
-          >
-            {products.map((item) => (
-              <Option key={item.id} value={item.name}>
-                {item.name}
-                {" $"}
-                {item.price}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-      ) : null;
-
-    let productTest =
+    let productsForm =
       products.length != 0 ? (
         <Form.List name="products">
           {(fields, { add, remove }) => (
@@ -187,7 +160,6 @@ export default class HomeScreen extends React.Component {
                   <Form.Item
                     {...field}
                     label="Product"
-                    // {...formItemLayoutWithLabel }
                     layout="vertical"
                     name={[field.name, "product"]}
                     fieldKey={[field.fieldKey, "product"]}
@@ -195,7 +167,7 @@ export default class HomeScreen extends React.Component {
                   >
                     <Select
                       defaultValue={products[0].name}
-                      // style={{ width: 130 }}
+                      style={{ width: 130 }}
                       onSelect={this.setCategory}
                     >
                       {products.map((item) => (
@@ -210,7 +182,6 @@ export default class HomeScreen extends React.Component {
                   <Form.Item
                     {...field}
                     label="Quantity"
-                    // {...formItemLayoutWithLabel }
                     name={[field.name, "quantity"]}
                     fieldKey={[field.fieldKey, "quantity"]}
                     rules={[{ required: true, message: "Missing quantity" }]}
@@ -224,7 +195,6 @@ export default class HomeScreen extends React.Component {
                       }}
                     />
                   </Form.Item>
-                  {/* </Input.Group> */}
                   {fields.length > 1 ? (
                     <MinusCircleOutlined
                       className="dynamic-delete-button"
@@ -237,7 +207,6 @@ export default class HomeScreen extends React.Component {
                 <Button
                   type="dashed"
                   onClick={() => add()}
-                  // block
                   icon={<PlusOutlined />}
                 >
                   Add product
@@ -247,53 +216,110 @@ export default class HomeScreen extends React.Component {
           )}
         </Form.List>
       ) : null;
+
     return (
-      <div>
+      <div className="customer-center">
         <Card className="customer-layout">
-          <Form
-            {...formItemLayout}
-            form={this.form}
-          >
-            <div className="customer-center">
-            <Col span={5} offset={8}>
-              <h1>Order</h1>
-              </Col>
-              <Form.Item
-                label="Delivery Day"
-                name="deliverDate"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please select deliver date",
-                  },
-                ]}
-              >
-                <DatePicker
-                  onChange={(date, dateString) => {
-                    this.setDeliverDate(dateString);
-                  }}
-                />
-              </Form.Item>
-              {addressForm}
-              <Form.Item label="Phone number">
-                <Input
-                  style={{ width: 120 }}
-                  value={business ? business.phone : null}
-                  onChange={(e) => {
-                    this.setPhone(e.target.value);
-                  }}
-                ></Input>
-              </Form.Item>
-              <Col span={8} offset={8}>
-              <h1>Order Detail</h1>
-              </Col>
-            </div>
+          <Form {...formItemLayout} form={this.form}>
+            <h1>Order</h1>
+            <Form.Item
+              label="Delivery Day"
+              name="deliverDate"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select deliver date",
+                },
+              ]}
+            >
+              <DatePicker
+                onChange={(date, dateString) => {
+                  this.setDeliverDate(dateString);
+                }}
+              />
+            </Form.Item>
+            {addressForm}
+            <Form.Item label="Phone number">
+              <Input
+                style={{ width: 120 }}
+                value={business ? business.phone : null}
+                onChange={(e) => {
+                  this.setPhone(e.target.value);
+                }}
+              ></Input>
+            </Form.Item>
+            <h1>Order Detail</h1>
           </Form>
-          
+
           <Form name="dynamic_form_nest_item" autoComplete="off">
-          <Col span={5} offset={8}>
-            {productTest}
-            </Col>
+            <Form.Item>
+              <ModalForm
+                title="Product Info"
+                width={250}
+                trigger={
+                  <Button type="primary">
+                    <PlusOutlined />
+                    Add Product
+                  </Button>
+                }
+                modalProps={{
+                  onCancel: () => console.log("run"),
+                }}
+                submitter={{
+                  searchConfig: {
+                    submitText: "Add",
+                    resetText: "Cancel",
+                  },
+                }}
+                onFinish={async (values) => {
+                  console.log(values);
+                  this.addToOrder(values);
+                  message.success("提交成功");
+                  return true;
+                }}
+              >
+                <Form.Item
+                  label="Product"
+                  name="product"
+                  layout="vertical"
+                  initialValue={"Select Product"}
+                  rules={[{ required: true, message: "Missing product" }]}
+                >
+                  <Select
+                    style={{ width: 140 }}
+                    onSelect={this.setProduct}
+                  >
+                    {products.map((item) => (
+                      <Option key={item.id} value={item.name}>
+                        {item.name}
+                        {" $"}
+                        {item.price}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  label="Quantity"
+                  name="quantity"
+                  rules={[{ required: true, message: "Missing quantity" }]}
+                >
+                  <InputNumber noStyle min={1} style={{ width: 120 }} />
+                </Form.Item>
+              </ModalForm>
+            </Form.Item>
+            {this.state.orders.length != 0 ? <List
+              grid={{ gutter: 20, column: 1 }}
+              dataSource={this.state.orders}
+              renderItem={(item) => (
+                <List.Item>
+                  <List.Item.Meta
+                    title={item.product}
+                    description={"Quantity: " + item.quantity}
+                  />
+                </List.Item>
+              )}
+            /> : null}
+            
             <Form.Item label="Special Note" {...formItemLayout}>
               <TextArea
                 style={{ width: "300px" }}
@@ -304,12 +330,14 @@ export default class HomeScreen extends React.Component {
                 }}
               ></TextArea>
             </Form.Item>
-            <Col span={5} offset={8}>
-            <Button type="primary" htmlType="submit" onClick={this.handleOk}
+            <Button
+              type="default"
+              htmlType="submit"
+              onClick={this.handleOk}
+              shape="round"
             >
-              Add Product
+              Order
             </Button>
-            </Col>
           </Form>
         </Card>
       </div>

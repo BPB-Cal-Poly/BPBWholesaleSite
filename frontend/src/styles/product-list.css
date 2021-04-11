@@ -19,6 +19,13 @@
   width: 300%;
 } */
 
+.customer-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #Form.Item {
   text-align: left;
 }

@@ -128,9 +128,6 @@ class App extends React.Component {
   componentDidMount() {
     this._isMounted = true;
     this.updateUser();
-    // const gmapScriptEl = document.createElement(`script`)
-    // gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=SECRET_EATING&libraries=places&callback=initMap`
-    // document.querySelector(`body`).insertAdjacentElement(`beforeend`, gmapScriptEl)
   }
 
   
