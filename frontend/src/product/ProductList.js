@@ -2,7 +2,6 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Button, message, Modal, Space, Table } from "antd";
 import { Link } from "react-router-dom";
 import React from "react";
-import "../styles/product-list.css";
 const { confirm } = Modal;
 
 export default class ProductList extends React.Component {

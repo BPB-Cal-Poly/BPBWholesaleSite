@@ -6,7 +6,6 @@ import {
   Input,
   Divider,Form
 } from "antd";
-import "../styles/product-list.css";
 
 const { Option } = Select;
 

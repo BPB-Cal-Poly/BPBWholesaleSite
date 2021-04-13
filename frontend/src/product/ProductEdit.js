@@ -8,8 +8,6 @@ import {
   InputNumber,
 } from "antd";
 
-
-import "../styles/product-list.css";
 const { Option } = Select;
 const { TextArea } = Input;
 

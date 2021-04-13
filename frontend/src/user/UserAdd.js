@@ -7,7 +7,6 @@ import {
   Divider,Form
 } from "antd";
 
-import "../styles/product-list.css";
 const { Option } = Select;
 let fakeBusinesses= [
   { id: 1, name: "business 1" },

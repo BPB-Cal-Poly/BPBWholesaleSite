@@ -1,23 +1,11 @@
-.list-div{
+/* .list-div{
     width: 100%;
 }
 
 .add-button{
   display:flex;
-  justify-content: flex-end;
+  justifys-content: flex-end;
 }
-
-/* .customer-layout{
-  display: flex;
-  align-self: center;
-  text-align: left;
-  justify-content: center;
-}
-
-.customer-center{
-  text-align: left;
-  width: 300%;
-} */
 
 .customer-center {
   display: flex;
@@ -28,4 +16,4 @@
 
 #Form.Item {
   text-align: left;
-}
+} */

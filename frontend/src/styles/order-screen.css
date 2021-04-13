@@ -65,7 +65,7 @@ img{
 
 .product-quantity {
     font-size: 2em;
-    width: 3em;
+    /* width: 3em; */
     height: 2em;
     text-align: center;
     padding: 0.25em 0.2em;
@@ -116,13 +116,24 @@ img{
 }
 
 .product-quantity .ant-input-number{
-    width: 2em;
     height: 1.5em;
     font-size: 1.5em;
     display: inline-flex;
-    bottom: 10px;
+    position: absolute;
+    bottom: 0.03em;
+    left: 0.68em;
 }
 
 .product-quantity .ant-input-number-input{
     padding: 0;
+}
+
+.add-button .ant-btn{
+    border: 2px solid transparent;
+    border-color: #d9d9d9;
+}
+
+.border-box {
+    border: 2px solid transparent;
+    border-color: #d9d9d9;
 }

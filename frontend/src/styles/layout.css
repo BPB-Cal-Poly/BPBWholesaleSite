@@ -15,4 +15,24 @@
     background: #fff;
     padding: 24;
     min-height: 360;
-  }
+}
+
+.list-div{
+    width: 100%;
+}
+
+.add-button{
+  display:flex;
+  justify-content: flex-end;
+}
+
+.customer-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#Form.Item {
+  text-align: left;
+}

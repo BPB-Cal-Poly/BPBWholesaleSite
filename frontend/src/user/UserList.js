@@ -2,8 +2,7 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Button, message, Modal, Space, Table } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/product-list.css";
-// import "../index";
+
 import Amplify, { Auth, API } from "aws-amplify";
 import aws_exports from "../aws-exports";
 Amplify.configure(aws_exports);

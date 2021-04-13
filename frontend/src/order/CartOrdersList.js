@@ -3,7 +3,6 @@ import { Button, Modal, message, Table, Space } from "antd";
 import { Link } from "react-router-dom";
 
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import "../styles/product-list.css";
 const { confirm } = Modal;
 
 let fakeOrders = [

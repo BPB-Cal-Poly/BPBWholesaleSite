@@ -13,7 +13,6 @@ import {
 } from "antd";
 import ProForm, { ModalForm } from "@ant-design/pro-form";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import "../styles/product-list.css";
 import "../styles/order-screen.css";
 import { Redirect } from "react-router-dom";
 const { Option } = Select;
@@ -94,12 +93,7 @@ export default class HomeScreen extends React.Component {
   };
 
   addToOrder = (values) => {
-    let newOrders = this.state.orders;
-    for (let theproduct of newOrders) {
-      if (theproduct.product === values.product) {
-        theproduct.quantity = values.quantity;
-      }
-    }
+    this.setOrderQuantity(values.quantity, values.product)
     const newProducts = this.state.products;
     for (let theproduct of this.props.fakeProducts) {
       if (theproduct.name === values.product) {
@@ -107,47 +101,52 @@ export default class HomeScreen extends React.Component {
       }
     }
     this.setState({
-      orders: newOrders,
       products: newProducts,
     });
   };
 
   deleteFromOrders = (item) => {
-    let newOrders = this.state.orders;
-    for (let theproduct of newOrders) {
-      if (theproduct.product === item.name) {
-        theproduct.quantity = 0;
-      }
-    }
+    this.setOrderQuantity(0, item.name)
     const newProducts = this.state.products.filter((prod) => {
       return prod.id !== item.id;
     });
     message.success("Delete Successfully");
     this.setState({
       products: newProducts,
-      orders: newOrders,
     });
   };
 
   setOrderQuantity = (quantity, name) => {
     let newOrders = this.state.orders;
-    for (let theproduct of newOrders) {
-      if (theproduct.product === name) {
-        theproduct.quantity = quantity;
+    newOrders.find((x, i) => {
+      if (x.product === name){
+        newOrders[i].quantity = quantity;
       }
-    }
+    })
     this.setState({
       orders: newOrders,
     });
   };
 
   getQuantity = (product) => {
+    return this.state.orders.find(x => x.product === product).quantity;
+  };
+
+  getSubtotal = () => {
+    let subtotal = 0;
     for (let theproduct of this.state.orders) {
-      if (theproduct.product === product) {
-        return theproduct.quantity;
+      if (theproduct.quantity !== 0) {
+        subtotal += theproduct.quantity * this.state.products.find(x => x.name === theproduct.product).price;
       }
     }
-  };
+    return subtotal.toFixed(2);
+
+  }
+
+  getQuantityLength = (product) => {
+    let quantity = this.getQuantity(product.name);
+    return quantity.toString().length; 
+  }
 
   handleOk = () => {
     this.setState({
@@ -185,10 +184,6 @@ export default class HomeScreen extends React.Component {
     let notAddedProducts = this.props.fakeProducts.filter(
       (value) => !products.includes(value)
     );
-    console.log("orders");
-    console.log(orders);
-    console.log("products ");
-    console.log(products);
     let business = this.props.business;
 
     const formItemLayout = {
@@ -323,7 +318,7 @@ export default class HomeScreen extends React.Component {
                 ></Input>
               </Form.Item>
 
-              
+
               <h1>Order Detail</h1>
               {notAddedProducts.length !== 0 ? (
                 <Form.Item>
@@ -399,7 +394,7 @@ export default class HomeScreen extends React.Component {
                               {"$ " + item.price}
                             </div>
                           </div>
-                          <div className="product-quantity">
+                          <div className="product-quantity" style={{width: `${this.getQuantityLength(item)+1}em`}}>
                             x
                             <InputNumber
                               bordered={false}
@@ -409,6 +404,7 @@ export default class HomeScreen extends React.Component {
                               onChange={(e) => {
                                 this.setOrderQuantity(e, item.name);
                               }}
+                              style={{ width: '100%' }}
                             ></InputNumber>
                           </div>
                         </div>
@@ -441,6 +437,9 @@ export default class HomeScreen extends React.Component {
 
 
               <h1>Order Summary</h1>
+              <h2 className="customer-center border-box">subtotal: $
+              {this.getSubtotal()}
+              </h2>
               <List
                 grid={{ gutter: 20, column: 1 }}
                 dataSource={orders}
@@ -448,14 +447,13 @@ export default class HomeScreen extends React.Component {
                   item.quantity !== 0 ? (
                     <List.Item>
                       <List.Item.Meta
-                        title={item.product}
-                        description={"Quantity: " + item.quantity}
+                        title={item.product+ " x" + item.quantity}
                       />
                     </List.Item>
                   ) : null
                 }
               />
-
+            <div className="add-button">
               <Button
                 type="default"
                 htmlType="submit"
@@ -464,6 +462,7 @@ export default class HomeScreen extends React.Component {
               >
                 Order
               </Button>
+              </div>
             </Form>
           </Card>
         </div>

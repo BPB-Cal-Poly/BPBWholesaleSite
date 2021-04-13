@@ -33,7 +33,7 @@ class App extends React.Component {
           dough: "Baguette",
           where: "SLO",
           when: 1,
-          price: 3,
+          price: 3.99,
           weight: 10,
           cutoff: 2,
         },
