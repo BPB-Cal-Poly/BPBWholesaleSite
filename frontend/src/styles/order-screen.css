@@ -2,12 +2,12 @@
   list-style: none;
   height: 280px;
   width: 100%;
-  /* display: table; */
   cursor: grab;
   position: relative;
   left: 0;
   transform: translate3d(0, 0, 0);
-  background: rgba(255, 144, 70, 0.596);;
+  background: rgba(255, 144, 70, 0.596);
+  margin-bottom: 24px;
 }
 
 .product{
@@ -65,17 +65,18 @@ img{
 
 .product-quantity {
     font-size: 2em;
-    width: 2em;
+    width: 3em;
     height: 2em;
     text-align: center;
-    padding: 0.35em 0;
+    padding: 0.25em 0.2em;
     border-radius: 1em;
     position: absolute;
-    top: 0.5em;
-    right: 0.5em;
+    top: 0.2em;
+    right: 0;
     background: #fff;
-    transform: rotateZ(10deg);
     backface-visibility: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .product-interactions {
@@ -83,40 +84,45 @@ img{
     bottom: 100px;
     width: 172px;
     height: 40px;
-    display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+    /* display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center; */
 }
 
 .button {
     width: 20%;
     height: 100%;
-    float: left;
+    /* float: left; */
     text-align: center;
     font-size: 3em;
     line-height: 0.75em;
     background: rgba(255, 255, 255, 0.65);
     cursor: pointer;
-    transition: 0.1s all ease-in-out;
-    transform-origin: 50% 0 0;
+    /* transition: 0.1s all ease-in-out; */
+    /* transform-origin: 50% 0 0;
     transform: perspective(600px);
-    z-index: 0;
-    position: relative;
+    z-index: 0; */
+    position: absolute;
+    right: 0;
     /* display: table-cell; */
     vertical-align: middle;
-    border: 2px solid white;
+    /* border: 2px solid white; */
     border-radius: 1px;
-}
-
-.button.plus{
-    color: #7fb034;
-}
-
-.button.minus{
-    color: #a0ce5a;
 }
 
 .button.del{
     color: red;
+}
+
+.product-quantity .ant-input-number{
+    width: 2em;
+    height: 1.5em;
+    font-size: 1.5em;
+    display: inline-flex;
+    bottom: 10px;
+}
+
+.product-quantity .ant-input-number-input{
+    padding: 0;
 }
