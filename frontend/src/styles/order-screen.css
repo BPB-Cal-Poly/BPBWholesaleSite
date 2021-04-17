@@ -139,8 +139,8 @@ img{
     padding: 0.25em 0.2em;
     border-radius: 1em;
     position: absolute;
-    top: 0.2em;
-    right: 0;
+    top: 4%;
+    right: 17%;
     background: #fff;
     backface-visibility: hidden;
     display: grid;
@@ -160,4 +160,9 @@ img{
 .border-box {
     border: 2px solid transparent;
     border-color: #d9d9d9;
+}
+
+
+.input-number-focus .ant-input-number-handler-wrap {
+    opacity: 1;
 }

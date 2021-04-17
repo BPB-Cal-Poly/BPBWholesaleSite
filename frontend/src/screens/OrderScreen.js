@@ -174,11 +174,10 @@ export default class HomeScreen extends React.Component {
   };
 
   handleOk = () => {
-    let orders =  this.state.orders.filter((x) => x.quantity !== 0);
-    if (orders.length == 0){
-      message.error('Please add at least one item to the order');
-    }
-    else{
+    let orders = this.state.orders.filter((x) => x.quantity !== 0);
+    if (orders.length == 0) {
+      message.error("Please add at least one item to the order");
+    } else {
       let newOrder = {
         date: this.state.date,
         address: this.state.address,
@@ -190,9 +189,7 @@ export default class HomeScreen extends React.Component {
       };
       console.log(newOrder);
       window.location.reload();
-
     }
-    
   };
 
   render() {
@@ -395,6 +392,7 @@ export default class HomeScreen extends React.Component {
                               onChange={(e) => {
                                 this.setOrderQuantity(e, item.name);
                               }}
+                              className="input-number-focus"
                             ></InputNumber>
                           </div>
                         </div>
