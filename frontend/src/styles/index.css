@@ -162,6 +162,7 @@ header .nav-item{
   padding:1rem;
   text-decoration: none;
 }
+
 a.brand{
   color: #581717;
   font-size: 3rem;
@@ -170,7 +171,7 @@ a.brand{
 
 .nav-item:hover{
   color:#ff8000;
-  /* color:white; */
+  cursor: pointer;
 }
 
 header {

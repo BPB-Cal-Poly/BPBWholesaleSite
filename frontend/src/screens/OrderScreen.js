@@ -93,7 +93,7 @@ export default class HomeScreen extends React.Component {
   };
 
   addToOrder = (values) => {
-    this.setOrderQuantity(values.quantity, values.product)
+    this.setOrderQuantity(values.quantity, values.product);
     const newProducts = this.state.products;
     for (let theproduct of this.props.fakeProducts) {
       if (theproduct.name === values.product) {
@@ -106,7 +106,7 @@ export default class HomeScreen extends React.Component {
   };
 
   deleteFromOrders = (item) => {
-    this.setOrderQuantity(0, item.name)
+    this.setOrderQuantity(0, item.name);
     const newProducts = this.state.products.filter((prod) => {
       return prod.id !== item.id;
     });
@@ -119,34 +119,35 @@ export default class HomeScreen extends React.Component {
   setOrderQuantity = (quantity, name) => {
     let newOrders = this.state.orders;
     newOrders.find((x, i) => {
-      if (x.product === name){
+      if (x.product === name) {
         newOrders[i].quantity = quantity;
       }
-    })
+    });
     this.setState({
       orders: newOrders,
     });
   };
 
   getQuantity = (product) => {
-    return this.state.orders.find(x => x.product === product).quantity;
+    return this.state.orders.find((x) => x.product === product).quantity;
   };
 
   getSubtotal = () => {
     let subtotal = 0;
     for (let theproduct of this.state.orders) {
       if (theproduct.quantity !== 0) {
-        subtotal += theproduct.quantity * this.state.products.find(x => x.name === theproduct.product).price;
+        subtotal +=
+          theproduct.quantity *
+          this.state.products.find((x) => x.name === theproduct.product).price;
       }
     }
     return subtotal.toFixed(2);
-
-  }
+  };
 
   getQuantityLength = (product) => {
     let quantity = this.getQuantity(product.name);
-    return quantity.toString().length; 
-  }
+    return quantity.toString().length;
+  };
 
   handleOk = () => {
     this.setState({
@@ -288,8 +289,6 @@ export default class HomeScreen extends React.Component {
         <div className="customer-center">
           <Card className="customer-layout">
             <Form {...formItemLayout} form={this.form}>
-
-
               <h1>Order</h1>
               <Form.Item
                 label="Delivery Day"
@@ -317,7 +316,6 @@ export default class HomeScreen extends React.Component {
                   }}
                 ></Input>
               </Form.Item>
-
 
               <h1>Order Detail</h1>
               {notAddedProducts.length !== 0 ? (
@@ -394,7 +392,12 @@ export default class HomeScreen extends React.Component {
                               {"$ " + item.price}
                             </div>
                           </div>
-                          <div className="product-quantity" style={{width: `${this.getQuantityLength(item)+1}em`}}>
+                          <div
+                            className="product-quantity"
+                            style={{
+                              width: `${this.getQuantityLength(item) + 1}em`,
+                            }}
+                          >
                             x
                             <InputNumber
                               bordered={false}
@@ -404,7 +407,6 @@ export default class HomeScreen extends React.Component {
                               onChange={(e) => {
                                 this.setOrderQuantity(e, item.name);
                               }}
-                              style={{ width: '100%' }}
                             ></InputNumber>
                           </div>
                         </div>
@@ -434,12 +436,7 @@ export default class HomeScreen extends React.Component {
                 ></TextArea>
               </Form.Item>
 
-
-
               <h1>Order Summary</h1>
-              <h2 className="customer-center border-box">subtotal: $
-              {this.getSubtotal()}
-              </h2>
               <List
                 grid={{ gutter: 20, column: 1 }}
                 dataSource={orders}
@@ -447,21 +444,24 @@ export default class HomeScreen extends React.Component {
                   item.quantity !== 0 ? (
                     <List.Item>
                       <List.Item.Meta
-                        title={item.product+ " x" + item.quantity}
+                        title={item.product + " x" + item.quantity}
                       />
                     </List.Item>
                   ) : null
                 }
               />
-            <div className="add-button">
-              <Button
-                type="default"
-                htmlType="submit"
-                onClick={this.handleOk}
-                shape="round"
-              >
-                Order
-              </Button>
+              <h2 className="customer-center border-box">
+                subtotal: ${this.getSubtotal()}
+              </h2>
+              <div className="add-button">
+                <Button
+                  type="default"
+                  htmlType="submit"
+                  onClick={this.handleOk}
+                  shape="round"
+                >
+                  Order
+                </Button>
               </div>
             </Form>
           </Card>

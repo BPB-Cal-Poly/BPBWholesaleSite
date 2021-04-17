@@ -211,14 +211,14 @@ class App extends React.Component {
     );
     let dropdown =
       userType === "admin" ? (
-        <Dropdown overlay={popMenuAdmin} className="nav-item">
+        <Dropdown overlay={popMenuAdmin} trigger={['click']} className="nav-item">
           <div>
             <UserOutlined />
             <span>Hello, {username}</span>
           </div>
         </Dropdown>
       ) : (
-        <Dropdown overlay={popMenuCustomer} className="nav-item">
+        <Dropdown overlay={popMenuCustomer} trigger={['click']} className="nav-item">
           <div>
             <UserOutlined />
             <span>Hello, {username}</span>
@@ -233,10 +233,10 @@ class App extends React.Component {
           </a>
         </div>
         <div className="nav">
-          <a href="/cart" className="nav-item">
+          {/* <a href="/cart" className="nav-item">
             <ShoppingCartOutlined />
             cart
-          </a>
+          </a> */}
           {dropdown}
         </div>
       </header>
