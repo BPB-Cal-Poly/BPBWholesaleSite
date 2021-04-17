@@ -33,6 +33,17 @@
   align-items: center;
 }
 
+.ant-card.half-transparent{
+  background-color: rgba(252, 246, 238, 0.9);
+}
+.align-right {
+  text-align: right;
+}
+
+.align-left {
+  text-align: left;
+}
+
 #Form.Item {
   text-align: left;
 }

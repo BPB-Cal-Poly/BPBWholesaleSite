@@ -68,7 +68,6 @@ export default class Login extends React.Component {
   getUser(data) {
     var theuser;
     // console.log(data.username);
-    console.log(this.state.fakeCustomers);
     for (let user of this.state.fakeCustomers){
         if (user.username === data.username){
             if (user.password === data.password){

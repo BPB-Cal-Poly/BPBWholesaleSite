@@ -163,7 +163,6 @@ class App extends React.Component {
 
   render() {
     let { isLogined, username, userType } = this.state;
-    console.log("app username is " + username);
     let popMenuAdmin = (
       <Menu
         onClick={(p) => {

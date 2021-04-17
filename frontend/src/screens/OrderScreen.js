@@ -5,12 +5,15 @@ import {
   Card,
   Input,
   Form,
+  Radio,
   message,
   InputNumber,
   DatePicker,
-  Space,
+  Col,
+  Row,
   List,
 } from "antd";
+import moment from "moment";
 import ProForm, { ModalForm } from "@ant-design/pro-form";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import "../styles/order-screen.css";
@@ -18,20 +21,23 @@ import { Redirect } from "react-router-dom";
 const { Option } = Select;
 const { TextArea } = Input;
 
+const shipping = 2;
 export default class HomeScreen extends React.Component {
+  today = new Date().toLocaleDateString();
   constructor(props) {
     super(props);
     this.state = {
       categories: [],
       products: [],
-      //----order details---
-      date: "",
-      deliver: "",
+      //----order----
+      date: this.today,
+
       address: "",
       phone: "",
-      note: "",
+      //----order detail----
       orders: [],
-      method: "",
+      deliver: "",
+      note: "",
       type: "",
       subtotal: 0,
     };
@@ -70,7 +76,7 @@ export default class HomeScreen extends React.Component {
 
   setDeliverDate = (date) => {
     this.setState({
-      deliverDate: date,
+      date,
     });
   };
 
@@ -89,6 +95,12 @@ export default class HomeScreen extends React.Component {
   setNote = (note) => {
     this.setState({
       note: note,
+    });
+  };
+
+  setDeliver = (deliver) => {
+    this.setState({
+      deliver,
     });
   };
 
@@ -126,13 +138,14 @@ export default class HomeScreen extends React.Component {
     this.setState({
       orders: newOrders,
     });
+    this.setSubtotal();
   };
 
   getQuantity = (product) => {
     return this.state.orders.find((x) => x.product === product).quantity;
   };
 
-  getSubtotal = () => {
+  setSubtotal = () => {
     let subtotal = 0;
     for (let theproduct of this.state.orders) {
       if (theproduct.quantity !== 0) {
@@ -141,7 +154,18 @@ export default class HomeScreen extends React.Component {
           this.state.products.find((x) => x.name === theproduct.product).price;
       }
     }
-    return subtotal.toFixed(2);
+    this.setState({
+      subtotal,
+    });
+  };
+
+  getSubtotal = () => {
+    return this.state.subtotal.toFixed(2);
+  };
+
+  getTotal = () => {
+    let total = this.state.subtotal + shipping;
+    return total.toFixed(2);
   };
 
   getQuantityLength = (product) => {
@@ -150,31 +174,25 @@ export default class HomeScreen extends React.Component {
   };
 
   handleOk = () => {
-    this.setState({
-      modelVisible: false,
-    });
-    let newProduct = {
-      id: this.state.list.length + 1,
-      name: this.state.name,
-      nickname: this.state.nickname,
-      note: this.state.note,
-      category: this.state.category,
-      packsize: this.state.packsize,
-      dough: this.state.dough,
-      where: this.state.where,
-      when: this.state.when,
-      price: this.state.price,
-      weight: this.state.weight,
-      cutoff: this.state.cutoff,
-    };
-    let newList = this.state.list;
-    newList.push(newProduct);
-    this.setState({
-      list: newList,
-    });
-    this.props.onListChange(this.state.list);
+    let orders =  this.state.orders.filter((x) => x.quantity !== 0);
+    if (orders.length == 0){
+      message.error('Please add at least one item to the order');
+    }
+    else{
+      let newOrder = {
+        date: this.state.date,
+        address: this.state.address,
+        phone: this.state.phone,
+        orders: orders,
+        deliver: this.state.deliver,
+        type: this.state.type,
+        subtotal: this.state.subtotal,
+      };
+      console.log(newOrder);
+      window.location.reload();
 
-    this.props.history.push("/admin/product/list");
+    }
+    
   };
 
   render() {
@@ -197,102 +215,60 @@ export default class HomeScreen extends React.Component {
       },
     };
 
-    let addressForm = business ? (
-      <Form.Item label="Deliver address">
-        <Select
-          defaultValue={business.addresses[0]}
-          style={{ width: 300 }}
-          onSelect={this.setAddress}
-        >
-          {business.addresses.map((item) => (
-            <Option key={item} value={item}>
-              {item}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
-    ) : null;
+    let addressForm =
+      business && this.state.deliver == "delivery" ? (
+        <Form.Item label="Deliver address">
+          <Select
+            defaultValue={business.addresses[0]}
+            style={{ width: 300 }}
+            onSelect={this.setAddress}
+          >
+            {business.addresses.map((item) => (
+              <Option key={item} value={item}>
+                {item}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+      ) : null;
 
-    // let productsForm =
-    //   products.length !== 0 ? (
-    //     <Form.List name="products">
-    //       {(fields, { add, remove }) => (
-    //         <>
-    //           {fields.map((field) => (
-    //             <Space
-    //               key={field.key}
-    //               style={{ display: "flex", marginBottom: 8 }}
-    //               align="baseline"
-    //             >
-    //               <Form.Item
-    //                 {...field}
-    //                 label="Product"
-    //                 layout="vertical"
-    //                 name={[field.name, "product"]}
-    //                 fieldKey={[field.fieldKey, "product"]}
-    //                 rules={[{ required: true, message: "Missing product" }]}
-    //               >
-    //                 <Select
-    //                   defaultValue={products[0].name}
-    //                   style={{ width: 130 }}
-    //                   onSelect={this.setCategory}
-    //                 >
-    //                   {products.map((item) => (
-    //                     <Option key={item.id} value={item.name}>
-    //                       {item.name}
-    //                       {" $"}
-    //                       {item.price}
-    //                     </Option>
-    //                   ))}
-    //                 </Select>
-    //               </Form.Item>
-    //               <Form.Item
-    //                 {...field}
-    //                 label="Quantity"
-    //                 name={[field.name, "quantity"]}
-    //                 fieldKey={[field.fieldKey, "quantity"]}
-    //                 rules={[{ required: true, message: "Missing quantity" }]}
-    //               >
-    //                 <InputNumber
-    //                   noStyle
-    //                   min={1}
-    //                   style={{ width: 120 }}
-    //                   onChange={(e) => {
-    //                     this.setWhen(e);
-    //                   }}
-    //                 />
-    //               </Form.Item>
-    //               {fields.length > 1 ? (
-    //                 <MinusCircleOutlined
-    //                   className="dynamic-delete-button"
-    //                   onClick={() => remove(field.name)}
-    //                 />
-    //               ) : null}
-    //             </Space>
-    //           ))}
-    //           <Form.Item>
-    //             <Button
-    //               type="dashed"
-    //               onClick={() => add()}
-    //               icon={<PlusOutlined />}
-    //             >
-    //               Add product
-    //             </Button>
-    //           </Form.Item>
-    //         </>
-    //       )}
-    //     </Form.List>
-    //   ) : null;
+    const dateFormat = "MM/DD/YYYY";
 
     return (
-      <div>
+      <div className="order-main-container">
         <div className="customer-center">
-          <Card className="customer-layout">
+          <Card className="half-transparent">
             <Form {...formItemLayout} form={this.form}>
               <h1>Order</h1>
+
               <Form.Item
-                label="Delivery Day"
+                label="Delivery Method"
+                name="deliver"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please pick a delivery method",
+                  },
+                ]}
+              >
+                <Radio.Group
+                  onChange={(e) => {
+                    this.setDeliver(e.target.value);
+                  }}
+                >
+                  <Radio value="delivery">Delivery</Radio>
+                  <Radio value="Slo">Pickup SLO</Radio>
+                  <Radio value="Atascadero">Pickup Atascadero</Radio>
+                </Radio.Group>
+              </Form.Item>
+              <Form.Item
+                label={
+                  this.state.deliver == "delivery" || this.state.deliver == ""
+                    ? "Delivery Day"
+                    : "Pickup Day"
+                }
                 name="deliverDate"
+                initialValue={moment(this.today, dateFormat)}
                 rules={[
                   {
                     required: true,
@@ -301,16 +277,28 @@ export default class HomeScreen extends React.Component {
                 ]}
               >
                 <DatePicker
+                  format={dateFormat}
+                  showToday={true}
                   onChange={(date, dateString) => {
                     this.setDeliverDate(dateString);
                   }}
                 />
               </Form.Item>
               {addressForm}
-              <Form.Item label="Phone number">
+              <Form.Item
+                label="Phone number"
+                name="phone"
+                initialValue={business ? business.phone : null}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input phone number",
+                  },
+                ]}
+              >
                 <Input
                   style={{ width: 120 }}
-                  value={business ? business.phone : null}
+                  defaultValue={business ? business.phone : null}
                   onChange={(e) => {
                     this.setPhone(e.target.value);
                   }}
@@ -442,17 +430,38 @@ export default class HomeScreen extends React.Component {
                 dataSource={orders}
                 renderItem={(item) =>
                   item.quantity !== 0 ? (
-                    <List.Item>
-                      <List.Item.Meta
-                        title={item.product + " x" + item.quantity}
-                      />
-                    </List.Item>
+                    <Col span={6} className="align-right">
+                      <List.Item>
+                        <List.Item.Meta
+                          title={item.product + " x" + item.quantity}
+                        />
+                      </List.Item>
+                    </Col>
                   ) : null
                 }
               />
-              <h2 className="customer-center border-box">
-                subtotal: ${this.getSubtotal()}
-              </h2>
+              <div className="border-box" style={{ marginBottom: "24px" }}>
+                <h2>
+                  <Row>
+                    <Col span={12} className="align-right">
+                      Subtotal:&nbsp;
+                    </Col>
+                    <Col span={12}>${this.getSubtotal()}</Col>
+                  </Row>
+                  <Row>
+                    <Col span={12} className="align-right">
+                      Delivery:&nbsp;
+                    </Col>
+                    <Col span={12}>${shipping}</Col>
+                  </Row>
+                  <Row>
+                    <Col span={12} className="align-right">
+                      Total:&nbsp;
+                    </Col>
+                    <Col span={12}>${this.getTotal()}</Col>
+                  </Row>
+                </h2>
+              </div>
               <div className="add-button">
                 <Button
                   type="default"
