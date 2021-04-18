@@ -10,17 +10,17 @@
   transform: translate3d(0, 0, 0);
   margin-bottom: 24px;
   flex-wrap: wrap;
-  
 }
 
 
 
-.product{
+.product {
     position: relative;
     width: 200px;
     height: 280px;
     float: left;
     padding: 1em;
+    box-shadow: 8px 10px 17px 0px rgba(158, 132, 116, 0.77);
 }
 
 @media (min-width: 466px) and (max-width: 865px) {
