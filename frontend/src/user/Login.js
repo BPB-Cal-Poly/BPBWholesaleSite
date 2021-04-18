@@ -199,7 +199,7 @@ export default class Login extends React.Component {
                     style={{
                       float: "right",
                     }}
-                    href=""
+                    href="/forgot-password"
                   >
                     Forgot password
                   </a>

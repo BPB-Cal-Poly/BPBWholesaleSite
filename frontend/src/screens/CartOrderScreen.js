@@ -14,10 +14,9 @@ import {
   List,
 } from "antd";
 import moment from "moment";
-import ProForm, { ModalForm } from "@ant-design/pro-form";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { ModalForm } from "@ant-design/pro-form";
+import {  PlusOutlined } from "@ant-design/icons";
 import "../styles/order-screen.css";
-import { Redirect } from "react-router-dom";
 const { Option } = Select;
 const { TextArea } = Input;
 
@@ -38,7 +37,6 @@ export default class CartOrderScreen extends React.Component {
       orders: [],
       deliver: "",
       note: "",
-      type: "",
       subtotal: 0,
     };
   }
@@ -137,6 +135,7 @@ export default class CartOrderScreen extends React.Component {
       if (x.product === name) {
         newOrders[i].quantity = quantity;
       }
+      return true;
     });
     this.setState({
       orders: newOrders,
@@ -178,7 +177,7 @@ export default class CartOrderScreen extends React.Component {
 
   handleOk = () => {
     let orders = this.state.orders.filter((x) => x.quantity !== 0);
-    if (orders.length == 0) {
+    if (orders.length === 0) {
       message.error("Please add at least one item to the order");
     } else {
       let newOrder = {
@@ -215,7 +214,7 @@ export default class CartOrderScreen extends React.Component {
     };
 
     let addressForm =
-      business && this.state.deliver == "delivery" ? (
+      business && this.state.deliver === "delivery" ? (
         <Form.Item label="Deliver address">
           <Select
             defaultValue={business.addresses[0]}
@@ -262,7 +261,7 @@ export default class CartOrderScreen extends React.Component {
               </Form.Item>
               <Form.Item
                 label={
-                  this.state.deliver == "delivery" || this.state.deliver == ""
+                  this.state.deliver === "delivery" || this.state.deliver === ""
                     ? "Delivery Day"
                     : "Pickup Day"
                 }
@@ -297,7 +296,7 @@ export default class CartOrderScreen extends React.Component {
               >
                 <Input
                   style={{ width: 120 }}
-                  defaultValue={business ? business.phone : null}
+                  // defaultValue={business ? business.phone : null}
                   onChange={(e) => {
                     this.setPhone(e.target.value);
                   }}
@@ -371,7 +370,7 @@ export default class CartOrderScreen extends React.Component {
                       <div className="product">
                         <div className="product-preview">
                           <div className="thumbnail">
-                            <img src="https://s.cdpn.io/24822/sidebar-cupcake.png" />
+                            <img src="https://s.cdpn.io/24822/sidebar-cupcake.png" alt={item.name} />
                           </div>
                           <div className="product-paper">
                             <div className="product-name">{item.name}</div>

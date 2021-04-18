@@ -3,7 +3,7 @@ import { Button, message, Modal, Space, Table } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import Amplify, { Auth, API } from "aws-amplify";
+import Amplify, { API } from "aws-amplify";
 import aws_exports from "../aws-exports";
 Amplify.configure(aws_exports);
 const { confirm } = Modal;
@@ -45,9 +45,6 @@ export default class UserList extends React.Component {
   };
 
   deleteCustomer = (id) => {
-    let dataProps = {
-      id: id,
-    };
     confirm({
       title: "Are you sure you want to delete",
       content: "If you press yes, the customer will be delete permanently",
@@ -56,7 +53,7 @@ export default class UserList extends React.Component {
       icon: <ExclamationCircleOutlined />,
       onOk: () => {
         const newCustomers = this.state.list.filter(function (cus) {
-          return cus.id != id;
+          return cus.id !== id;
         });
         message.success("Delete Successfully");
         this.setState({

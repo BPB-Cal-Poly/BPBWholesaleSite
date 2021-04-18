@@ -149,7 +149,7 @@ export default class ProductAdd extends React.Component {
   }
 
   render() {
-    let { list, categories } = this.state;
+    let { categories } = this.state;
     const formItemLayout = {
       labelCol: {
         span: 3,

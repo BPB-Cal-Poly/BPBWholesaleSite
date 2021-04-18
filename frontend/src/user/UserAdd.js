@@ -4,7 +4,7 @@ import {
   Select,
   Card,
   Input,
-  Divider,Form
+  Form
 } from "antd";
 
 const { Option } = Select;
@@ -108,7 +108,7 @@ export default class UserAdd extends React.Component {
 
 
   render() {
-    let {list, businesses, permissions} = this.state;
+    let { businesses, permissions} = this.state;
     const formItemLayout = {
       labelCol: {
         span: 3,

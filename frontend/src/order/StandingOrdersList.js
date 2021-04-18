@@ -54,9 +54,6 @@ export default class StandingOrdersList extends React.Component {
   };
 
   deleteOrder = (id) => {
-    let dataProps = {
-      id: id,
-    };
     confirm({
       title: "Are you sure you want to delete",
       content: "If you press yes, the Order will be delete permanently",

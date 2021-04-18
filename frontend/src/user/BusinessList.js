@@ -36,9 +36,6 @@ export default class BusinessList extends React.Component {
   }
 
   deleteBusiness = (id) => {
-    let dataProps = {
-      id: id,
-    };
     confirm({
       title: "Are you sure you want to delete",
       content: "If you press yes, the customer will be delete permanently",
@@ -47,7 +44,7 @@ export default class BusinessList extends React.Component {
       icon: <ExclamationCircleOutlined />,
       onOk: () => {
         const newCustomers = this.state.list.filter(function (cus) {
-          return cus.id != id;
+          return cus.id !== id;
         });
         message.success("Delete Successfully");
         this.setState({

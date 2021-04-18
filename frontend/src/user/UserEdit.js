@@ -50,7 +50,7 @@ export default class UserEdit extends React.Component {
     var theuser;
     // console.log(this.props.fakeCustomers);
     for (let user of this.props.fakeCustomers){
-      if (user.id == id){
+      if (user.id === id){
         theuser = user;
       }
     }
@@ -130,7 +130,7 @@ export default class UserEdit extends React.Component {
 
 
   render() {
-    let {list, businesses, permissions} = this.state;
+    let { businesses, permissions} = this.state;
     const formItemLayout = {
       labelCol: {
         span: 3,

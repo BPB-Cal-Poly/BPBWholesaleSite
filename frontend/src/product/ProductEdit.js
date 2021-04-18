@@ -183,14 +183,13 @@ export default class ProductEdit extends React.Component {
   }
 
   render() {
-    let { list, categories } = this.state;
+    let { categories } = this.state;
     const formItemLayout = {
       labelCol: {
         span: 3,
       },
     };
 
-    console.log(this.state)
     return (
       <div className="customer-layout">
         <Card>

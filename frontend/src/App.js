@@ -3,7 +3,6 @@ import { Route, Redirect, Link, Switch } from "react-router-dom";
 import { Dropdown, Menu, message } from "antd";
 import {
   UserOutlined,
-  ShoppingCartOutlined,
   LoginOutlined,
   SafetyCertificateOutlined,
   ReconciliationOutlined,

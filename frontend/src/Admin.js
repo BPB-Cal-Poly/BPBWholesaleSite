@@ -101,8 +101,6 @@ export default class OrderScreen extends React.Component {
     let pathnames = this.props.location.pathname.split("/");
     let category = pathnames[2];
     var sub_category, id, customer_category;
-    console.log("admin");
-    console.log(this.state.fakeProducts);
     switch (category) {
       case "customer":
         category = "Customer";

@@ -33,9 +33,6 @@ export default class ProductList extends React.Component {
   }
 
   deleteProduct = (id) => {
-    let dataProps = {
-      id: id,
-    };
     confirm({
       title: "Are you sure you want to delete",
       content: "If you press yes, the product will be delete permanently",

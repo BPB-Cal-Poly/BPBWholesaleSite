@@ -1,23 +1,16 @@
 import React from "react";
 import {
   Button,
-  Select,
   Card,
   Input,
-  Divider,Form
+  Form
 } from "antd";
 
-const { Option } = Select;
 
 
 let fakeBusinesses= [
   { id: 1, name: "business 1" },
   { id: 2, name: "business 2" },
-];
-
-let fakePermissions= [
-  { id: 1, name: "full" },
-  { id: 2, name: "order" },
 ];
 
 export default class BusinessAdd extends React.Component {
@@ -132,7 +125,6 @@ export default class BusinessAdd extends React.Component {
 
 
   render() {
-    let {list, businesses, permissions, address} = this.state;
     const formItemLayout = {
       labelCol: {
         span: 3,
