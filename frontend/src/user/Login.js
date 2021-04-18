@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Input, message, Button} from "antd";
+import { Card, Input, message, Button, Form, Checkbox } from "antd";
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 import "../styles/login.css";
 import { setUsername, setUserType } from "../utils/utils";
@@ -13,7 +13,7 @@ export default class Login extends React.Component {
     this.state = {
       username: "",
       password: "",
-      fakeCustomers : [
+      fakeCustomers: [
         {
           id: 1,
           firstName: "first1",
@@ -68,27 +68,25 @@ export default class Login extends React.Component {
   getUser(data) {
     var theuser;
     // console.log(data.username);
-    for (let user of this.state.fakeCustomers){
-        if (user.username === data.username){
-            if (user.password === data.password){
-                theuser = user;
-            }
-            else{
-                message.error("Password do not match");
-                return;
-            }        
+    for (let user of this.state.fakeCustomers) {
+      if (user.username === data.username) {
+        if (user.password === data.password) {
+          theuser = user;
+        } else {
+          message.error("Password do not match");
+          return;
         }
+      }
     }
-    if(theuser == null){
-        message.error("No user found");
-        return;
+    if (theuser == null) {
+      message.error("No user found");
+      return;
     }
-    setUsername(theuser.username);  
-    if (theuser.permission === "admin"){  
-        setUserType("admin");
-    }
-    else{
-        setUserType("customer");
+    setUsername(theuser.username);
+    if (theuser.permission === "admin") {
+      setUserType("admin");
+    } else {
+      setUserType("customer");
     }
     this.props.onUserChange();
     this.props.history.push({ pathname: "/" });
@@ -116,6 +114,10 @@ export default class Login extends React.Component {
     // });
   };
 
+  onFinish = (values) => {
+    console.log("Received values of form: ", values);
+  };
+
   setUserName = (name) => {
     this.setState({
       username: name,
@@ -130,59 +132,91 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <div className="login-div">
-        <Card
-          title="Back Porch Bakery Wholesale"
-          bordered={true}
-          style={{ width: 400 }}
-        >
-          <Input
-            id="username"
-            size="large"
-            placeholder="Username (admin0 or user0)"
-            prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
-            onChange={(e) => {
-              this.setUserName(e.target.value);
-            }}
-          />
-          <br />
-          <br />
-          <Input.Password
-            id="password"
-            size="large"
-            placeholder="Password (admin0 or user0)"
-            prefix={<KeyOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
-            onChange={(e) => {
-              this.setPassword(e.target.value);
-            }}
-          />
-          <br />
-          <br />
-          <Button
-            type="primary"
-            size="large"
-            style={{ backgroundColor: "#642626", borderColor: "#642626" }}
-            block
-            onClick={this.checkLogin}
-          >
-            Login in
-          </Button>
-          <br />
-          <br />
-          <Button
-            type="primary"
-            style={{
-              backgroundColor: "#642626",
-              borderColor: "#642626",
-              width: "100px",
-              float: "right",
-            }}
-            block
-            onClick={this.checkLogin}
-          >
-            <a href="/signup">Sign up</a>
-          </Button>
-        </Card>
+      <div className="main-container">
+        <div className="customer-center">
+          <div className="order-selection-container">
+            <Card
+              className="card-transparent"
+              title="Back Porch Bakery Wholesale"
+              bordered={true}
+              style={{ width: 400 }}
+            >
+              <Form
+                name="login-form"
+                className="login-form"
+                initialValues={{
+                  remember: true,
+                }}
+                onFinish={this.onFinish}
+              >
+                <Form.Item
+                  name="username"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your username",
+                    },
+                  ]}
+                >
+                  <Input
+                    id="username"
+                    // size="large"
+                    placeholder="Username (admin0 or user0)"
+                    prefix={
+                      <UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    onChange={(e) => {
+                      this.setUserName(e.target.value);
+                    }}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your Password!",
+                    },
+                  ]}
+                >
+                  <Input.Password
+                    id="password"
+                    placeholder="Password (admin0 or user0)"
+                    prefix={
+                      <KeyOutlined style={{ color: "rgba(0,0,0,.25)" }} />
+                    }
+                    onChange={(e) => {
+                      this.setPassword(e.target.value);
+                    }}
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Form.Item name="remember" valuePropName="checked" noStyle>
+                    <Checkbox>Remember me</Checkbox>
+                  </Form.Item>
+
+                  <a
+                    style={{
+                      float: "right",
+                    }}
+                    href=""
+                  >
+                    Forgot password
+                  </a>
+                </Form.Item>
+                <Button
+                  type="primary"
+                  // style={{ backgroundColor: "#642626", borderColor: "#642626" }}
+                  block
+                  onClick={this.checkLogin}
+                >
+                  Login in
+                </Button>
+                Or <a href="/signup">register now!</a>
+              </Form>
+            </Card>
+          </div>
+        </div>
       </div>
     );
   }

@@ -234,9 +234,9 @@ export default class CartOrderScreen extends React.Component {
     const dateFormat = "MM/DD/YYYY";
 
     return (
-      <div className="order-main-container">
+      <div className="main-container">
         <div className="customer-center">
-          <Card className="half-transparent">
+          <Card className="card-transparent">
             <Form {...formItemLayout} form={this.form}>
               <h1>Cart Order</h1>
 

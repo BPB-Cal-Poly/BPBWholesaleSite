@@ -43,7 +43,7 @@ export default class OrderSelectiosnScreen extends React.Component {
 
   render() {
     return (
-      <div className="order-main-container">
+      <div className="main-container">
         <div className="customer-center">
           <div className="order-selection-container">
             <div className="order-selection"></div>

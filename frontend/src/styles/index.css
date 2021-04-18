@@ -55,78 +55,6 @@ section {
   background-color: lightblue;
 } */
 
-
-
-.bulkInfo {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-  padding: 1rem;
-}
-.title{
-  padding: 1rem;
-}
-
-.totalGrid {
-  display: grid;
-  width: 300px;
-  grid-template: repeat(4, 1fr) / 1fr 1fr;
-}
-
-.addStandGrid {
-  display: grid;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  grid-template: 1fr 1fr / 30% repeat(8, 1fr);
-  justify-items: start;
-}
-
-.enterNewProduct, .chooseRoute {
-  padding: 10px 30%;
-  text-align: left;
-}
-
-.enterNewStandingProduct {
-  text-align: center;
-}
-
-img {
-  width: 40px;
-}
-
-.currentOrder {
-  display: grid;
-  width: 500px;
-  margin: 20px auto;
-  grid-template: repeat(4, 1fr) / 1fr 6fr 2fr 1fr 2fr 1fr;
-  align-items: center;
-}
-
-.currentStandingOrder {
-  display: grid;
-  width: 90%;
-  margin: 20px auto;
-  grid-template: repeat(4, 1fr) / 30% repeat(8, 1fr);
-  align-items: center;
-  justify-items: start;
-}
-
-.submit, .fulfill {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.chooseRoute {
-  background-color: #dddddd;
-}
-
-
-.fulfill, .enterNewProduct {
-  background-color: #eeeeee;
-}
 .buttons {
   text-align: center;
 }
@@ -142,6 +70,7 @@ img {
   grid-template-rows: 5rem 1fr auto;
   height:100%;
 }
+
 header{
   grid-area: header;
   background-color: #eee4ac;
@@ -149,11 +78,6 @@ header{
   padding-left: 8px;
   padding-right: 8px;
 }
-/* main{
-  grid-area: main;
-  padding: 0 0;
-} */
-
 
 
 /* header */
@@ -220,5 +144,12 @@ footer{
   color: #ffffff;
   padding-left: 8px;
   padding-right: 8px;
+}
+
+.main-container {
+  background-image: url("../imgs/background2.jfif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 

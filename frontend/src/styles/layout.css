@@ -33,7 +33,7 @@
   align-items: center;
 }
 
-.ant-card.half-transparent{
+.ant-card.card-transparent{
   background-color: rgba(252, 246, 238, 0.9);
 }
 .align-right {
