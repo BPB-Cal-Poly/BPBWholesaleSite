@@ -180,9 +180,18 @@ header {
   flex-direction: row;
   justify-content: space-between;
   /* align-items: center; */
-  align-items: flex-start;
+  /* align-items: flex-start; */
 } 
-
+@media (min-width: 200px) and (max-width: 400px) {
+  header{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .grid-container{
+    grid-template-rows: 9rem 1fr auto;
+    height:100%;
+  }
+}
 .nav {
   display:flex;
   flex-wrap: wrap;
@@ -197,6 +206,7 @@ header {
 /* main */
 main {
   width: 100%;
+  height: 100%;
   padding-left: 8px;
   padding-right: 8px;
 }

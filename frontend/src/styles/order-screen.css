@@ -1,4 +1,4 @@
-.order-main-container{
+.order-main-container {
     background-image: url("../imgs/background2.jfif");
     background-repeat: no-repeat;
     background-position: center;
@@ -160,9 +160,4 @@ img{
 .border-box {
     border: 2px solid transparent;
     border-color: #d9d9d9;
-}
-
-
-.input-number-focus .ant-input-number-handler-wrap {
-    opacity: 1;
 }

@@ -22,7 +22,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const shipping = 2;
-export default class HomeScreen extends React.Component {
+export default class StandingOrderScreen extends React.Component {
   today = new Date().toLocaleDateString();
   constructor(props) {
     super(props);
@@ -30,8 +30,8 @@ export default class HomeScreen extends React.Component {
       categories: [],
       products: [],
       //----order----
+      type: "",
       date: this.today,
-
       address: "",
       phone: "",
       //----order detail----
@@ -42,6 +42,7 @@ export default class HomeScreen extends React.Component {
       subtotal: 0,
     };
   }
+  
 
   componentDidMount() {
     this._isMounted = true;
@@ -115,10 +116,12 @@ export default class HomeScreen extends React.Component {
     this.setState({
       products: newProducts,
     });
+    this.setSubtotal();
   };
 
   deleteFromOrders = (item) => {
     this.setOrderQuantity(0, item.name);
+    this.setSubtotal();
     const newProducts = this.state.products.filter((prod) => {
       return prod.id !== item.id;
     });
@@ -138,7 +141,7 @@ export default class HomeScreen extends React.Component {
     this.setState({
       orders: newOrders,
     });
-    this.setSubtotal();
+    // this.setSubtotal();
   };
 
   getQuantity = (product) => {
@@ -205,7 +208,6 @@ export default class HomeScreen extends React.Component {
     const formItemLayout = {
       labelCol: {
         span: 6,
-        // offset: 2,
       },
       wrapperCol: {
         span: 14,
@@ -236,7 +238,7 @@ export default class HomeScreen extends React.Component {
         <div className="customer-center">
           <Card className="half-transparent">
             <Form {...formItemLayout} form={this.form}>
-              <h1>Order</h1>
+              <h1>Standing Order</h1>
 
               <Form.Item
                 label="Delivery Method"
@@ -315,7 +317,7 @@ export default class HomeScreen extends React.Component {
                       </Button>
                     }
                     modalProps={{
-                      onCancel: () => console.log("run"),
+                      onCancel: () => console.log("canceled"),
                     }}
                     submitter={{
                       searchConfig: {
@@ -391,8 +393,8 @@ export default class HomeScreen extends React.Component {
                               value={this.getQuantity(item.name)}
                               onChange={(e) => {
                                 this.setOrderQuantity(e, item.name);
+                                this.setSubtotal();
                               }}
-                              className="input-number-focus"
                             ></InputNumber>
                           </div>
                         </div>

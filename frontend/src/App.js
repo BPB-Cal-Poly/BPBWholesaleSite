@@ -8,7 +8,9 @@ import {
   SafetyCertificateOutlined,
   ReconciliationOutlined,
 } from "@ant-design/icons";
-import OrderScreen from "./screens/OrderScreen";
+import CartOrderScreen from "./screens/CartOrderScreen";
+import StandingOrderScreen from "./screens/StandingOrderScreen";
+import OrderSelectionScreen from "./screens/OrderSelectionScreen";
 import Login from "./user/Login";
 import Admin from "./Admin";
 import { isLogined, getUsername, getUserType, clearToken } from "./utils/utils";
@@ -80,7 +82,7 @@ class App extends React.Component {
           cutoff: 5,
         },
       ],
-      fakeCustomers : [
+      fakeCustomers: [
         {
           id: 1,
           firstName: "first1",
@@ -106,14 +108,14 @@ class App extends React.Component {
         {
           id: 1,
           name: "Business 1",
-          addresses:["111 S OK street", "112 S OK street"],
+          addresses: ["111 S OK street", "112 S OK street"],
           phone: "(666) 666-6666",
           nickname: "1",
         },
         {
           id: 2,
           name: "Business 2",
-          addresses: ["122 W This street","123 W This street"],
+          addresses: ["122 W This street", "123 W This street"],
           phone: "(555) 555-5555",
           nickname: "2",
         },
@@ -130,8 +132,6 @@ class App extends React.Component {
     this.updateUser();
   }
 
-  
-
   updateUser = () => {
     this.setState({
       username: getUsername(),
@@ -144,22 +144,22 @@ class App extends React.Component {
     this._isMounted = false;
   }
 
-  getBusiness = () =>{
+  getBusiness = () => {
     // console.log("getting business for "+ this.state.username);
     var thebusiness;
-    for(let customer of this.state.fakeCustomers){
+    for (let customer of this.state.fakeCustomers) {
       // console.log("customer is "+ customer.username);
-      if (customer.username === this.state.username){
+      if (customer.username === this.state.username) {
         thebusiness = customer.business;
       }
     }
     // console.log("thebusiness is "+ thebusiness);
-    for(let business of this.state.fakeBusinesses){
-      if(business.name === thebusiness){
+    for (let business of this.state.fakeBusinesses) {
+      if (business.name === thebusiness) {
         return business;
       }
     }
-  }
+  };
 
   render() {
     let { isLogined, username, userType } = this.state;
@@ -210,14 +210,22 @@ class App extends React.Component {
     );
     let dropdown =
       userType === "admin" ? (
-        <Dropdown overlay={popMenuAdmin} trigger={['click']} className="nav-item">
+        <Dropdown
+          overlay={popMenuAdmin}
+          trigger={["click"]}
+          className="nav-item"
+        >
           <div>
             <UserOutlined />
             <span>Hello, {username}</span>
           </div>
         </Dropdown>
       ) : (
-        <Dropdown overlay={popMenuCustomer} trigger={['click']} className="nav-item">
+        <Dropdown
+          overlay={popMenuCustomer}
+          trigger={["click"]}
+          className="nav-item"
+        >
           <div>
             <UserOutlined />
             <span>Hello, {username}</span>
@@ -254,15 +262,12 @@ class App extends React.Component {
       </header>
     );
     return (
-      
       <div className="grid-container">
-        
         {header}
         <main>
           <Switch>
             <Route
               path="/admin"
-              // component={Admin}
               render={(props) =>
                 this._isMounted && this.state.userType !== "admin" ? (
                   <Redirect
@@ -289,6 +294,51 @@ class App extends React.Component {
                 <Login {...props} onUserChange={this.updateUser} />
               )}
             ></Route>
+
+
+            <Route
+              exact
+              path="/cart-order"
+              render={(props) =>
+                this._isMounted && !isLogined ? (
+                  <Redirect
+                    to={{
+                      pathname: "/login",
+                      state: { from: props.location },
+                    }}
+                  />
+                ) :
+                  <CartOrderScreen
+                    {...props}
+                    fakeCategories={this.state.fakeCategories}
+                    fakeProducts={this.state.fakeProducts}
+                    business={this.getBusiness()}
+                  />
+              }
+            ></Route>
+
+<Route
+              exact
+              path="/standing-order"
+              render={(props) =>
+                this._isMounted && !isLogined ? (
+                  <Redirect
+                    to={{
+                      pathname: "/login",
+                      state: { from: props.location },
+                    }}
+                  />
+                ) :
+                  <StandingOrderScreen
+                    {...props}
+                    fakeCategories={this.state.fakeCategories}
+                    fakeProducts={this.state.fakeProducts}
+                    business={this.getBusiness()}
+                  />
+              }
+            ></Route>
+
+
             <Route
               exact
               path="/"
@@ -300,14 +350,15 @@ class App extends React.Component {
                       state: { from: props.location },
                     }}
                   />
+                ) : userType === "admin" ? (
+                  <Redirect
+                    to={{
+                      pathname: "/admin/main",
+                      state: { from: props.location },
+                    }}
+                  />
                 ) : (
-                  userType === "admin" ? <Redirect
-                  to={{
-                    pathname: "/admin/main",
-                    state: { from: props.location },
-                  }}
-                />:
-                  <OrderScreen
+                  <OrderSelectionScreen
                     {...props}
                     fakeCategories={this.state.fakeCategories}
                     fakeProducts={this.state.fakeProducts}
