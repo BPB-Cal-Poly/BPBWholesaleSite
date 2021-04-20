@@ -9,7 +9,7 @@ import {
   BarsOutlined,
   DatabaseOutlined,
 } from "@ant-design/icons";
-import "./styles/layout.css";
+
 import { Route, Switch, Link } from "react-router-dom";
 import ProductList from "./product/ProductList";
 import ProductEdit from "./product/ProductEdit";

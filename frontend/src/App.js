@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Redirect, Link, Switch } from "react-router-dom";
 import { Dropdown, Menu, message } from "antd";
+import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import {
   UserOutlined,
   LoginOutlined,
@@ -14,6 +15,8 @@ import Login from "./user/Login";
 import Admin from "./Admin";
 import { isLogined, getUsername, getUserType, clearToken } from "./utils/utils";
 import "antd/dist/antd.css";
+import "./styles/index.css";
+import './styles/app.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -209,60 +212,40 @@ class App extends React.Component {
     );
     let dropdown =
       userType === "admin" ? (
-        <Dropdown
-          overlay={popMenuAdmin}
-          trigger={["click"]}
-          className="nav-item"
+        <NavDropdown.Item href="/admin/main">Admin</NavDropdown.Item>
+      ) : null;
+    let hello_user = `Hello, ${username}`;
+    let navs = username ? (
+      <NavDropdown title={hello_user} id="collasible-nav-dropdown">
+        {dropdown}
+        <NavDropdown.Item href="/account">Account</NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item
+          onSelect={() => {
+            console.log("selected");
+            clearToken();
+            this.updateUser();
+            this.props.history.push("/");
+          }}
         >
-          <div>
-            <UserOutlined />
-            <span>Hello, {username}</span>
-          </div>
-        </Dropdown>
-      ) : (
-        <Dropdown
-          overlay={popMenuCustomer}
-          trigger={["click"]}
-          className="nav-item"
-        >
-          <div>
-            <UserOutlined />
-            <span>Hello, {username}</span>
-          </div>
-        </Dropdown>
-      );
-    let header = username ? (
-      <header>
-        <div>
-          <a className="brand" href="/">
-            Back Porch Bakery
-          </a>
-        </div>
-        <div className="nav">
-          {/* <a href="/cart" className="nav-item">
-            <ShoppingCartOutlined />
-            cart
-          </a> */}
-          {dropdown}
-        </div>
-      </header>
-    ) : (
-      <header className="row">
-        <div>
-          <a className="brand" href="/">
-            Back Porch Bakery
-          </a>
-        </div>
-        <div className="nav">
-          <a href="/login" className="nav-item">
-            login
-          </a>
-        </div>
-      </header>
-    );
+          logout
+        </NavDropdown.Item>
+      </NavDropdown>
+    ) : null;
     return (
       <div className="grid-container">
-        {header}
+        
+        <header>
+          <Navbar collapseOnSelect expand="lg" bg="custom" variant="custom">
+            <Navbar.Brand href="/">BACK PORCH NAKERY</Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="mr-auto"></Nav>
+              <Nav>{navs}</Nav>
+            </Navbar.Collapse>
+          </Navbar>
+        </header>
+
         <main>
           <Switch>
             <Route
@@ -294,7 +277,6 @@ class App extends React.Component {
               )}
             ></Route>
 
-
             <Route
               exact
               path="/cart-order"
@@ -306,17 +288,18 @@ class App extends React.Component {
                       state: { from: props.location },
                     }}
                   />
-                ) :
+                ) : (
                   <CartOrderScreen
                     {...props}
                     fakeCategories={this.state.fakeCategories}
                     fakeProducts={this.state.fakeProducts}
                     business={this.getBusiness()}
                   />
+                )
               }
             ></Route>
 
-<Route
+            <Route
               exact
               path="/standing-order"
               render={(props) =>
@@ -327,16 +310,16 @@ class App extends React.Component {
                       state: { from: props.location },
                     }}
                   />
-                ) :
+                ) : (
                   <StandingOrderScreen
                     {...props}
                     fakeCategories={this.state.fakeCategories}
                     fakeProducts={this.state.fakeProducts}
                     business={this.getBusiness()}
                   />
+                )
               }
             ></Route>
-
 
             <Route
               exact
