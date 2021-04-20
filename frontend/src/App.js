@@ -1,13 +1,6 @@
 import React from "react";
 import { Route, Redirect, Link, Switch } from "react-router-dom";
-import { Dropdown, Menu, message } from "antd";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
-import {
-  UserOutlined,
-  LoginOutlined,
-  SafetyCertificateOutlined,
-  ReconciliationOutlined,
-} from "@ant-design/icons";
 import "antd/dist/antd.css";
 import "./styles/index.css";
 import './styles/app.css';

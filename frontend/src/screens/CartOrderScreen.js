@@ -131,12 +131,11 @@ export default class CartOrderScreen extends React.Component {
 
   setOrderQuantity = (quantity, name) => {
     let newOrders = this.state.orders;
-    newOrders.find((x, i) => {
-      if (x.product === name) {
-        newOrders[i].quantity = quantity;
-      }
-      return true;
-    });
+    console.log(quantity, name);
+    let index = newOrders.findIndex((x) => x.product === name);
+    newOrders[index].quantity = quantity;
+    console.log(this.state.orders);
+    console.log(newOrders);
     this.setState({
       orders: newOrders,
     });
