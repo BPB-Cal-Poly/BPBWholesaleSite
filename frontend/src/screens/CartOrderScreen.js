@@ -295,7 +295,7 @@ export default class CartOrderScreen extends React.Component {
               >
                 <Input
                   style={{ width: 120 }}
-                  // defaultValue={business ? business.phone : null}
+                  value={business ? business.phone : null}
                   onChange={(e) => {
                     this.setPhone(e.target.value);
                   }}

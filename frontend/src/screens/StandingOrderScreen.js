@@ -9,6 +9,7 @@ import {
   message,
   InputNumber,
   DatePicker,
+  Checkbox,
   Col,
   Row,
   List,
@@ -16,11 +17,12 @@ import {
 import moment from "moment";
 import { ModalForm } from "@ant-design/pro-form";
 import { PlusOutlined } from "@ant-design/icons";
-import "../styles/order-screen.css";
+import "../styles/standing-order-screen.css";
 const { Option } = Select;
 const { TextArea } = Input;
 
 const shipping = 2;
+const plainOptions = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export default class StandingOrderScreen extends React.Component {
   today = new Date().toLocaleDateString();
   constructor(props) {
@@ -40,7 +42,6 @@ export default class StandingOrderScreen extends React.Component {
       subtotal: 0,
     };
   }
-  
 
   componentDidMount() {
     this._isMounted = true;
@@ -131,12 +132,11 @@ export default class StandingOrderScreen extends React.Component {
 
   setOrderQuantity = (quantity, name) => {
     let newOrders = this.state.orders;
-    newOrders.find((x, i) => {
-      if (x.product === name) {
-        newOrders[i].quantity = quantity;
-      }
-      return true;
-    });
+    console.log(quantity, name);
+    let index = newOrders.findIndex((x) => x.product === name);
+    newOrders[index].quantity = quantity;
+    console.log(this.state.orders);
+    console.log(newOrders);
     this.setState({
       orders: newOrders,
     });
@@ -296,7 +296,7 @@ export default class StandingOrderScreen extends React.Component {
               >
                 <Input
                   style={{ width: 120 }}
-                  // defaultValue={business ? business.phone : null}
+                  value={business ? business.phone : null}
                   onChange={(e) => {
                     this.setPhone(e.target.value);
                   }}
@@ -363,50 +363,18 @@ export default class StandingOrderScreen extends React.Component {
                 </Form.Item>
               ) : null}
               {products.length !== 0 ? (
-                <div className="products customer-center">
+                <div className="standing-products">
                   <List
+                    itemLayout="vertical"
                     dataSource={products}
                     renderItem={(item) => (
-                      <div className="product">
-                        <div className="product-preview">
-                          <div className="thumbnail">
-                            <img src="https://s.cdpn.io/24822/sidebar-cupcake.png" alt={item.name}/>
-                          </div>
-                          <div className="product-paper">
-                            <div className="product-name">{item.name}</div>
-                            <div className="product-price">
-                              {"$ " + item.price}
-                            </div>
-                          </div>
-                          <div
-                            className="product-quantity"
-                            style={{
-                              width: `${this.getQuantityLength(item) + 1}em`,
-                            }}
-                          >
-                            x
-                            <InputNumber
-                              bordered={false}
-                              min={0}
-                              defaultValue={this.getQuantity(item.name)}
-                              value={this.getQuantity(item.name)}
-                              onChange={(e) => {
-                                this.setOrderQuantity(e, item.name);
-                                this.setSubtotal();
-                              }}
-                            ></InputNumber>
-                          </div>
-                        </div>
-                        <div className="product-interactions">
-                          <div
-                            className="button del"
-                            onClick={() => {
-                              this.deleteFromOrders(item);
-                            }}
-                          >
-                            x
-                          </div>
-                        </div>
+                      <div>
+                        <h1>{item.name} </h1>
+                        <Checkbox.Group
+                          options={plainOptions}
+                          // value={checkedList}
+                          // onChange={onChange}
+                        />
                       </div>
                     )}
                   />

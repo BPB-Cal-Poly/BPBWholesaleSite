@@ -1,0 +1,151 @@
+
+
+.standing-products{
+  list-style: none;
+  height: 280px;
+  width: 100%;
+  cursor: grab;
+  position: relative;
+  left: 0;
+  transform: translate3d(0, 0, 0);
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.standing-product {
+    position: relative;
+    width: 150px;
+    height: 100px;
+    float: left;
+    padding: 1em;
+    /* box-shadow: 8px 10px 17px 0px rgba(158, 132, 116, 0.77); */
+}
+
+@media (min-width: 466px) and (max-width: 865px) {
+    .standing-products{
+        height: 600px;
+    }
+}
+
+.product:hover{
+      z-index: 1
+}
+
+.product-preview {
+    /* padding: 1em; */
+    height: inherit;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.thumbnail {
+    width: 100%;
+    min-height: 120px;
+    max-height: 200px;
+    background: #E8B0AF;
+}
+
+@media (min-width: 425px) and (max-width: 465px) {
+    .standing-products{
+        height: 550px;
+    }
+}
+
+@media (min-width: 200px) and (max-width: 425px) {
+    .standing-products{
+        height: 450px;
+    }
+}
+
+.product-info {
+    /* position: absolute; */
+    /* height: 75px;
+    bottom: 20px; */
+    background: rgba(226, 185, 185, 0.65);
+    padding: 1em;
+    display: block;
+    width: 100%;
+}
+
+img{
+    width: 100%;
+    margin-top: 1em;
+}
+
+.product-name {
+    font-size: 1.6em;
+    text-align: center;
+}
+
+.product-price {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.product-interactions {
+    position: absolute;
+    height: 40px;
+    bottom: 33%;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.button {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    font-size: 3em;
+    line-height: 0.75em;
+    background: rgba(255, 255, 255, 0.65);
+    cursor: pointer;
+    position: absolute;
+    right: 7%;
+    vertical-align: middle;
+}
+
+.button.del{
+    color: red;
+}
+
+.product-quantity .ant-input-number{
+    height: 1.5em;
+    font-size: 1.5em;
+    display: inline-flex;
+    position: absolute;
+    bottom: 0.03em;
+    left: 0.68em;
+    width: 100%;
+}
+
+.product-quantity {
+    font-size: 2em;
+    /* width: 3em; */
+    height: 2em;
+    text-align: center;
+    padding: 0.25em 0.2em;
+    border-radius: 1em;
+    position: absolute;
+    top: 4%;
+    right: 17%;
+    background: #fff;
+    backface-visibility: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.product-quantity .ant-input-number-input{
+    padding: 0;
+    height: auto;
+}
+
+.add-button .ant-btn{
+    border: 2px solid transparent;
+    border-color: #d9d9d9;
+}
+
+.border-box {
+    border: 2px solid transparent;
+    border-color: #d9d9d9;
+}

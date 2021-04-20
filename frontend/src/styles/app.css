@@ -52,7 +52,7 @@ main {
 /* footer */
 footer{
   grid-area: footer;
-  background-color: #642626;
+  background-color: #ffffe4;
 }
 
 .main-container {

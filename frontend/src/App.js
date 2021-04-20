@@ -296,7 +296,7 @@ class App extends React.Component {
             ></Route>
           </Switch>
         </main>
-       <footer><Navbar variant="dark"> <Navbar.Brand href="/" className="disabled-text">This is footer</Navbar.Brand></Navbar></footer>
+       <footer><Navbar variant="light"> <Navbar.Brand href="/" className="disabled-text">This is footer</Navbar.Brand></Navbar></footer>
         {/* <footer className="row center"> <Navbar  bg="custom" variant="custom"></Navbar> This is footer</footer> */}
       </div>
     );
