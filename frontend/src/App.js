@@ -169,13 +169,13 @@ class App extends React.Component {
 
     let dropdown =
       userType === "admin" ? (
-        <NavDropdown.Item href="/admin/main">Admin</NavDropdown.Item>
+        <NavDropdown.Item href="/admin/main" className="disabled-text">Admin</NavDropdown.Item>
       ) : null;
     let hello_user = `Hello, ${username}`;
     let navs = username ? (
-      <NavDropdown title={hello_user} id="collasible-nav-dropdown">
+      <NavDropdown title={hello_user} id="collasible-nav-dropdown" className="disabled-text">
         {dropdown}
-        <NavDropdown.Item href="/account">Account</NavDropdown.Item>
+        <NavDropdown.Item href="/account" className="disabled-text">Account</NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item
           onSelect={() => {
@@ -184,11 +184,12 @@ class App extends React.Component {
             this.updateUser();
             this.props.history.push("/");
           }}
+          className="disabled-text"
         >
           logout
         </NavDropdown.Item>
       </NavDropdown>
-    ) : null;
+    ) : <Nav.Link href="/login" className="disabled-text">login</Nav.Link>;
     return (
       <div className="grid-container">
         
@@ -283,14 +284,15 @@ class App extends React.Component {
               exact
               path="/"
               render={(props) =>
-                this._isMounted && !isLogined ? (
-                  <Redirect
-                    to={{
-                      pathname: "/login",
-                      state: { from: props.location },
-                    }}
-                  />
-                ) : userType === "admin" ? (
+                // this._isMounted && !isLogined ? (
+                //   <Redirect
+                //     to={{
+                //       pathname: "/login",
+                //       state: { from: props.location },
+                //     }}
+                //   />
+                // ) : 
+                userType === "admin" ? (
                   <Redirect
                     to={{
                       pathname: "/admin/main",

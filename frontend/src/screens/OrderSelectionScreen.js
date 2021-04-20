@@ -22,12 +22,12 @@ export default class OrderSelectiosnScreen extends React.Component {
             <div className="order-selection"></div>
             <a className="brand" href="/cart-order">
               <button className="selection-btn">
-                <span>CART ORDER</span>
+                <span className="disabled-text">CART ORDER</span>
               </button>
             </a>
             <a className="brand" href="/standing-order">
               <button className="selection-btn">
-                <span>STANDING ORDER</span>
+                <span className="disabled-text">STANDING ORDER</span>
               </button>
             </a>
           </div>
