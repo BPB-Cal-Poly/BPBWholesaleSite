@@ -188,7 +188,7 @@ class App extends React.Component {
         
         <header>
           <Navbar collapseOnSelect expand="lg" bg="custom" variant="custom" sticky="top">
-            <Navbar.Brand href="/">BACK PORCH BAKERY</Navbar.Brand>
+            <Navbar.Brand href="/" className="header-brand disabled-text">BACK PORCH BAKERY</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto"></Nav>
@@ -277,14 +277,6 @@ class App extends React.Component {
               exact
               path="/"
               render={(props) =>
-                // this._isMounted && !isLogined ? (
-                //   <Redirect
-                //     to={{
-                //       pathname: "/login",
-                //       state: { from: props.location },
-                //     }}
-                //   />
-                // ) : 
                 userType === "admin" ? (
                   <Redirect
                     to={{
@@ -304,7 +296,8 @@ class App extends React.Component {
             ></Route>
           </Switch>
         </main>
-        <footer className="row center">This is footer</footer>
+       <footer><Navbar variant="dark"> <Navbar.Brand href="/" className="disabled-text">This is footer</Navbar.Brand></Navbar></footer>
+        {/* <footer className="row center"> <Navbar  bg="custom" variant="custom"></Navbar> This is footer</footer> */}
       </div>
     );
   }

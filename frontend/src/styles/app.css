@@ -22,11 +22,10 @@ header{
   background-color: #eee4ac;
 }
 
-a.navbar-brand{
+a.navbar-brand.header-brand{
   color: #581717;
   font-size: 3rem;
   font-weight: bold;
-  
 }
 
 a.nav-link:hover, a.navbar-brand:hover{
@@ -50,15 +49,10 @@ main {
   padding-right: 8px;
 }
 
-
-
 /* footer */
 footer{
   grid-area: footer;
   background-color: #642626;
-  color: #ffffff;
-  padding-left: 8px;
-  padding-right: 8px;
 }
 
 .main-container {
