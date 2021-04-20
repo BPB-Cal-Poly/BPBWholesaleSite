@@ -8,15 +8,16 @@ import {
   SafetyCertificateOutlined,
   ReconciliationOutlined,
 } from "@ant-design/icons";
+import "antd/dist/antd.css";
+import "./styles/index.css";
+import './styles/app.css';
+
 import CartOrderScreen from "./screens/CartOrderScreen";
 import StandingOrderScreen from "./screens/StandingOrderScreen";
 import OrderSelectionScreen from "./screens/OrderSelectionScreen";
 import Login from "./user/Login";
 import Admin from "./Admin";
 import { isLogined, getUsername, getUserType, clearToken } from "./utils/utils";
-import "antd/dist/antd.css";
-import "./styles/index.css";
-import './styles/app.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -165,51 +166,7 @@ class App extends React.Component {
 
   render() {
     let { isLogined, username, userType } = this.state;
-    let popMenuAdmin = (
-      <Menu
-        onClick={(p) => {
-          if (p.key === "logout") {
-            clearToken();
-            this.updateUser();
-            this.props.history.push("/");
-          } else if (p.key === "admin") {
-          } else {
-            message.info(p.key);
-          }
-        }}
-      >
-        <Menu.Item key="admin" icon={<ReconciliationOutlined />}>
-          <Link to="/admin/main">admin</Link>
-        </Menu.Item>
-        <Menu.Item key="account" icon={<SafetyCertificateOutlined />}>
-          account
-        </Menu.Item>
-        <Menu.Item key="logout" icon={<LoginOutlined />}>
-          logout
-        </Menu.Item>
-      </Menu>
-    );
 
-    let popMenuCustomer = (
-      <Menu
-        onClick={(p) => {
-          if (p.key === "logout") {
-            clearToken();
-            this.updateUser();
-            this.props.history.push("/");
-          } else {
-            message.info(p.key);
-          }
-        }}
-      >
-        <Menu.Item key="account" icon={<SafetyCertificateOutlined />}>
-          account
-        </Menu.Item>
-        <Menu.Item key="logout" icon={<LoginOutlined />}>
-          logout
-        </Menu.Item>
-      </Menu>
-    );
     let dropdown =
       userType === "admin" ? (
         <NavDropdown.Item href="/admin/main">Admin</NavDropdown.Item>
@@ -236,8 +193,8 @@ class App extends React.Component {
       <div className="grid-container">
         
         <header>
-          <Navbar collapseOnSelect expand="lg" bg="custom" variant="custom">
-            <Navbar.Brand href="/">BACK PORCH NAKERY</Navbar.Brand>
+          <Navbar collapseOnSelect expand="lg" bg="custom" variant="custom" sticky="top">
+            <Navbar.Brand href="/">BACK PORCH BAKERY</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto"></Nav>
@@ -245,6 +202,7 @@ class App extends React.Component {
             </Navbar.Collapse>
           </Navbar>
         </header>
+
 
         <main>
           <Switch>

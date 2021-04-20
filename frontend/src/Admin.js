@@ -23,7 +23,7 @@ import StandingOrdersEdit from "./order/StandingOrdersEdit";
 import CartOrdersList from "./order/CartOrdersList";
 import CartOrdersEdit from "./order/CartOrdersEdit";
 import ProductAdd from "./product/ProductAdd";
-
+import './styles/admin.css';
 const { Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -203,7 +203,8 @@ export default class OrderScreen extends React.Component {
             style={{
               padding: 24,
               margin: "0 16px",
-              minHeight: 280,
+              minHeight: 300,
+              backgroundColor: 'white'
             }}
           >
             <Switch>
