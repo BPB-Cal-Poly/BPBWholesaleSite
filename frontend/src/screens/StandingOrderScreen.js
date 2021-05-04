@@ -14,6 +14,7 @@ import {
   Row,
   List,
 } from "antd";
+import MediaQuery from "react-responsive";
 import moment from "moment";
 import { ModalForm } from "@ant-design/pro-form";
 import { PlusOutlined } from "@ant-design/icons";
@@ -22,7 +23,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const shipping = 2;
-const plainOptions = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const plainOptions = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 export default class StandingOrderScreen extends React.Component {
   today = new Date().toLocaleDateString();
   constructor(props) {
@@ -46,29 +47,29 @@ export default class StandingOrderScreen extends React.Component {
   componentDidMount() {
     this._isMounted = true;
     this.getList();
-    this.setOrderList();
+    // this.setOrderList();
   }
 
   componentWillUnmount() {
     this._isMounted = false;
   }
 
-  setOrderList = () => {
-    let orders = [];
-    for (let theproduct of this.props.fakeProducts) {
-      orders.push({ product: theproduct.name, quantity: 0 });
-    }
-    this.setState({
-      orders,
-    });
-  };
+  // setOrderList = () => {
+  //   let orders = [];
+  //   for (let theproduct of this.props.fakeProducts) {
+  //     orders.push({ product: theproduct.name });
+  //   }
+  //   this.setState({
+  //     orders,
+  //   });
+  // };
 
   getList = () => {
     if (this._isMounted) {
       let categories = this.props.fakeCategories;
       let products = this.props.fakeProducts;
       this.setState({
-        products: products,
+        // products: products,
         categories: categories,
       });
     }
@@ -105,7 +106,9 @@ export default class StandingOrderScreen extends React.Component {
   };
 
   addToOrder = (values) => {
-    this.setOrderQuantity(values.quantity, values.product);
+    let newOrders = this.state.orders;
+    newOrders.push({ product: values.product });
+    this.setOrderQuantity(values, newOrders);
     const newProducts = this.state.products;
     for (let theproduct of this.props.fakeProducts) {
       if (theproduct.name === values.product) {
@@ -117,7 +120,12 @@ export default class StandingOrderScreen extends React.Component {
     });
     this.setSubtotal();
   };
-
+  addDayToOrder(quantity, day, name) {
+    let product = { product: name };
+    product[day] = quantity;
+    this.setOrderQuantity(product, this.state.orders);
+    this.setSubtotal();
+  }
   deleteFromOrders = (item) => {
     this.setOrderQuantity(0, item.name);
     this.setSubtotal();
@@ -130,12 +138,15 @@ export default class StandingOrderScreen extends React.Component {
     });
   };
 
-  setOrderQuantity = (quantity, name) => {
-    let newOrders = this.state.orders;
-    console.log(quantity, name);
-    let index = newOrders.findIndex((x) => x.product === name);
-    newOrders[index].quantity = quantity;
-    console.log(this.state.orders);
+  setOrderQuantity = (values, newOrders) => {
+    console.log(values);
+
+    let index = newOrders.findIndex((x) => x.product === values.product);
+    for (let day of plainOptions) {
+      if (values[day] != null) {
+        newOrders[index][day] = values[day];
+      }
+    }
     console.log(newOrders);
     this.setState({
       orders: newOrders,
@@ -150,10 +161,14 @@ export default class StandingOrderScreen extends React.Component {
   setSubtotal = () => {
     let subtotal = 0;
     for (let theproduct of this.state.orders) {
-      if (theproduct.quantity !== 0) {
-        subtotal +=
-          theproduct.quantity *
-          this.state.products.find((x) => x.name === theproduct.product).price;
+      for (let day of plainOptions) {
+        if (theproduct[day] != 0 && theproduct[day] != null) {
+          console.log(theproduct, day);
+          subtotal +=
+            theproduct[day] *
+            this.state.products.find((x) => x.name === theproduct.product)
+              .price;
+        }
       }
     }
     this.setState({
@@ -193,14 +208,28 @@ export default class StandingOrderScreen extends React.Component {
       window.location.reload();
     }
   };
+  orderContainProduct(name) {
+    let orderHasProduct = false;
+    for (var i = 0; i < this.state.orders.length; i++) {
+      if (this.state.orders[i].product === name) {
+        orderHasProduct = true;
+        break;
+      }
+    }
+    return orderHasProduct;
+  }
 
   render() {
     let { products, orders, note } = this.state;
 
     //notAddedProducts are the products not in the gallery view (they are all in by default
     //but user might delete them and want to add later);
+    // let notAddedProducts = this.props.fakeProducts.filter(
+    //   (value) => !products.includes(value)
+    // );
+
     let notAddedProducts = this.props.fakeProducts.filter(
-      (value) => !products.includes(value)
+      (value) => !this.orderContainProduct(value.name)
     );
     let business = this.props.business;
 
@@ -229,13 +258,52 @@ export default class StandingOrderScreen extends React.Component {
           </Select>
         </Form.Item>
       ) : null;
-
+    let productCom = (
+      <List
+        itemLayout="vertical"
+        dataSource={orders}
+        renderItem={(product) => (
+          <div>
+            <h3>{product.product} </h3>
+            <List
+              grid={{ gutter: 16, column: 7 }}
+              dataSource={plainOptions}
+              renderItem={(day) => (
+                <div>
+                  <Form form={this.form}>
+                    <Form.Item label={day} name="day">
+                      <InputNumber
+                        min={0}
+                        style={{ width: 60 }}
+                        onChange={(e) => {
+                          this.addDayToOrder(e, day, product.product);
+                          this.setSubtotal();
+                        }}
+                        defaultValue={product[day]}
+                        value={product[day]}
+                      />
+                    </Form.Item>
+                  </Form>
+                </div>
+              )}
+            />
+          </div>
+        )}
+      />
+    );
     const dateFormat = "MM/DD/YYYY";
-
+    function DayList() {
+      const list = plainOptions.map((day) => (
+        <Form.Item label={day} name={day}>
+          <InputNumber min={0} style={{ width: 60 }} />
+        </Form.Item>
+      ));
+      return list;
+    }
     return (
       <div className="main-container">
         <div className="customer-center">
-          <Card className="card-transparent">
+          <Card className="card-transparent standing-card">
             <Form {...formItemLayout} form={this.form}>
               <h1>Standing Order</h1>
 
@@ -304,81 +372,59 @@ export default class StandingOrderScreen extends React.Component {
               </Form.Item>
 
               <h1>Order Detail</h1>
-              {notAddedProducts.length !== 0 ? (
-                <Form.Item>
-                  <ModalForm
-                    title="Product Info"
-                    width={250}
-                    trigger={
-                      <Button type="primary">
-                        <PlusOutlined />
-                        Add Product
-                      </Button>
+              <Form.Item>
+                <ModalForm
+                  title="Product Info"
+                  width={400}
+                  trigger={
+                    <Button type="primary">
+                      <PlusOutlined />
+                      Add Product
+                    </Button>
+                  }
+                  modalProps={{
+                    onCancel: () => console.log("canceled"),
+                  }}
+                  submitter={{
+                    searchConfig: {
+                      submitText: "Add",
+                      resetText: "Cancel",
+                    },
+                  }}
+                  onFinish={async (values) => {
+                    console.log(values);
+                    this.addToOrder(values);
+                    message.success("Product added");
+                    return true;
+                  }}
+                >
+                  <Form.Item
+                    label="Product"
+                    name="product"
+                    layout="vertical"
+                    initialValue={
+                      notAddedProducts.length !== 0
+                        ? notAddedProducts[0].name
+                        : "Select Product"
                     }
-                    modalProps={{
-                      onCancel: () => console.log("canceled"),
-                    }}
-                    submitter={{
-                      searchConfig: {
-                        submitText: "Add",
-                        resetText: "Cancel",
-                      },
-                    }}
-                    onFinish={async (values) => {
-                      console.log(values);
-                      this.addToOrder(values);
-                      message.success("Product added");
-                      return true;
-                    }}
+                    rules={[{ required: true, message: "Missing product" }]}
                   >
-                    <Form.Item
-                      label="Product"
-                      name="product"
-                      layout="vertical"
-                      initialValue={
-                        notAddedProducts.length !== 0
-                          ? notAddedProducts[0].name
-                          : "Select Product"
-                      }
-                      rules={[{ required: true, message: "Missing product" }]}
-                    >
-                      <Select style={{ width: 140 }} onSelect={this.setProduct}>
-                        {notAddedProducts.map((item) => (
-                          <Option key={item.id} value={item.name}>
-                            {item.name}
-                            {" $"}
-                            {item.price}
-                          </Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                    <Form.Item
-                      label="Quantity"
-                      name="quantity"
-                      rules={[{ required: true, message: "Missing quantity" }]}
-                    >
-                      <InputNumber min={1} style={{ width: 120 }} />
-                    </Form.Item>
-                  </ModalForm>
-                </Form.Item>
-              ) : null}
+                    <Select style={{ width: 140 }} onSelect={this.setProduct}>
+                      {notAddedProducts.map((item) => (
+                        <Option key={item.id} value={item.name}>
+                          {item.name}
+                          {" $"}
+                          {item.price}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                  <DayList />
+                </ModalForm>
+              </Form.Item>
+
               {products.length !== 0 ? (
-                <div className="standing-products">
-                  <List
-                    itemLayout="vertical"
-                    dataSource={products}
-                    renderItem={(item) => (
-                      <div>
-                        <h1>{item.name} </h1>
-                        <Checkbox.Group
-                          options={plainOptions}
-                          // value={checkedList}
-                          // onChange={onChange}
-                        />
-                      </div>
-                    )}
-                  />
-                </div>
+                <div className="standing-products">{productCom}</div>
               ) : null}
               <Form.Item label="Special Note" {...formItemLayout}>
                 <TextArea
@@ -392,21 +438,7 @@ export default class StandingOrderScreen extends React.Component {
               </Form.Item>
 
               <h1>Order Summary</h1>
-              <List
-                grid={{ gutter: 20, column: 1 }}
-                dataSource={orders}
-                renderItem={(item) =>
-                  item.quantity !== 0 ? (
-                    <Col span={6} className="align-right">
-                      <List.Item>
-                        <List.Item.Meta
-                          title={item.product + " x" + item.quantity}
-                        />
-                      </List.Item>
-                    </Col>
-                  ) : null
-                }
-              />
+
               <div className="border-box" style={{ marginBottom: "24px" }}>
                 <h2>
                   <Row>

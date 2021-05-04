@@ -13,9 +13,10 @@ import {
   Row,
   List,
 } from "antd";
+import MediaQuery from "react-responsive";
 import moment from "moment";
 import { ModalForm } from "@ant-design/pro-form";
-import {  PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import "../styles/order-screen.css";
 const { Option } = Select;
 const { TextArea } = Input;
@@ -40,27 +41,26 @@ export default class CartOrderScreen extends React.Component {
       subtotal: 0,
     };
   }
-  
 
   componentDidMount() {
     this._isMounted = true;
     this.getList();
-    this.setOrderList();
+    // this.setOrderList();
   }
 
   componentWillUnmount() {
     this._isMounted = false;
   }
 
-  setOrderList = () => {
-    let orders = [];
-    for (let theproduct of this.props.fakeProducts) {
-      orders.push({ product: theproduct.name, quantity: 0 });
-    }
-    this.setState({
-      orders,
-    });
-  };
+  // setOrderList = () => {
+  //   let orders = [];
+  //   for (let theproduct of this.props.fakeProducts) {
+  //     orders.push({ product: theproduct.name, quantity: 0 });
+  //   }
+  //   this.setState({
+  //     orders,
+  //   });
+  // };
 
   getList = () => {
     if (this._isMounted) {
@@ -104,46 +104,36 @@ export default class CartOrderScreen extends React.Component {
   };
 
   addToOrder = (values) => {
-    this.setOrderQuantity(values.quantity, values.product);
-    const newProducts = this.state.products;
-    for (let theproduct of this.props.fakeProducts) {
-      if (theproduct.name === values.product) {
-        newProducts.push(theproduct);
-      }
-    }
-    this.setState({
-      products: newProducts,
-    });
+    let newOrders = this.state.orders;
+    newOrders.push({ product: values.product });
+    this.setOrderQuantity(values.quantity, values.product, newOrders);
     this.setSubtotal();
   };
 
   deleteFromOrders = (item) => {
-    this.setOrderQuantity(0, item.name);
+    this.setOrderQuantity(0, item.product, this.state.orders);
     this.setSubtotal();
-    const newProducts = this.state.products.filter((prod) => {
-      return prod.id !== item.id;
-    });
-    message.success("Delete Successfully");
-    this.setState({
-      products: newProducts,
-    });
   };
 
-  setOrderQuantity = (quantity, name) => {
-    let newOrders = this.state.orders;
-    console.log(quantity, name);
+  setOrderQuantity = (quantity, name, newOrders) => {
     let index = newOrders.findIndex((x) => x.product === name);
     newOrders[index].quantity = quantity;
-    console.log(this.state.orders);
-    console.log(newOrders);
+    if (quantity == 0) {
+      newOrders = newOrders.filter((prod) => {
+        return prod.product != name;
+      });
+    }
     this.setState({
       orders: newOrders,
     });
-    // this.setSubtotal();
   };
 
   getQuantity = (product) => {
     return this.state.orders.find((x) => x.product === product).quantity;
+  };
+
+  getPrice = (product) => {
+    return this.state.products.find((x) => x.name === product).price;
   };
 
   setSubtotal = () => {
@@ -170,7 +160,7 @@ export default class CartOrderScreen extends React.Component {
   };
 
   getQuantityLength = (product) => {
-    let quantity = this.getQuantity(product.name);
+    let quantity = this.getQuantity(product.product);
     return quantity.toString().length;
   };
 
@@ -193,13 +183,27 @@ export default class CartOrderScreen extends React.Component {
     }
   };
 
+  orderContainProduct(name) {
+    let orderHasProduct = false;
+    for (var i = 0; i < this.state.orders.length; i++) {
+      if (this.state.orders[i].product === name) {
+        orderHasProduct = true;
+        break;
+      }
+    }
+    return orderHasProduct;
+  }
+
   render() {
     let { products, orders, note } = this.state;
 
     //notAddedProducts are the products not in the gallery view (they are all in by default
     //but user might delete them and want to add later);
+    // let notAddedProducts = this.props.fakeProducts.filter(
+    //   (value) => !products.includes(value)
+    // );
     let notAddedProducts = this.props.fakeProducts.filter(
-      (value) => !products.includes(value)
+      (value) => !this.orderContainProduct(value.name)
     );
     let business = this.props.business;
 
@@ -229,8 +233,59 @@ export default class CartOrderScreen extends React.Component {
         </Form.Item>
       ) : null;
 
-    const dateFormat = "MM/DD/YYYY";
+    let productCom = (
+      <List
+        dataSource={orders}
+        renderItem={(item) => (
+          <div className="product">
+            <div className="product-preview">
+              <div className="thumbnail">
+                <img
+                  src="https://s.cdpn.io/24822/sidebar-cupcake.png"
+                  alt={item.product}
+                />
+              </div>
+              <div className="product-paper">
+                <div className="product-name">{item.product}</div>
+                <div className="product-price">
+                  {"$ " + this.getPrice(item.product)}
+                </div>
+              </div>
+              <div
+                className="product-quantity"
+                style={{
+                  width: `${this.getQuantityLength(item) + 1}em`,
+                }}
+              >
+                x
+                <InputNumber
+                  bordered={false}
+                  min={0}
+                  defaultValue={this.getQuantity(item.product)}
+                  value={this.getQuantity(item.product)}
+                  onChange={(e) => {
+                    this.setOrderQuantity(e, item.product, orders);
+                    this.setSubtotal();
+                  }}
+                ></InputNumber>
+              </div>
+            </div>
+            <div className="product-interactions">
+              <div
+                className="button del"
+                onClick={() => {
+                  this.deleteFromOrders(item);
+                }}
+              >
+                x
+              </div>
+            </div>
+          </div>
+        )}
+      />
+    );
 
+    const dateFormat = "MM/DD/YYYY";
     return (
       <div className="main-container">
         <div className="customer-center">
@@ -361,54 +416,48 @@ export default class CartOrderScreen extends React.Component {
                   </ModalForm>
                 </Form.Item>
               ) : null}
-              {products.length !== 0 ? (
-                <div className="products customer-center">
-                  <List
-                    dataSource={products}
-                    renderItem={(item) => (
-                      <div className="product">
-                        <div className="product-preview">
-                          <div className="thumbnail">
-                            <img src="https://s.cdpn.io/24822/sidebar-cupcake.png" alt={item.name} />
-                          </div>
-                          <div className="product-paper">
-                            <div className="product-name">{item.name}</div>
-                            <div className="product-price">
-                              {"$ " + item.price}
-                            </div>
-                          </div>
-                          <div
-                            className="product-quantity"
-                            style={{
-                              width: `${this.getQuantityLength(item) + 1}em`,
-                            }}
-                          >
-                            x
-                            <InputNumber
-                              bordered={false}
-                              min={0}
-                              defaultValue={this.getQuantity(item.name)}
-                              value={this.getQuantity(item.name)}
-                              onChange={(e) => {
-                                this.setOrderQuantity(e, item.name);
-                                this.setSubtotal();
-                              }}
-                            ></InputNumber>
-                          </div>
-                        </div>
-                        <div className="product-interactions">
-                          <div
-                            className="button del"
-                            onClick={() => {
-                              this.deleteFromOrders(item);
-                            }}
-                          >
-                            x
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  />
+              {orders.length !== 0 ? (
+                <div>
+                  <MediaQuery minDeviceWidth={666}>
+                    <div
+                      className="products customer-center"
+                      style={{
+                        height: `${Math.ceil(orders.length/3) * 20}em`,
+                      }}
+                    >
+                      {productCom}
+                    </div>
+                  </MediaQuery>
+                  <MediaQuery minDeviceWidth={466} maxDeviceWidth={665}>
+                    <div
+                      className="products customer-center"
+                      style={{
+                        height: `${Math.ceil(orders.length/2) * 20}em`,
+                      }}
+                    >
+                      {productCom}
+                    </div>
+                  </MediaQuery>
+                  <MediaQuery minDeviceWidth={426} maxDeviceWidth={465}>
+                    <div
+                      className="products customer-center"
+                      style={{
+                        height: `${Math.ceil(orders.length/2) * 17}em`,
+                      }}
+                    >
+                      {productCom}
+                    </div>
+                  </MediaQuery>
+                  <MediaQuery maxDeviceWidth={425}>
+                    <div
+                      className="products customer-center"
+                      style={{
+                        height: `${Math.ceil(orders.length/2) * 15}em`,
+                      }}
+                    >
+                      {productCom}
+                    </div>
+                  </MediaQuery>
                 </div>
               ) : null}
               <Form.Item label="Special Note" {...formItemLayout}>
@@ -423,21 +472,23 @@ export default class CartOrderScreen extends React.Component {
               </Form.Item>
 
               <h1>Order Summary</h1>
-              <List
-                grid={{ gutter: 20, column: 1 }}
-                dataSource={orders}
-                renderItem={(item) =>
-                  item.quantity !== 0 ? (
-                    <Col span={6} className="align-right">
-                      <List.Item>
-                        <List.Item.Meta
-                          title={item.product + " x" + item.quantity}
-                        />
-                      </List.Item>
-                    </Col>
-                  ) : null
-                }
-              />
+              {orders.length !== 0 ? (
+                <List
+                  grid={{ gutter: 20, column: 1 }}
+                  dataSource={orders}
+                  renderItem={(item) =>
+                    item.quantity !== 0 ? (
+                      <Col span={6} className="align-right">
+                        <List.Item>
+                          <List.Item.Meta
+                            title={item.product + " x" + item.quantity}
+                          />
+                        </List.Item>
+                      </Col>
+                    ) : null
+                  }
+                />
+              ) : null}
               <div className="border-box" style={{ marginBottom: "24px" }}>
                 <h2>
                   <Row>

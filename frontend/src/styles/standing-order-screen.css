@@ -2,7 +2,7 @@
 
 .standing-products{
   list-style: none;
-  height: 280px;
+  height: 400px;
   width: 100%;
   cursor: grab;
   position: relative;
@@ -10,6 +10,10 @@
   transform: translate3d(0, 0, 0);
   margin-bottom: 24px;
   flex-wrap: wrap;
+}
+
+.standing-card {
+    width: 500px;
 }
 
 .standing-product {
@@ -52,7 +56,7 @@
     }
 }
 
-@media (min-width: 200px) and (max-width: 425px) {
+@media (max-width: 425px) {
     .standing-products{
         height: 450px;
     }

@@ -23,11 +23,6 @@
     box-shadow: 8px 10px 17px 0px rgba(158, 132, 116, 0.77);
 }
 
-@media (min-width: 466px) and (max-width: 865px) {
-    .products{
-        height: 600px;
-    }
-}
 .product:hover{
       z-index: 1
 }
@@ -46,19 +41,13 @@
 }
 
 @media (min-width: 425px) and (max-width: 465px) {
-    .products{
-        height: 550px;
-    }
     .product{
         width: 180px;
         height: 252px;
     }
 }
 
-@media (min-width: 200px) and (max-width: 425px) {
-    .products{
-        height: 450px;
-    }
+@media (max-width: 425px) {
     .product{
         width: 150px;
         height: 210px;
