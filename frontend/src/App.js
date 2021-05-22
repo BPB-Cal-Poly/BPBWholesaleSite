@@ -128,6 +128,7 @@ class App extends React.Component {
     this.updateUser();
   }
 
+  /* update user state as stored in local storage */
   updateUser = () => {
     this.setState({
       username: getUsername(),
@@ -140,16 +141,14 @@ class App extends React.Component {
     this._isMounted = false;
   }
 
+  /* get business from current user */
   getBusiness = () => {
-    // console.log("getting business for "+ this.state.username);
     var thebusiness;
     for (let customer of this.state.fakeCustomers) {
-      // console.log("customer is "+ customer.username);
       if (customer.username === this.state.username) {
         thebusiness = customer.business;
       }
     }
-    // console.log("thebusiness is "+ thebusiness);
     for (let business of this.state.fakeBusinesses) {
       if (business.name === thebusiness) {
         return business;
@@ -297,7 +296,6 @@ class App extends React.Component {
           </Switch>
         </main>
        <footer><Navbar variant="light"> <Navbar.Brand href="/" className="disabled-text">This is footer</Navbar.Brand></Navbar></footer>
-        {/* <footer className="row center"> <Navbar  bg="custom" variant="custom"></Navbar> This is footer</footer> */}
       </div>
     );
   }

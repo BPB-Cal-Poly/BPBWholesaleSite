@@ -10,17 +10,19 @@ import {
   InputNumber,
   DatePicker,
   Col,
+  Modal,
   Row,
   List,
 } from "antd";
 import MediaQuery from "react-responsive";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { ModalForm } from "@ant-design/pro-form";
 import { PlusOutlined } from "@ant-design/icons";
 import "../styles/order-screen.css";
 const { Option } = Select;
 const { TextArea } = Input;
-
+const { confirm } = Modal;
 const shipping = 2;
 export default class CartOrderScreen extends React.Component {
   today = new Date().toLocaleDateString();
@@ -52,24 +54,53 @@ export default class CartOrderScreen extends React.Component {
     this._isMounted = false;
   }
 
-  // setOrderList = () => {
-  //   let orders = [];
-  //   for (let theproduct of this.props.fakeProducts) {
-  //     orders.push({ product: theproduct.name, quantity: 0 });
-  //   }
-  //   this.setState({
-  //     orders,
-  //   });
-  // };
+  static getDerivedStateFromProps(props, state) {
+    if (props.fakeProducts !== state.products) {
+      return {
+        products: props.fakeProducts,
+      };
+    }
+    if (props.fakeCategories !== state.categories) {
+      return {
+        categories: props.fakeCategories,
+      };
+    }
+    if (props.business !== state.business) {
+      if (state.address == "") {
+        return {
+          address: props.business.addresses[0],
+        };
+      } else if (state.phone == "") {
+        return {
+          phone: props.business.phone
+        };
+      }
+    }
+    return null;
+  }
 
   getList = () => {
     if (this._isMounted) {
+      let orders = this.props.location.state.orders;
       let categories = this.props.fakeCategories;
       let products = this.props.fakeProducts;
       this.setState({
         products: products,
         categories: categories,
       });
+
+      if (orders != null && orders.length != 0) {
+        for (let order of orders) {
+          let size = 0;
+          for (let key in order) {
+            if (order.hasOwnProperty(key) && key!= "product") {
+              size += order[key]
+            }
+          }
+            let product = {product: order.product, quantity: size}
+            this.addToOrder(product)
+        }
+      }
     }
   };
 
@@ -151,20 +182,44 @@ export default class CartOrderScreen extends React.Component {
   };
 
   getSubtotal = () => {
-    return this.state.subtotal.toFixed(2);
+    let subtotal = this.state.subtotal.toFixed(2);
+    return subtotal != null ? subtotal : 0
   };
 
   getTotal = () => {
     let total = this.state.subtotal + shipping;
-    return total.toFixed(2);
+    total = total.toFixed(2);
+    return total != null ? total : 0;
   };
 
   getQuantityLength = (product) => {
     let quantity = this.getQuantity(product.product);
-    return quantity.toString().length;
+    if (quantity != null) {
+      return quantity.toString().length;
+    }
+    return 0;
   };
 
-  handleOk = () => {
+  revertToStandingOrder = () => {
+    confirm({
+      title: "Are you sure you want to revert to standing order?",
+      content: "After reverting, your quantity information will be cleared",
+      okText: "Yes",
+      cancelText: "Cancel",
+      icon: <ExclamationCircleOutlined />,
+      onOk: () => {
+        this.props.history.push({
+          pathname:"/standing-order",
+          state:{
+              orders:this.state.orders
+           }
+         });
+      },
+    });
+  };
+
+
+  onFinish = async () => {
     let orders = this.state.orders.filter((x) => x.quantity !== 0);
     if (orders.length === 0) {
       message.error("Please add at least one item to the order");
@@ -178,7 +233,6 @@ export default class CartOrderScreen extends React.Component {
         type: this.state.type,
         subtotal: this.state.subtotal,
       };
-      console.log(newOrder);
       window.location.reload();
     }
   };
@@ -290,7 +344,7 @@ export default class CartOrderScreen extends React.Component {
       <div className="main-container">
         <div className="customer-center">
           <Card className="card-transparent">
-            <Form {...formItemLayout} form={this.form}>
+            <Form {...formItemLayout} form={this.form} onFinish={this.onFinish}>
               <h1>Cart Order</h1>
 
               <Form.Item
@@ -379,7 +433,6 @@ export default class CartOrderScreen extends React.Component {
                       },
                     }}
                     onFinish={async (values) => {
-                      console.log(values);
                       this.addToOrder(values);
                       message.success("Product added");
                       return true;
@@ -481,7 +534,7 @@ export default class CartOrderScreen extends React.Component {
                       <Col span={6} className="align-right">
                         <List.Item>
                           <List.Item.Meta
-                            title={item.product + " x" + item.quantity}
+                            title={item.product + " x" + item.quantity != null ? item.quantity : 0}
                           />
                         </List.Item>
                       </Col>
@@ -511,11 +564,20 @@ export default class CartOrderScreen extends React.Component {
                   </Row>
                 </h2>
               </div>
+              <div className="revert-button">
+                <Button
+                  type="default"
+                  form={this.form}
+                  onClick={this.revertToStandingOrder}
+                  shape="round"
+                >
+                  Revert to standing order
+                </Button>
+                </div>
               <div className="add-button">
                 <Button
                   type="default"
                   htmlType="submit"
-                  onClick={this.handleOk}
                   shape="round"
                 >
                   Order

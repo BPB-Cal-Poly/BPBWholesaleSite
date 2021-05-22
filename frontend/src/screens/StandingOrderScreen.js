@@ -10,20 +10,24 @@ import {
   InputNumber,
   DatePicker,
   Checkbox,
+  Modal,
   Col,
   Row,
   List,
 } from "antd";
 import MediaQuery from "react-responsive";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { ModalForm } from "@ant-design/pro-form";
 import { PlusOutlined } from "@ant-design/icons";
 import "../styles/standing-order-screen.css";
+import { Redirect } from "react-router";
 const { Option } = Select;
 const { TextArea } = Input;
-
+const { confirm } = Modal;
 const shipping = 2;
-const plainOptions = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 export default class StandingOrderScreen extends React.Component {
   today = new Date().toLocaleDateString();
   constructor(props) {
@@ -32,7 +36,6 @@ export default class StandingOrderScreen extends React.Component {
       categories: [],
       products: [],
       //----order----
-      type: "",
       date: this.today,
       address: "",
       phone: "",
@@ -54,6 +57,31 @@ export default class StandingOrderScreen extends React.Component {
     this._isMounted = false;
   }
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.fakeProducts !== state.products) {
+      return {
+        products: props.fakeProducts,
+      };
+    }
+    if (props.fakeCategories !== state.categories) {
+      return {
+        categories: props.fakeCategories,
+      };
+    }
+    if (props.business !== state.business) {
+      if (state.address == "") {
+        return {
+          address: props.business.addresses[0],
+        };
+      } else if (state.phone == "") {
+        return {
+          phone: props.business.phone
+        };
+      }
+    }
+    return null;
+  }
+
   // setOrderList = () => {
   //   let orders = [];
   //   for (let theproduct of this.props.fakeProducts) {
@@ -66,12 +94,19 @@ export default class StandingOrderScreen extends React.Component {
 
   getList = () => {
     if (this._isMounted) {
+      let orders = this.props.location.state.orders;
       let categories = this.props.fakeCategories;
       let products = this.props.fakeProducts;
       this.setState({
-        // products: products,
+        products: products,
         categories: categories,
       });
+      if (orders != null && orders.length != 0) {
+        for (let order of orders) {
+            let product = {product: order.product}
+            this.addToOrder(product)
+        }
+      }
     }
   };
 
@@ -109,15 +144,6 @@ export default class StandingOrderScreen extends React.Component {
     let newOrders = this.state.orders;
     newOrders.push({ product: values.product });
     this.setOrderQuantity(values, newOrders);
-    const newProducts = this.state.products;
-    for (let theproduct of this.props.fakeProducts) {
-      if (theproduct.name === values.product) {
-        newProducts.push(theproduct);
-      }
-    }
-    this.setState({
-      products: newProducts,
-    });
     this.setSubtotal();
   };
   addDayToOrder(quantity, day, name) {
@@ -129,29 +155,22 @@ export default class StandingOrderScreen extends React.Component {
   deleteFromOrders = (item) => {
     this.setOrderQuantity(0, item.name);
     this.setSubtotal();
-    const newProducts = this.state.products.filter((prod) => {
-      return prod.id !== item.id;
-    });
-    message.success("Delete Successfully");
-    this.setState({
-      products: newProducts,
-    });
   };
 
   setOrderQuantity = (values, newOrders) => {
-    console.log(values);
-
     let index = newOrders.findIndex((x) => x.product === values.product);
-    for (let day of plainOptions) {
+    for (let day of weekdays) {
       if (values[day] != null) {
         newOrders[index][day] = values[day];
       }
     }
-    console.log(newOrders);
     this.setState({
       orders: newOrders,
     });
-    // this.setSubtotal();
+  };
+
+  getPrice = (product) => {
+    return this.state.products.find((x) => x.name === product).price;
   };
 
   getQuantity = (product) => {
@@ -161,9 +180,8 @@ export default class StandingOrderScreen extends React.Component {
   setSubtotal = () => {
     let subtotal = 0;
     for (let theproduct of this.state.orders) {
-      for (let day of plainOptions) {
+      for (let day of weekdays) {
         if (theproduct[day] != 0 && theproduct[day] != null) {
-          console.log(theproduct, day);
           subtotal +=
             theproduct[day] *
             this.state.products.find((x) => x.name === theproduct.product)
@@ -177,37 +195,61 @@ export default class StandingOrderScreen extends React.Component {
   };
 
   getSubtotal = () => {
-    return this.state.subtotal.toFixed(2);
+    let subtotal = this.state.subtotal.toFixed(2);
+    return subtotal != null ? subtotal : 0
   };
 
   getTotal = () => {
     let total = this.state.subtotal + shipping;
-    return total.toFixed(2);
+    total = total.toFixed(2);
+    return total != null ? total : 0;
   };
 
   getQuantityLength = (product) => {
     let quantity = this.getQuantity(product.name);
-    return quantity.toString().length;
+    if (quantity != null) {
+      return quantity.toString().length;
+    }
+    return 0
   };
 
-  handleOk = () => {
-    let orders = this.state.orders.filter((x) => x.quantity !== 0);
-    if (orders.length === 0) {
-      message.error("Please add at least one item to the order");
-    } else {
-      let newOrder = {
-        date: this.state.date,
-        address: this.state.address,
-        phone: this.state.phone,
-        orders: orders,
-        deliver: this.state.deliver,
-        type: this.state.type,
-        subtotal: this.state.subtotal,
-      };
-      console.log(newOrder);
-      window.location.reload();
-    }
+  revertToCartOrder = () => {
+    confirm({
+      title: "Are you sure you want to revert to cart order?",
+      content: "After reverting, your quantity selection for each weekday will be cleared",
+      okText: "Yes",
+      cancelText: "Cancel",
+      icon: <ExclamationCircleOutlined />,
+      onOk: () => {
+        this.props.history.push({
+          pathname:"/cart-order",
+          state:{
+              orders:this.state.orders
+           }
+         });
+      },
+    });
   };
+
+  onFinish = async () => {
+      let orders = this.state.orders.filter((x) => x.quantity !== 0);
+      if (orders.length === 0) {
+        message.error("Please add at least one item to the order");
+      } else {
+        let newOrder = {
+          date: this.state.date,
+          address: this.state.address,
+          phone: this.state.phone,
+          orders: orders,
+          deliver: this.state.deliver,
+          note: this.state.note,
+          subtotal: this.state.subtotal,
+        };
+        message.success("Order placed");
+        window.location.reload();
+      }
+  }
+
   orderContainProduct(name) {
     let orderHasProduct = false;
     for (var i = 0; i < this.state.orders.length; i++) {
@@ -232,6 +274,7 @@ export default class StandingOrderScreen extends React.Component {
       (value) => !this.orderContainProduct(value.name)
     );
     let business = this.props.business;
+    
 
     const formItemLayout = {
       labelCol: {
@@ -267,7 +310,7 @@ export default class StandingOrderScreen extends React.Component {
             <h3>{product.product} </h3>
             <List
               grid={{ gutter: 16, column: 7 }}
-              dataSource={plainOptions}
+              dataSource={weekdays}
               renderItem={(day) => (
                 <div>
                   <Form form={this.form}>
@@ -293,7 +336,7 @@ export default class StandingOrderScreen extends React.Component {
     );
     const dateFormat = "MM/DD/YYYY";
     function DayList() {
-      const list = plainOptions.map((day) => (
+      const list = weekdays.map((day) => (
         <Form.Item label={day} name={day}>
           <InputNumber min={0} style={{ width: 60 }} />
         </Form.Item>
@@ -304,7 +347,7 @@ export default class StandingOrderScreen extends React.Component {
       <div className="main-container">
         <div className="customer-center">
           <Card className="card-transparent standing-card">
-            <Form {...formItemLayout} form={this.form}>
+            <Form {...formItemLayout} form={this.form} onFinish={this.onFinish}> 
               <h1>Standing Order</h1>
 
               <Form.Item
@@ -461,11 +504,22 @@ export default class StandingOrderScreen extends React.Component {
                   </Row>
                 </h2>
               </div>
+              <div className="revert-button">
+                <Button
+                  type="default"
+                  form={this.form}
+                  onClick={this.revertToCartOrder}
+                  shape="round"
+                >
+                  Revert to cart order
+                </Button>
+              </div>
               <div className="add-button">
                 <Button
                   type="default"
+                  form={this.form}
                   htmlType="submit"
-                  onClick={this.handleOk}
+                  // onClick={this.handleOk}
                   shape="round"
                 >
                   Order

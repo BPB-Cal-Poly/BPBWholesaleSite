@@ -39,32 +39,26 @@ export default class OrderScreen extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    console.log("get in admin");
     if (props.fakeProducts !== state.fakeProducts) {
-      console.log("fakeproduct change");
       return {
         fakeProducts: props.fakeProducts,
       };
     }
     if (props.fakeCategories !== state.fakeCategories) {
-      console.log("fakecat change");
       return {
         fakeCategories: props.fakeCategories,
       };
     }
     if (props.fakeBusinesses !== state.fakeBusinesses) {
-      console.log("fakebus change");
       return {
         fakeBusinesses: props.fakeBusinesses,
       };
     }
     if (props.fakeCustomers !== state.fakeCustomers) {
-      console.log("fakecus change");
       return {
         fakeCustomers: props.fakeCustomers,
       };
     }
-
     return null;
   }
 
@@ -76,6 +70,7 @@ export default class OrderScreen extends React.Component {
     this._isMounted = false;
   }
 
+  /* get info passed from App */
   getList = () => {
     if (this._isMounted) {
       let fakeProducts = this.props.fakeProducts;
