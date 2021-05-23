@@ -44,6 +44,7 @@ export default class StandingOrderScreen extends React.Component {
       deliver: "",
       note: "",
       subtotal: 0,
+      total: 0
     };
   }
 
@@ -185,6 +186,7 @@ export default class StandingOrderScreen extends React.Component {
     }
     this.setState({
       subtotal,
+      total: this.getTotal()
     });
   };
 
@@ -238,6 +240,7 @@ export default class StandingOrderScreen extends React.Component {
           deliver: this.state.deliver,
           note: this.state.note,
           subtotal: this.state.subtotal,
+          total: this.state.total
         };
         message.success("Order placed");
         window.location.reload();

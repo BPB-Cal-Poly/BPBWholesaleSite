@@ -32,7 +32,6 @@ export default class CartOrderScreen extends React.Component {
       categories: [],
       products: [],
       //----order----
-      type: "",
       date: this.today,
       address: "",
       phone: "",
@@ -41,6 +40,7 @@ export default class CartOrderScreen extends React.Component {
       deliver: "",
       note: "",
       subtotal: 0,
+      total: 0
     };
   }
 
@@ -182,6 +182,7 @@ export default class CartOrderScreen extends React.Component {
     }
     this.setState({
       subtotal,
+      total: this.getTotal()
     });
   };
 
@@ -234,8 +235,9 @@ export default class CartOrderScreen extends React.Component {
         phone: this.state.phone,
         orders: orders,
         deliver: this.state.deliver,
-        type: this.state.type,
+        note: this.state.note,
         subtotal: this.state.subtotal,
+        total: this.state.total
       };
       window.location.reload();
     }
@@ -254,7 +256,7 @@ export default class CartOrderScreen extends React.Component {
 
   render() {
     let { products, orders, note } = this.state;
-    console.log(orders)
+
     //notAddedProducts are the products not in the gallery view (they are all in by default
     //but user might delete them and want to add later);
     // let notAddedProducts = this.props.fakeProducts.filter(
