@@ -82,19 +82,13 @@ export default class StandingOrderScreen extends React.Component {
     return null;
   }
 
-  // setOrderList = () => {
-  //   let orders = [];
-  //   for (let theproduct of this.props.fakeProducts) {
-  //     orders.push({ product: theproduct.name });
-  //   }
-  //   this.setState({
-  //     orders,
-  //   });
-  // };
-
   getList = () => {
     if (this._isMounted) {
-      let orders = this.props.location.state.orders;
+      let orders = [];
+      if (this.props.location.state != null) {
+        orders = this.props.location.state.orders;
+      }
+      
       let categories = this.props.fakeCategories;
       let products = this.props.fakeProducts;
       this.setState({
@@ -263,7 +257,6 @@ export default class StandingOrderScreen extends React.Component {
 
   render() {
     let { products, orders, note } = this.state;
-
     //notAddedProducts are the products not in the gallery view (they are all in by default
     //but user might delete them and want to add later);
     // let notAddedProducts = this.props.fakeProducts.filter(
@@ -301,7 +294,7 @@ export default class StandingOrderScreen extends React.Component {
           </Select>
         </Form.Item>
       ) : null;
-    let productCom = (
+    let productCom = orders.length !== 0 ? (
       <List
         itemLayout="vertical"
         dataSource={orders}
@@ -309,7 +302,16 @@ export default class StandingOrderScreen extends React.Component {
           <div>
             <h3>{product.product} </h3>
             <List
-              grid={{ gutter: 16, column: 7 }}
+                grid={{
+                  gutter: 16,
+                  xs: 4,
+                  sm: 4,
+                  md: 6,
+                  lg: 6,
+                  xl: 8,
+                  xxl:8,
+                }}
+              // grid={{ gutter: 16, column: 7 }}
               dataSource={weekdays}
               renderItem={(day) => (
                 <div>
@@ -330,10 +332,10 @@ export default class StandingOrderScreen extends React.Component {
                 </div>
               )}
             />
-          </div>
+            </div>
         )}
       />
-    );
+    ) : null;
     const dateFormat = "MM/DD/YYYY";
     function DayList() {
       const list = weekdays.map((day) => (
@@ -346,7 +348,7 @@ export default class StandingOrderScreen extends React.Component {
     return (
       <div className="main-container">
         <div className="customer-center">
-          <Card className="card-transparent standing-card">
+          <Card className="card-transparent">
             <Form {...formItemLayout} form={this.form} onFinish={this.onFinish}> 
               <h1>Standing Order</h1>
 
@@ -467,7 +469,28 @@ export default class StandingOrderScreen extends React.Component {
               </Form.Item>
 
               {products.length !== 0 ? (
-                <div className="standing-products">{productCom}</div>
+                <div>
+                  <MediaQuery minDeviceWidth={576}>
+                    <div
+                      className="standing-products"
+                      style={{
+                        height: `${orders.length * 10}em`,
+                      }}
+                    >
+                      {productCom}
+                    </div>
+                  </MediaQuery>
+                  <MediaQuery maxDeviceWidth={575}>
+                    <div
+                      className="standing-products"
+                      style={{
+                        height: `${orders.length * 15}em`,
+                      }}
+                    >
+                      {productCom}
+                    </div>
+                  </MediaQuery>
+                </div>
               ) : null}
               <Form.Item label="Special Note" {...formItemLayout}>
                 <TextArea

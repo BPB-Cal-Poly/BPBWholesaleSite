@@ -81,7 +81,11 @@ export default class CartOrderScreen extends React.Component {
 
   getList = () => {
     if (this._isMounted) {
-      let orders = this.props.location.state.orders;
+      let orders = [];
+      if (this.props.location.state != null) {
+        orders = this.props.location.state.orders;
+      };
+      console.log(orders)
       let categories = this.props.fakeCategories;
       let products = this.props.fakeProducts;
       this.setState({
@@ -250,7 +254,7 @@ export default class CartOrderScreen extends React.Component {
 
   render() {
     let { products, orders, note } = this.state;
-
+    console.log(orders)
     //notAddedProducts are the products not in the gallery view (they are all in by default
     //but user might delete them and want to add later);
     // let notAddedProducts = this.props.fakeProducts.filter(
