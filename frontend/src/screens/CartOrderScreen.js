@@ -239,6 +239,7 @@ export default class CartOrderScreen extends React.Component {
         subtotal: this.state.subtotal,
         total: this.state.total
       };
+      message.success("Order placed");
       window.location.reload();
     }
   };
@@ -292,6 +293,9 @@ export default class CartOrderScreen extends React.Component {
           </Select>
         </Form.Item>
       ) : null;
+
+
+      console.log(orders)
 
     let productCom = (
       <List
@@ -540,7 +544,7 @@ export default class CartOrderScreen extends React.Component {
                       <Col span={6} className="align-right">
                         <List.Item>
                           <List.Item.Meta
-                            title={item.product + " x" + item.quantity != null ? item.quantity : 0}
+                            title={item.product + " x" + (item.quantity != null ? item.quantity : 0)}
                           />
                         </List.Item>
                       </Col>
