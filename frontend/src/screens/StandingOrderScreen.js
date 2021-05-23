@@ -18,12 +18,9 @@ import {
 import MediaQuery from "react-responsive";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
-import ProForm, { ModalForm, 
-   
-  ProFormText,
- ProFormSelect,
- ProFormList  } from "@ant-design/pro-form";
+import ProForm, { ModalForm} from "@ant-design/pro-form";
 import { PlusOutlined } from "@ant-design/icons";
+import "../styles/order-screen.css";
 import "../styles/standing-order-screen.css";
 import { Redirect } from "react-router";
 const { Option } = Select;
@@ -500,7 +497,7 @@ export default class StandingOrderScreen extends React.Component {
                 <div>
                   <MediaQuery minDeviceWidth={576}>
                     <div
-                      className="standing-products"
+                      className="products"
                       style={{
                         height: `${orders.length * 10}em`,
                       }}
