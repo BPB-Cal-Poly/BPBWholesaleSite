@@ -18,7 +18,11 @@ import {
 import MediaQuery from "react-responsive";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { ModalForm } from "@ant-design/pro-form";
+import ProForm, { ModalForm, 
+   
+  ProFormText,
+ ProFormSelect,
+ ProFormList  } from "@ant-design/pro-form";
 import { PlusOutlined } from "@ant-design/icons";
 import "../styles/standing-order-screen.css";
 import { Redirect } from "react-router";
@@ -44,7 +48,7 @@ export default class StandingOrderScreen extends React.Component {
       deliver: "",
       note: "",
       subtotal: 0,
-      total: 0
+      total: 0,
     };
   }
 
@@ -76,7 +80,7 @@ export default class StandingOrderScreen extends React.Component {
         };
       } else if (state.phone == "") {
         return {
-          phone: props.business.phone
+          phone: props.business.phone,
         };
       }
     }
@@ -89,7 +93,7 @@ export default class StandingOrderScreen extends React.Component {
       if (this.props.location.state != null) {
         orders = this.props.location.state.orders;
       }
-      
+
       let categories = this.props.fakeCategories;
       let products = this.props.fakeProducts;
       this.setState({
@@ -98,8 +102,8 @@ export default class StandingOrderScreen extends React.Component {
       });
       if (orders != null && orders.length != 0) {
         for (let order of orders) {
-            let product = {product: order.product}
-            this.addToOrder(product)
+          let product = { product: order.product };
+          this.addToOrder(product);
         }
       }
     }
@@ -186,13 +190,13 @@ export default class StandingOrderScreen extends React.Component {
     }
     this.setState({
       subtotal,
-      total: this.getTotal()
+      total: this.getTotal(),
     });
   };
 
   getSubtotal = () => {
     let subtotal = this.state.subtotal.toFixed(2);
-    return subtotal != null ? subtotal : 0
+    return subtotal != null ? subtotal : 0;
   };
 
   getTotal = () => {
@@ -206,46 +210,47 @@ export default class StandingOrderScreen extends React.Component {
     if (quantity != null) {
       return quantity.toString().length;
     }
-    return 0
+    return 0;
   };
 
   revertToCartOrder = () => {
     confirm({
       title: "Are you sure you want to revert to cart order?",
-      content: "After reverting, your quantity selection for each weekday will be cleared",
+      content:
+        "After reverting, your quantity selection for each weekday will be cleared",
       okText: "Yes",
       cancelText: "Cancel",
       icon: <ExclamationCircleOutlined />,
       onOk: () => {
         this.props.history.push({
-          pathname:"/cart-order",
-          state:{
-              orders:this.state.orders
-           }
-         });
+          pathname: "/cart-order",
+          state: {
+            orders: this.state.orders,
+          },
+        });
       },
     });
   };
 
   onFinish = async () => {
-      let orders = this.state.orders.filter((x) => x.quantity !== 0);
-      if (orders.length === 0) {
-        message.error("Please add at least one item to the order");
-      } else {
-        let newOrder = {
-          date: this.state.date,
-          address: this.state.address,
-          phone: this.state.phone,
-          orders: orders,
-          deliver: this.state.deliver,
-          note: this.state.note,
-          subtotal: this.state.subtotal,
-          total: this.state.total
-        };
-        message.success("Order placed");
-        window.location.reload();
-      }
-  }
+    let orders = this.state.orders.filter((x) => x.quantity !== 0);
+    if (orders.length === 0) {
+      message.error("Please add at least one item to the order");
+    } else {
+      let newOrder = {
+        date: this.state.date,
+        address: this.state.address,
+        phone: this.state.phone,
+        orders: orders,
+        deliver: this.state.deliver,
+        note: this.state.note,
+        subtotal: this.state.subtotal,
+        total: this.state.total,
+      };
+      message.success("Order placed");
+      window.location.reload();
+    }
+  };
 
   orderContainProduct(name) {
     let orderHasProduct = false;
@@ -260,17 +265,13 @@ export default class StandingOrderScreen extends React.Component {
 
   render() {
     let { products, orders, note } = this.state;
+
     //notAddedProducts are the products not in the gallery view (they are all in by default
     //but user might delete them and want to add later);
-    // let notAddedProducts = this.props.fakeProducts.filter(
-    //   (value) => !products.includes(value)
-    // );
-
     let notAddedProducts = this.props.fakeProducts.filter(
       (value) => !this.orderContainProduct(value.name)
     );
     let business = this.props.business;
-    
 
     const formItemLayout = {
       labelCol: {
@@ -297,14 +298,15 @@ export default class StandingOrderScreen extends React.Component {
           </Select>
         </Form.Item>
       ) : null;
-    let productCom = orders.length !== 0 ? (
-      <List
-        itemLayout="vertical"
-        dataSource={orders}
-        renderItem={(product) => (
-          <div>
-            <h3>{product.product} </h3>
-            <List
+    let productCom =
+      orders.length !== 0 ? (
+        <List
+          itemLayout="vertical"
+          dataSource={orders}
+          renderItem={(product) => (
+            <div>
+              <h3>{product.product} </h3>
+              <List
                 grid={{
                   gutter: 16,
                   xs: 4,
@@ -312,47 +314,47 @@ export default class StandingOrderScreen extends React.Component {
                   md: 6,
                   lg: 6,
                   xl: 8,
-                  xxl:8,
+                  xxl: 8,
                 }}
-              // grid={{ gutter: 16, column: 7 }}
-              dataSource={weekdays}
-              renderItem={(day) => (
-                <div>
-                  <Form form={this.form}>
-                    <Form.Item label={day} name="day">
-                      <InputNumber
-                        min={0}
-                        style={{ width: 60 }}
-                        onChange={(e) => {
-                          this.addDayToOrder(e, day, product.product);
-                          this.setSubtotal();
-                        }}
-                        defaultValue={product[day]}
-                        value={product[day]}
-                      />
-                    </Form.Item>
-                  </Form>
-                </div>
-              )}
-            />
+                dataSource={weekdays}
+                renderItem={(day) => (
+                  <div>
+                    <Form form={this.form}>
+                      <Form.Item label={day} name="day">
+                        <InputNumber
+                          min={0}
+                          style={{ width: 60 }}
+                          onChange={(e) => {
+                            this.addDayToOrder(e, day, product.product);
+                            this.setSubtotal();
+                          }}
+                          defaultValue={product[day]}
+                          value={product[day]}
+                        />
+                      </Form.Item>
+                    </Form>
+                  </div>
+                )}
+              />
             </div>
-        )}
-      />
-    ) : null;
+          )}
+        />
+      ) : null;
     const dateFormat = "MM/DD/YYYY";
-    function DayList() {
-      const list = weekdays.map((day) => (
+
+    function dayInput(day) {
+      const item = (
         <Form.Item label={day} name={day}>
           <InputNumber min={0} style={{ width: 60 }} />
         </Form.Item>
-      ));
-      return list;
+      );
+      return item;
     }
     return (
       <div className="main-container">
         <div className="customer-center">
           <Card className="card-transparent">
-            <Form {...formItemLayout} form={this.form} onFinish={this.onFinish}> 
+            <Form {...formItemLayout} form={this.form} onFinish={this.onFinish}>
               <h1>Standing Order</h1>
 
               <Form.Item
@@ -449,7 +451,7 @@ export default class StandingOrderScreen extends React.Component {
                   <Form.Item
                     label="Product"
                     name="product"
-                    layout="vertical"
+                    // layout="vertical"
                     initialValue={
                       notAddedProducts.length !== 0
                         ? notAddedProducts[0].name
@@ -457,7 +459,7 @@ export default class StandingOrderScreen extends React.Component {
                     }
                     rules={[{ required: true, message: "Missing product" }]}
                   >
-                    <Select style={{ width: 140 }} onSelect={this.setProduct}>
+                    <Select style={{ width: 140 }}>
                       {notAddedProducts.map((item) => (
                         <Option key={item.id} value={item.name}>
                           {item.name}
@@ -467,7 +469,30 @@ export default class StandingOrderScreen extends React.Component {
                       ))}
                     </Select>
                   </Form.Item>
-                  <DayList />
+                  <ProForm.Group>
+                    {dayInput("Sun")}
+                    {dayInput("Mon")}
+                    {dayInput("Tue")}
+                    <MediaQuery minDeviceWidth={400}>
+                      {dayInput("Wed")}
+                    </MediaQuery>
+                  </ProForm.Group>
+                  <ProForm.Group>
+                  <MediaQuery maxDeviceWidth={399}>
+                  {dayInput("Wed")}
+                    </MediaQuery>
+                    
+                    {dayInput("Thu")}
+                    {dayInput("Fri")}
+                    <MediaQuery minDeviceWidth={399}>
+                    {dayInput("Sat")}
+                    </MediaQuery>
+                    
+                    
+                  </ProForm.Group>
+                  <MediaQuery maxDeviceWidth={399}>
+                    {dayInput("Sat")}
+                    </MediaQuery>
                 </ModalForm>
               </Form.Item>
 

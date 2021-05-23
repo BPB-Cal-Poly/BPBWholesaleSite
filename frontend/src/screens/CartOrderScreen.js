@@ -17,7 +17,7 @@ import {
 import MediaQuery from "react-responsive";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { ModalForm } from "@ant-design/pro-form";
+import { ModalForm} from "@ant-design/pro-form";
 import { PlusOutlined } from "@ant-design/icons";
 import "../styles/order-screen.css";
 const { Option } = Select;
