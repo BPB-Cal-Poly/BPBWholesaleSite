@@ -17,7 +17,7 @@ import {
 import MediaQuery from "react-responsive";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { ModalForm} from "@ant-design/pro-form";
+import { ModalForm } from "@ant-design/pro-form";
 import { PlusOutlined } from "@ant-design/icons";
 import "../styles/order-screen.css";
 const { Option } = Select;
@@ -40,7 +40,7 @@ export default class CartOrderScreen extends React.Component {
       deliver: "",
       note: "",
       subtotal: 0,
-      total: 0
+      total: 0,
     };
   }
 
@@ -72,7 +72,7 @@ export default class CartOrderScreen extends React.Component {
         };
       } else if (state.phone == "") {
         return {
-          phone: props.business.phone
+          phone: props.business.phone,
         };
       }
     }
@@ -84,8 +84,8 @@ export default class CartOrderScreen extends React.Component {
       let orders = [];
       if (this.props.location.state != null) {
         orders = this.props.location.state.orders;
-      };
-      console.log(orders)
+      }
+      console.log(orders);
       let categories = this.props.fakeCategories;
       let products = this.props.fakeProducts;
       this.setState({
@@ -97,12 +97,12 @@ export default class CartOrderScreen extends React.Component {
         for (let order of orders) {
           let size = 0;
           for (let key in order) {
-            if (order.hasOwnProperty(key) && key!= "product") {
-              size += order[key]
+            if (order.hasOwnProperty(key) && key != "product") {
+              size += order[key];
             }
           }
-            let product = {product: order.product, quantity: size}
-            this.addToOrder(product)
+          let product = { product: order.product, quantity: size };
+          this.addToOrder(product);
         }
       }
     }
@@ -182,13 +182,13 @@ export default class CartOrderScreen extends React.Component {
     }
     this.setState({
       subtotal,
-      total: this.getTotal()
+      total: this.getTotal(),
     });
   };
 
   getSubtotal = () => {
     let subtotal = this.state.subtotal.toFixed(2);
-    return subtotal != null ? subtotal : 0
+    return subtotal != null ? subtotal : 0;
   };
 
   getTotal = () => {
@@ -214,15 +214,14 @@ export default class CartOrderScreen extends React.Component {
       icon: <ExclamationCircleOutlined />,
       onOk: () => {
         this.props.history.push({
-          pathname:"/standing-order",
-          state:{
-              orders:this.state.orders
-           }
-         });
+          pathname: "/standing-order",
+          state: {
+            orders: this.state.orders,
+          },
+        });
       },
     });
   };
-
 
   onFinish = async () => {
     let orders = this.state.orders.filter((x) => x.quantity !== 0);
@@ -237,7 +236,7 @@ export default class CartOrderScreen extends React.Component {
         deliver: this.state.deliver,
         note: this.state.note,
         subtotal: this.state.subtotal,
-        total: this.state.total
+        total: this.state.total,
       };
       message.success("Order placed");
       window.location.reload();
@@ -294,8 +293,7 @@ export default class CartOrderScreen extends React.Component {
         </Form.Item>
       ) : null;
 
-
-      console.log(orders)
+    console.log(orders);
 
     let productCom = (
       <List
@@ -330,6 +328,9 @@ export default class CartOrderScreen extends React.Component {
                   onChange={(e) => {
                     this.setOrderQuantity(e, item.product, orders);
                     this.setSubtotal();
+                  }}
+                  onPressEnter={(e) => {
+                    e.preventDefault();
                   }}
                 ></InputNumber>
               </div>
@@ -418,6 +419,9 @@ export default class CartOrderScreen extends React.Component {
                   onChange={(e) => {
                     this.setPhone(e.target.value);
                   }}
+                  onPressEnter={(e) => {
+                    e.preventDefault();
+                  }}
                 ></Input>
               </Form.Item>
 
@@ -474,7 +478,13 @@ export default class CartOrderScreen extends React.Component {
                       name="quantity"
                       rules={[{ required: true, message: "Missing quantity" }]}
                     >
-                      <InputNumber min={1} style={{ width: 120 }} />
+                      <InputNumber
+                        min={1}
+                        style={{ width: 120 }}
+                        onPressEnter={(e) => {
+                          e.preventDefault();
+                        }}
+                      />
                     </Form.Item>
                   </ModalForm>
                 </Form.Item>
@@ -485,7 +495,7 @@ export default class CartOrderScreen extends React.Component {
                     <div
                       className="products customer-center"
                       style={{
-                        height: `${Math.ceil(orders.length/3) * 20}em`,
+                        height: `${Math.ceil(orders.length / 3) * 20}em`,
                       }}
                     >
                       {productCom}
@@ -495,7 +505,7 @@ export default class CartOrderScreen extends React.Component {
                     <div
                       className="products customer-center"
                       style={{
-                        height: `${Math.ceil(orders.length/2) * 20}em`,
+                        height: `${Math.ceil(orders.length / 2) * 20}em`,
                       }}
                     >
                       {productCom}
@@ -505,7 +515,7 @@ export default class CartOrderScreen extends React.Component {
                     <div
                       className="products customer-center"
                       style={{
-                        height: `${Math.ceil(orders.length/2) * 17}em`,
+                        height: `${Math.ceil(orders.length / 2) * 17}em`,
                       }}
                     >
                       {productCom}
@@ -515,7 +525,7 @@ export default class CartOrderScreen extends React.Component {
                     <div
                       className="products customer-center"
                       style={{
-                        height: `${Math.ceil(orders.length/2) * 15}em`,
+                        height: `${Math.ceil(orders.length / 2) * 15}em`,
                       }}
                     >
                       {productCom}
@@ -544,7 +554,11 @@ export default class CartOrderScreen extends React.Component {
                       <Col span={6} className="align-right">
                         <List.Item>
                           <List.Item.Meta
-                            title={item.product + " x" + (item.quantity != null ? item.quantity : 0)}
+                            title={
+                              item.product +
+                              " x" +
+                              (item.quantity != null ? item.quantity : 0)
+                            }
                           />
                         </List.Item>
                       </Col>
@@ -583,13 +597,9 @@ export default class CartOrderScreen extends React.Component {
                 >
                   Revert to standing order
                 </Button>
-                </div>
+              </div>
               <div className="add-button">
-                <Button
-                  type="default"
-                  htmlType="submit"
-                  shape="round"
-                >
+                <Button type="default" htmlType="submit" shape="round">
                   Order
                 </Button>
               </div>

@@ -18,7 +18,7 @@ import {
 import MediaQuery from "react-responsive";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
-import ProForm, { ModalForm} from "@ant-design/pro-form";
+import ProForm, { ModalForm } from "@ant-design/pro-form";
 import { PlusOutlined } from "@ant-design/icons";
 import "../styles/order-screen.css";
 import "../styles/standing-order-screen.css";
@@ -327,6 +327,9 @@ export default class StandingOrderScreen extends React.Component {
                           }}
                           defaultValue={product[day]}
                           value={product[day]}
+                          onPressEnter={(e) => {
+                            e.preventDefault();
+                          }}
                         />
                       </Form.Item>
                     </Form>
@@ -342,7 +345,13 @@ export default class StandingOrderScreen extends React.Component {
     function dayInput(day) {
       const item = (
         <Form.Item label={day} name={day}>
-          <InputNumber min={0} style={{ width: 60 }} />
+          <InputNumber
+            min={0}
+            style={{ width: 60 }}
+            onPressEnter={(e) => {
+              e.preventDefault();
+            }}
+          />
         </Form.Item>
       );
       return item;
@@ -415,6 +424,9 @@ export default class StandingOrderScreen extends React.Component {
                   onChange={(e) => {
                     this.setPhone(e.target.value);
                   }}
+                  onPressEnter={(e) => {
+                    e.preventDefault();
+                  }}
                 ></Input>
               </Form.Item>
 
@@ -475,21 +487,19 @@ export default class StandingOrderScreen extends React.Component {
                     </MediaQuery>
                   </ProForm.Group>
                   <ProForm.Group>
-                  <MediaQuery maxDeviceWidth={399}>
-                  {dayInput("Wed")}
+                    <MediaQuery maxDeviceWidth={399}>
+                      {dayInput("Wed")}
                     </MediaQuery>
-                    
+
                     {dayInput("Thu")}
                     {dayInput("Fri")}
                     <MediaQuery minDeviceWidth={399}>
-                    {dayInput("Sat")}
+                      {dayInput("Sat")}
                     </MediaQuery>
-                    
-                    
                   </ProForm.Group>
                   <MediaQuery maxDeviceWidth={399}>
                     {dayInput("Sat")}
-                    </MediaQuery>
+                  </MediaQuery>
                 </ModalForm>
               </Form.Item>
 
