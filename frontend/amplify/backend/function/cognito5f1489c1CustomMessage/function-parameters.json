@@ -1,0 +1,21 @@
+{
+  "trigger": true,
+  "modules": [
+    "verification-link"
+  ],
+  "parentResource": "cognito5f1489c1",
+  "functionName": "cognito5f1489c1CustomMessage",
+  "resourceName": "cognito5f1489c1CustomMessage",
+  "parentStack": "auth",
+  "triggerEnvs": "[\n  {\n    \"key\": \"RESOURCENAME\",\n    \"value\": \"resourceName\"\n  }\n]",
+  "triggerDir": "/home/xzhao11/.npm-global/lib/node_modules/@aws-amplify/cli/node_modules/amplify-category-auth/provider-utils/awscloudformation/triggers/CustomMessage",
+  "triggerTemplate": "CustomMessage.json.ejs",
+  "triggerEventPath": "CustomMessage.event.json",
+  "roleName": "cognito5f1489c1CustomMessage",
+  "skipEdit": true,
+  "REDIRECTURL": "/",
+  "EMAILSUBJECT": "Please confirm your email for Back Porch Backery",
+  "EMAILMESSAGE": "",
+  "RESOURCENAME": "resourceName",
+  "enableCors": false
+}

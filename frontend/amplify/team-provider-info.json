@@ -1,0 +1,38 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bpboregon-dev-120913-authRole",
+      "UnauthRoleArn": "arn:aws:iam::548183285548:role/amplify-bpboregon-dev-120913-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::548183285548:role/amplify-bpboregon-dev-120913-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-bpboregon-dev-120913-deployment",
+      "UnauthRoleName": "amplify-bpboregon-dev-120913-unauthRole",
+      "StackName": "amplify-bpboregon-dev-120913",
+      "StackId": "arn:aws:cloudformation:us-west-2:548183285548:stack/amplify-bpboregon-dev-120913/d4088950-7a00-11eb-93cd-060e4fc6c1d9",
+      "AmplifyAppId": "d35nb3d4s3s8vs"
+    },
+    "categories": {
+      "auth": {
+        "cognito5f1489c1": {}
+      },
+      "function": {
+        "user": {
+          "deploymentBucketName": "amplify-bpboregon-dev-120913-deployment",
+          "s3Key": "amplify-builds/user-6b424f42364c782f5573-build.zip"
+        },
+        "cognito5f1489c1CustomMessage": {
+          "REDIRECTURL": "/",
+          "EMAILSUBJECT": "Please confirm your email for Back Porch Backery",
+          "EMAILMESSAGE": "",
+          "deploymentBucketName": "amplify-bpboregon-dev-120913-deployment",
+          "s3Key": "amplify-builds/cognito5f1489c1CustomMessage-2f6e6b44456775656261-build.zip"
+        },
+        "cognito5f1489c1PostConfirmation": {
+          "GROUP": "customer",
+          "deploymentBucketName": "amplify-bpboregon-dev-120913-deployment",
+          "s3Key": "amplify-builds/cognito5f1489c1PostConfirmation-52675370724c476e774d-build.zip"
+        }
+      }
+    }
+  }
+}

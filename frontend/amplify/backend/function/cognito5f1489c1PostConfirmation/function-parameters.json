@@ -1,0 +1,18 @@
+{
+  "trigger": true,
+  "modules": [
+    "add-to-group"
+  ],
+  "parentResource": "cognito5f1489c1",
+  "functionName": "cognito5f1489c1PostConfirmation",
+  "resourceName": "cognito5f1489c1PostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": "[]",
+  "triggerDir": "/home/xzhao11/.npm-global/lib/node_modules/@aws-amplify/cli/node_modules/amplify-category-auth/provider-utils/awscloudformation/triggers/PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "triggerEventPath": "PostConfirmation.event.json",
+  "roleName": "cognito5f1489c1PostConfirmation",
+  "skipEdit": true,
+  "GROUP": "customer",
+  "enableCors": false
+}

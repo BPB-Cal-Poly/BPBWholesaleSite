@@ -1,0 +1,33 @@
+{
+  "function": {
+    "productLambda": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
+    }
+  },
+  "auth": {
+    "cognito5f1489c1": {
+      "service": "Cognito",
+      "serviceType": "managed",
+      "providerPlugin": "awscloudformation"
+    }
+  },
+  "api": {
+    "productApi": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "productLambda",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
+    }
+  }
+}

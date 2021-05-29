@@ -1,0 +1,14 @@
+.standing-product {
+    position: relative;
+    width: 150px;
+    height: 100px;
+    float: left;
+    padding: 1em;
+}
+
+.product-info {
+    background: rgba(226, 185, 185, 0.65);
+    padding: 1em;
+    display: block;
+    width: 100%;
+}

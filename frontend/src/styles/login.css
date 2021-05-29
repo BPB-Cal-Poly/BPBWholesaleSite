@@ -1,0 +1,10 @@
+.login-container {
+    height:90vh;
+    display: flex;
+    width: 50%;
+    align-items: center;
+}
+.ant-card-head-title {
+    text-align: center;
+    color: rgb(15, 30, 78);
+}

@@ -1,0 +1,36 @@
+{
+    "paths": [
+        {
+            "name": "/user",
+            "lambdaFunction": "user",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/user"
+        }
+    ],
+    "resourceName": "user",
+    "apiName": "user",
+    "functionArns": [
+        {
+            "lambdaFunction": "user"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-bpboregon-dev-120913-authRole",
+        "unAuthRoleName": "amplify-bpboregon-dev-120913-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "user",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ],
+    "uuid": "89b6930a"
+}
